@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--扫描注解-->
+    <context:component-scan base-package="com.admin.service,com.admin.mapper"/>
+
+    <!-- JNDI获取数据源(使用dbcp连接池) -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/vesp?characterEncoding=UTF-8&amp;autoReconnect=true&amp;serverTimezone=GMT%2B8&amp;useSSL=false"/>
+<!--        useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC-->
+<!--        &amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;useOldAliasMetadataBehavior=true" />-->
+        <!--serverTimezone时区UTC世界标准时间（Coordinated Universal Time）原子钟提供；GTM格林尼治标准时间（Greenwich Mean Time）-->
+        <!--useUnicode=true使用Unicode编码-->
+        <!--characterEncoding=utf8使用utf-8编码-->
+        <!--rewriteBatchedStatements批量更新-->
+        <!--useSSL通过证书或者令牌进行安全验证-->
+        <!--useOldAliasMetadataBehavior别名-->
+        <property name="username" value="hwzn" />
+        <property name="password" value="manager68!" />
+        <property name="initialSize" value="0"/>
+        <property name="maxActive" value="100"/>
+        <property name="minIdle" value="10"/>
+        <property name="maxWait" value="1000"/>
+        <property name="removeAbandoned" value="true"/><!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandonedTimeout" value="180"/>
+        <property name="logAbandoned" value="true" /><!-- 关闭abanded连接时输出错误日志 -->
+        <!-- sql 心跳 -->
+        <!--开启Evict的定时校验，循环校验  -->
+        <property name= "testWhileIdle" value="true"/>
+        <!-- 在进行borrowObject处理时，会对拿到的 连接进行校验-false-->
+        <property name= "testOnBorrow" value="true"/>
+        <!-- 在进行ruturnObject处理时，会对返回的连接进行校验-false -->
+        <property name= "testOnReturn" value="true"/>
+        <!-- 校验使用的sql语句，validatetionQuery，复杂的校验sql会影响性能 -->
+        <property name= "validationQuery" value="select 1"/>
+        <!-- 定义Evict的时间间隔，单位：毫秒 -->
+        <property name= "timeBetweenEvictionRunsMillis" value="3600000"/>
+        <!-- 连接在池中保持空闲而不被空闲连接回收器线程,(如果有)回收的最小时间值，单位毫秒 -->
+        <property name= "minEvictableIdleTimeMillis" value="18000000"/>
+        <!-- 连接在池中保持空闲而不被空闲连接回收器线程,(如果有)回收的最大时间值，单位毫秒 -->
+        <property name= "maxEvictableIdleTimeMillis" value="180000000"/>
+    </bean>
+    <!--定义事务管理-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven/>
+<!--    <tx:annotation-driven transaction-manager="transactionManager" />-->
+    <!--配置mybatis  sqlsessionFactoryBean-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+    </bean>
+
+    <!--接口扫描包-->
+    <!--优先扫描接口中的注解,没有的话会自动去找xml映射文件-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.admin.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+</beans>

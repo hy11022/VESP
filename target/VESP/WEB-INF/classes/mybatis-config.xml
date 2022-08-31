@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--严格区分大小写，空格-->
+        <!--STDOUT_LOGGING标准的日志工厂实现-->
+<!--    <setting name="logImpl" value="STDOUT_LOGGING"/>    -->
+        <!--autoMappingBehavior开启resultMap自动装配  普通列自动映射,对象列不自动映射-->
+        <setting name="autoMappingBehavior" value="FULL"/>
+        <!--开启二级缓存(Mapper)-->
+         <setting name="cacheEnabled" value="true"/>
+        <!--开启驼峰命名-->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+    <typeAliases>
+        <!--扫描实体类中的别名,扫描后映射文件查询的返回值可以不写entity包-->
+        <package name="entity"/>
+    </typeAliases>
+    <!--引入pageHelper分页插件，注意plugin标签位置-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
+</configuration>

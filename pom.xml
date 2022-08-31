@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--modelVersion包含4.0.0。这是目前唯一支持Maven 2和3的POM版本，并且始终是必需的。-->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--这在组织或项目中通常是独一无二的。点标记的groupId不必与项目包含的包​​结构相对应。-->
+    <groupId>hwzn</groupId>
+    <!--artifactId通常是项目已知的名称。虽然groupId很重要，但组内人员很少会提及讨论中的groupId（它们通常都是相同的ID)。它和groupId一起创建了一个将该项目与世界上其他项目分开的关键（至少应该）。与groupId一起，artifactId完全定义了存储库中的工件生活区。-->
+    <artifactId>VESP</artifactId>
+    <!--groupId ：artifactId表示单个项目，但他们无法描述我们正在讨论的项目的哪个化身。代码更改，这些更改应该进行版本控制，并且此元素将这些版本保持一致。它也用在工件的存储库中，以便相互分离版本。-->
+    <version>1.0.0</version>
+    <!--groupId、artifactId、version 三个元素指向一个项目的特定版本，让maven知道我们正在处理的是谁，以及何时处于我们想要的软件生命周期中-->
+
+    <!--现在我们有了我们的地址结构groupId、artifactId、version，还有一个标准标签给我们一个真正完整的地址。那就是项目的项目类型，上面定义的MySSM：MySSM：1.0-SNAPSHOT的示例POM将打成jar包，我们可以通过宣布不同的包装将其变成一个war包-->
+    <packaging>war</packaging>
+
+    <!--项目往往拥有会话名称-->
+    <name>VESP</name>
+
+    <!--与名称一样，URL不是必需的。但是这对于项目用户来说是一个很好的gesture，以便于让他们知道the project lives-->
+    <url>192.168.0.50</url>
+    <repositories>
+        <repository>
+            <id>com.e-iceblue</id>
+            <url>http://repo.e-iceblue.cn/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.complier.encoding>UTF-8</maven.complier.encoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <!--Maven的一个强大方面是处理项目关系; 其中包括依赖关系（和传递依赖关系），继承和聚合（多模块项目）。POM的基石是它的依赖列表。-->
+    <!--groupId、artifactId、version这三个元素用于及时计算特定项目的Maven坐标，并将其划分为该项目的依赖项。这个计算的目的是选择一个匹配所有依赖声明的版本（由于传递依赖关系，对同一个工件可以有多个依赖声明）。-->
+    <!--groupId、artifactId：直接依赖的相应坐标；version：依赖版本需求规范，将用于计算依赖项的有效版本。-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.SR2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <!-- 这个jar文件包含Web应用开发时，用到Spring框架时所需的核心类，包括自动载入WebApplicationContext特性的类、
+        Struts与JSF集成类、文件上传的支持类、Filter类和大量工具辅助类。-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.22</version>
+        </dependency>
+        <!--日志-->
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.5.0.Final</version>
+        </dependency>
+<!--        Spring Cloud 统一的依赖管理-->
+        <!-- 包含了大量的 描述和定义在运行于HTTP协议之下的servlet类和通过遵从servlet容器为这样一个类的实例提供运行环境之间的契约 的类和接口.-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- mysql数据库连接-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version>
+        </dependency>
+        <!-- 引入mybatis支持-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.10</version>
+        </dependency>
+
+        <!-- MyBatis-Spring 会帮助你将 MyBatis 代码无缝地整合到 Spring 中。它将允许 MyBatis 参与到 Spring 的事务管理之中，
+        创建映射器 mapper 和 SqlSession 并注入到 bean 中，以及将 Mybatis 的异常转换为 Spring 的 DataAccessException。
+        最终，可以做到应用代码不依赖于 MyBatis，Spring 或 MyBatis-Spring。-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+        <!-- 引入数据库连接池，c3p0,dbcp,druid-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.11</version>
+        </dependency>
+
+        <!-- 负责数据库资源和错误处理-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.3.22</version>
+        </dependency>
+        <!-- json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.12</version>
+        </dependency>
+
+        <!-- 验证配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>2.7.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- jackson的序列化和反序列化 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <!-- jackson允许使用任意的构造方法或工厂方法来构造实例 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <!-- json转换 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <!-- 上传下载 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <!-- 通过数字签名，以JSON对象为载体在服务间安全传输信息的方式-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!-- set get省略 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <version>1.18.24</version>
+        </dependency>
+        <!-- 分页插件pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+        <!-- word插件 -->
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.doc</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.3.22</version>
+        </dependency>
+        <!-- 视频 -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.5.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg-platform</artifactId>
+            <version>4.1-1.4.4</version>
+        </dependency>
+        <!-- excel工具 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>VESP</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <!--编译后对xml进行资源拷贝-->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

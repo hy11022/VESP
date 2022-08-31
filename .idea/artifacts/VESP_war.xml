@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="VESP:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>VESP</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="VESP.war">
+      <element id="artifact" artifact-name="VESP:war exploded" />
+    </root>
+  </artifact>
+</component>
