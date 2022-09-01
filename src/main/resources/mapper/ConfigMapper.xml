@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.admin.mapper.ConfigMapper">
+    <select id="getSchoolList" resultType="com.admin.pojo.vo.config.SchoolListVo" >
+        SELECT * FROM schools
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND name = #{name}
+        </if>
+        <if test="status != null and status !=''">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <update id="updateSchool">
+        UPDATE schools SET status = #{status}
+        <if test="name != null and name !=''">
+            ,name = #{name}
+        </if>
+        WHERE id = #{id}
+    </update>
+</mapper>

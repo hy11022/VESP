@@ -28,8 +28,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--放行jsp所有静态资源-->
-    <mvc:default-servlet-handler/>
     <!--自定义拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>
@@ -42,7 +40,7 @@
         <mvc:interceptor>
             <!-- 拦截所有mvc控制器 -->
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/config/getSchoolList"/>
             <bean class="com.admin.interceptor.TokenInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

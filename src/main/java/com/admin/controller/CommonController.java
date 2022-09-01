@@ -9,7 +9,6 @@ import com.admin.util.CommonUtils;
 import com.admin.util.Result;
 import com.admin.util.Config;
 import java.util.Objects;
-
 @RestController
 @RequestMapping("/common")
 public class CommonController {

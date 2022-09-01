@@ -30,9 +30,6 @@
         <property name="maxActive" value="100"/>
         <property name="minIdle" value="10"/>
         <property name="maxWait" value="1000"/>
-        <property name="removeAbandoned" value="true"/><!-- 打开removeAbandoned功能 -->
-        <property name="removeAbandonedTimeout" value="180"/>
-        <property name="logAbandoned" value="true" /><!-- 关闭abanded连接时输出错误日志 -->
         <!-- sql 心跳 -->
         <!--开启Evict的定时校验，循环校验  -->
         <property name= "testWhileIdle" value="true"/>
@@ -55,7 +52,8 @@
     </bean>
 
     <!-- 使用annotation定义事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven/>
+<!--    <tx:annotation-driven transaction-manager="transactionManager" />-->
     <!--配置mybatis  sqlsessionFactoryBean-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -69,4 +67,5 @@
         <property name="basePackage" value="com.admin.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
+    <bean id="configService" class="com.admin.service.impl.ConfigServiceImpl"/>
 </beans>

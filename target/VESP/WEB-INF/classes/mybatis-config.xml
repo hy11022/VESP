@@ -4,7 +4,7 @@
     <settings>
         <!--严格区分大小写，空格-->
         <!--STDOUT_LOGGING标准的日志工厂实现-->
-<!--    <setting name="logImpl" value="STDOUT_LOGGING"/>    -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
         <!--autoMappingBehavior开启resultMap自动装配  普通列自动映射,对象列不自动映射-->
         <setting name="autoMappingBehavior" value="FULL"/>
         <!--开启二级缓存(Mapper)-->
