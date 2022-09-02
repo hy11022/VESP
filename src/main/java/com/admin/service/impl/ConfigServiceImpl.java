@@ -1,12 +1,11 @@
 package com.admin.service.impl;
 
 import com.admin.mapper.ConfigMapper;
-import com.admin.pojo.dto.config.AddSchoolDto;
-import com.admin.pojo.dto.config.DeleteSchoolDto;
-import com.admin.pojo.dto.config.SchoolFilterDto;
-import com.admin.pojo.dto.config.UpdateSchoolDto;
+import com.admin.pojo.dto.config.*;
+import com.admin.pojo.entity.ClassesEntity;
 import com.admin.pojo.entity.DepartmentEntity;
 import com.admin.pojo.entity.SchoolEntity;
+import com.admin.pojo.vo.config.DepartmentListVo;
 import com.admin.pojo.vo.config.SchoolListVo;
 import com.admin.service.ConfigService;
 import com.github.pagehelper.PageHelper;
@@ -57,5 +56,50 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public List<DepartmentEntity> getDepartmentsBySchoolID(int id) {
         return configMapper.getDepartmentsBySchoolID(id);
+    }
+
+    @Override
+    public List<DepartmentListVo> getDepartmentList(DepartmentFilterDto departmentFilterDto) {
+        return configMapper.getDepartmentList(departmentFilterDto);
+    }
+
+    @Override
+    public List<DepartmentEntity> checkDepartmentByDto(AddDepartmentDto addDepartmentDto) {
+        return configMapper.checkDepartmentByDto(addDepartmentDto);
+    }
+
+    @Override
+    public int getDepartmentListTotalCount(DepartmentFilterDto departmentFilterDto) {
+        return configMapper.getDepartmentList(departmentFilterDto).size();
+    }
+
+    @Override
+    public boolean addDepartment(AddDepartmentDto addDepartmentDto) {
+        return configMapper.addDepartment(addDepartmentDto);
+    }
+
+    @Override
+    public List<DepartmentEntity> getDepartmentByID(int id) {
+        return configMapper.getDepartmentByID(id);
+    }
+
+    @Override
+    public List<ClassesEntity> getClassesByDepartmentID(int id) {
+        return configMapper.getClassesByDepartmentID(id);
+    }
+
+    @Override
+    public boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto) {
+        return configMapper.deleteDepartment(deleteDepartmentDto);
+    }
+
+    @Override
+    public List<DepartmentEntity> getDepartmentByName(String name) {
+        return configMapper.getDepartmentByName(name);
+    }
+
+    @Override
+    public boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto) {
+        return configMapper.updateDepartment(updateDepartmentDto);
     }
 }

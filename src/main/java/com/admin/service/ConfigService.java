@@ -1,11 +1,10 @@
 package com.admin.service;
 
-import com.admin.pojo.dto.config.AddSchoolDto;
-import com.admin.pojo.dto.config.DeleteSchoolDto;
-import com.admin.pojo.dto.config.SchoolFilterDto;
-import com.admin.pojo.dto.config.UpdateSchoolDto;
+import com.admin.pojo.dto.config.*;
+import com.admin.pojo.entity.ClassesEntity;
 import com.admin.pojo.entity.DepartmentEntity;
 import com.admin.pojo.entity.SchoolEntity;
+import com.admin.pojo.vo.config.DepartmentListVo;
 import com.admin.pojo.vo.config.SchoolListVo;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +27,22 @@ public interface ConfigService {
     List<SchoolEntity> getSchoolByName(String name);
 
     List<DepartmentEntity> getDepartmentsBySchoolID(int id);
+
+    List<DepartmentListVo> getDepartmentList(DepartmentFilterDto departmentFilterDto);
+
+    List<DepartmentEntity> checkDepartmentByDto(AddDepartmentDto addDepartmentDto);
+
+    int getDepartmentListTotalCount(DepartmentFilterDto departmentFilterDto);
+
+    boolean addDepartment(AddDepartmentDto addDepartmentDto);
+
+    List<DepartmentEntity> getDepartmentByID(int id);
+
+    List<ClassesEntity> getClassesByDepartmentID(int id);
+
+    boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto);
+
+    List<DepartmentEntity> getDepartmentByName(String name);
+
+    boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
 }

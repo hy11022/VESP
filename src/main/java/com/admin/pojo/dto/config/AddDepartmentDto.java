@@ -11,9 +11,12 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddSchoolDto implements Serializable {
-    @NotBlank(message = "学校名称不能为空")
+public class AddDepartmentDto implements Serializable {
+    @NotBlank(message = "院系名称不能为空")
     private String name;
+
+    @NotBlank(message = "学校不能为空")
+    private String schoolID;
 
     private String updateTime;
 

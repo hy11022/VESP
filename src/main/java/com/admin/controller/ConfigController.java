@@ -1,41 +1,31 @@
 package com.admin.controller;
 
-import com.admin.pojo.dto.config.AddSchoolDto;
-import com.admin.pojo.dto.config.DeleteSchoolDto;
-import com.admin.pojo.dto.config.SchoolFilterDto;
-import com.admin.pojo.dto.config.UpdateSchoolDto;
-import com.admin.pojo.entity.DepartmentEntity;
-import com.admin.pojo.entity.SchoolEntity;
-import com.admin.pojo.vo.config.SchoolListVo;
-import com.admin.service.ConfigService;
-import com.admin.util.CommonUtils;
-import com.admin.util.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.validation.BindingResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.validation.BindingResult;
+import com.admin.pojo.vo.config.DepartmentListVo;
+import com.admin.pojo.entity.DepartmentEntity;
+import com.admin.pojo.vo.config.SchoolListVo;
+import com.admin.pojo.entity.ClassesEntity;
+import com.admin.pojo.entity.SchoolEntity;
+import com.admin.service.ConfigService;
+import com.admin.pojo.dto.config.*;
+import com.admin.util.CommonUtils;
+import com.admin.util.Result;
 import java.util.Objects;
+import java.util.List;
 
 @RestController
 @RequestMapping("/config")
 public class ConfigController {
-
     @Autowired
     private ConfigService configService;
-
-    @Autowired
-    private DataSourceTransactionManager transactionManager;
 
     //获取学校列表
     @PostMapping("/getSchoolList")
@@ -90,8 +80,8 @@ public class ConfigController {
         if (departmentList.size() > 0) {
             return Result.showInfo("00000002", "该学校尚有院系存在，不可删除", null);
         }
-        Boolean isSuccess = configService.deleteSchool(deleteSchoolDto);
-        if (isSuccess ) {
+        boolean isSuccess = configService.deleteSchool(deleteSchoolDto);
+        if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
             return Result.showInfo("00000002", "删除失败", null);
@@ -107,17 +97,107 @@ public class ConfigController {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
         int schoolID = updateSchoolDto.getId();
-        String schoolName = updateSchoolDto.getName();
         List<SchoolEntity> schoolList1 = configService.getSchoolByID(schoolID);
         if (schoolList1.size() < 1) {
             return Result.showInfo("00000002", "查无此学校", null);
         }
+        String schoolName = updateSchoolDto.getName();
         List<SchoolEntity> schoolList2 = configService.getSchoolByName(schoolName);
         if (schoolList2.size() > 0) {
             return Result.showInfo("00000002", "该学校名称已存在", null);
         }
-        Boolean isSuccess = configService.updateSchool(updateSchoolDto);
-        if (isSuccess ) {
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateSchoolDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateSchool(updateSchoolDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "删除失败", null);
+        }
+    }
+
+    //获取院系列表
+    @PostMapping("/getDepartmentList")
+    public Result getDepartmentList(@Validated @RequestBody DepartmentFilterDto departmentFilterDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<DepartmentListVo> departmentList = configService.getDepartmentList(departmentFilterDto);
+        int totalCount = configService.getDepartmentListTotalCount(departmentFilterDto);
+        return Result.showList("00000000", "Success", departmentList, totalCount);
+    }
+
+    //新增院系
+    @PostMapping("/addDepartment")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result addDepartment(@Validated @RequestBody AddDepartmentDto addDepartmentDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<DepartmentEntity> departmentList = configService.checkDepartmentByDto(addDepartmentDto);
+        if (departmentList.size() > 0) {
+            return Result.showInfo("00000002", "该院系已存在", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        addDepartmentDto.setUpdateTime(now);
+        addDepartmentDto.setStatus("1");
+        boolean isSuccess = configService.addDepartment(addDepartmentDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "新增失败", null);
+        }
+    }
+
+    //删除院系
+    @PostMapping("/deleteDepartment")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result deleteDepartment(@Validated @RequestBody DeleteDepartmentDto deleteDepartmentDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int departmentID = deleteDepartmentDto.getId();
+        List<DepartmentEntity> departmentList = configService.getDepartmentByID(departmentID);
+        if (departmentList.size() < 1) {
+            return Result.showInfo("00000002", "查无此院系", null);
+        }
+        List<ClassesEntity> classesList = configService.getClassesByDepartmentID(departmentID);
+        if (classesList.size() > 0) {
+            return Result.showInfo("00000002", "该院系尚有班级存在，不可删除", null);
+        }
+        boolean isSuccess = configService.deleteDepartment(deleteDepartmentDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "删除失败", null);
+        }
+    }
+
+    //更新学院
+    @PostMapping("/updateDepartment")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateDepartment(@Validated @RequestBody UpdateDepartmentDto updateDepartmentDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int departmentID = updateDepartmentDto.getId();
+        List<DepartmentEntity> departmentList1 = configService.getDepartmentByID(departmentID);
+        if (departmentList1.size() < 1) {
+            return Result.showInfo("00000002", "查无此院系", null);
+        }
+        String departmentName = updateDepartmentDto.getName();
+        List<DepartmentEntity> departmentList2 = configService.getDepartmentByName(departmentName);
+        if (departmentList2.size() > 0) {
+            return Result.showInfo("00000002", "该院系名称已存在", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateDepartmentDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateDepartment(updateDepartmentDto);
+        if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
             return Result.showInfo("00000002", "删除失败", null);

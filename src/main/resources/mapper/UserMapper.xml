@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.admin.mapper.UserMapper">
+    <select id="getUserList" resultType="com.admin.pojo.dto.user.UserFilterDto" >
+        SELECT * FROM users WHERE 1=1
+        <if test="account != null and account !=''">
+            AND account LIKE CONCAT('%',#{account},'%')
+        </if>
+        <if test="name != null and name !=''">
+            AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
+</mapper>

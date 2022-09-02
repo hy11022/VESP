@@ -3,6 +3,9 @@
     <option name="myName" value="Project Default" />
     <inspection_tool class="AndroidLintTestAppLink" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="AndroidLintTypos" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,com.github.pagehelper.page.PageMethod,startPage" />
+    </inspection_tool>
     <inspection_tool class="DuplicatedCode" enabled="false" level="WEAK WARNING" enabled_by_default="false">
       <Languages>
         <language minSize="73" name="Java" />
@@ -77,7 +80,7 @@
       <option name="myAdditionalJavadocTags" value="BelongsProject:,BelongsPackage:,Author:,CreateTime:,Description:,Version:,description:,author:,date:,param:,return:" />
     </inspection_tool>
     <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="ADDITIONAL_TAGS" value="BelongsProject:,BelongsPackage:,Author:,CreateTime:,Description:,Version:,description:,author:,date:,param:,return:" />
+      <option name="ADDITIONAL_TAGS" value="BelongsProject:,BelongsPackage:,Author:,CreateTime:,Description:,Version:,description:,author:,date:,param:,return:,description:生成tokenInfo" />
     </inspection_tool>
     <inspection_tool class="LanguageDetectionInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MavenPackageUpdate" enabled="true" level="WEAK WARNING" enabled_by_default="true">

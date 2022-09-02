@@ -11,13 +11,17 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateSchoolDto implements Serializable {
-    @NotNull(message = "学校唯一编号不能为空")
-    private int id;
+public class DepartmentFilterDto implements Serializable {
+    @NotNull(message = "页数不能为空")
+    private int pageNum;
+
+    @NotNull(message = "页码不能为空")
+    private int pageSize;
+
+    @NotNull(message = "学校不能为空")
+    private int schoolID;
 
     private String name;
 
     private String status;
-
-    private String updateTime;
 }

@@ -1,24 +1,30 @@
-package com.admin.pojo.entity;
+package com.admin.pojo.vo.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentEntity implements Serializable {
+public class UserVo implements Serializable {
 
     private int id;
 
+    private String account;
+
     private String name;
 
-    private int schoolID;
+    private String role;
 
-    private String updateTime;
+    private String belongType;
 
-    private String status;
+    private String belongID;
+
+    private String isAdmin;
+
 }

@@ -261,20 +261,16 @@ public class CommonUtils {
         return getThirdLocation(filePath);
     }
 
-    public static String saveVideoCover(String fileStr) {//保存培训视频封面
+    public static String saveVideoCover(String fileStr) throws IOException {//保存培训视频封面
         ByteArrayOutputStream os = VideoUtils.fetchFrame(fileStr);
-        FileOutputStream fileOutputStream;
         String basePath = CommonUtils.picModuleType("3");
         File dir = new File(basePath);// 创建文件夹
         // 判断是否存在，不存在创建
         if (!dir.exists()) dir.mkdirs();
         String uuid = (UUID.randomUUID().toString()).replaceAll("-", "");// uuid
         String filePath = basePath + uuid + ".png";
-        try {
-            fileOutputStream = new FileOutputStream(filePath);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)){
             fileOutputStream.write(os.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return filePath;
     }

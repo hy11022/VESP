@@ -1,11 +1,10 @@
 package com.admin.mapper;
 
-import com.admin.pojo.dto.config.AddSchoolDto;
-import com.admin.pojo.dto.config.DeleteSchoolDto;
-import com.admin.pojo.dto.config.SchoolFilterDto;
-import com.admin.pojo.dto.config.UpdateSchoolDto;
+import com.admin.pojo.dto.config.*;
+import com.admin.pojo.entity.ClassesEntity;
 import com.admin.pojo.entity.DepartmentEntity;
 import com.admin.pojo.entity.SchoolEntity;
+import com.admin.pojo.vo.config.DepartmentListVo;
 import com.admin.pojo.vo.config.SchoolListVo;
 import org.apache.ibatis.annotations.*;
 
@@ -31,4 +30,26 @@ public interface ConfigMapper {
     boolean deleteSchool(DeleteSchoolDto deleteSchoolDto);
 
     boolean updateSchool(UpdateSchoolDto updateSchoolDto);
+
+    List<DepartmentListVo> getDepartmentList(DepartmentFilterDto departmentFilterDto);
+
+    @Select("SELECT * FROM departments WHERE school_id = #{schoolID} AND name = #{name}")
+    List<DepartmentEntity> checkDepartmentByDto(AddDepartmentDto addDepartmentDto);
+
+    @Insert("INSERT INTO departments SET name=#{name},school_id=#{schoolID},update_time = #{updateTime},status=#{status}")
+    boolean addDepartment(AddDepartmentDto addDepartmentDto);
+
+    @Select("SELECT * FROM departments WHERE id=#{id}")
+    List<DepartmentEntity> getDepartmentByID(int id);
+
+    @Select("SELECT * FROM classes WHERE department_id=#{id}")
+    List<ClassesEntity> getClassesByDepartmentID(int id);
+
+    @Delete("DELETE FROM departments WHERE id=#{id}")
+    boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto);
+
+    @Select("SELECT * FROM departments WHERE name = #{name}")
+    List<DepartmentEntity> getDepartmentByName(String name);
+
+    boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
 }

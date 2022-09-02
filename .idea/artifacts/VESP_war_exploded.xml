@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" build-on-make="true" name="VESP:war exploded">
-    <output-path>$PROJECT_DIR$/target/VESP</output-path>
+    <output-path>$PROJECT_DIR$/../../apache-tomcat-9.0.64/webapps/VESP</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>

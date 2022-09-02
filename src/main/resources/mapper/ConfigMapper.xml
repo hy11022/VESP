@@ -14,7 +14,26 @@
     </select>
 
     <update id="updateSchool">
-        UPDATE schools SET status = #{status}
+        UPDATE schools SET status = #{status},update_time=#{updateTime}
+        <if test="name != null and name !=''">
+            ,name = #{name}
+        </if>
+        WHERE id = #{id}
+    </update>
+
+    <select id="getDepartmentList" resultType="com.admin.pojo.vo.config.DepartmentListVo" >
+        SELECT * FROM departments
+        WHERE school_id= #{schoolID}
+        <if test="name != null and name !=''">
+            AND name = #{name}
+        </if>
+        <if test="status != null and status !=''">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <update id="updateDepartment">
+        UPDATE departments SET status = #{status},update_time=#{updateTime}
         <if test="name != null and name !=''">
             ,name = #{name}
         </if>

@@ -1,19 +1,23 @@
-package com.admin.pojo.dto.config;
+package com.admin.pojo.vo.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotBlank;
+
 import java.io.Serializable;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddSchoolDto implements Serializable {
-    @NotBlank(message = "学校名称不能为空")
+public class DepartmentListVo implements Serializable {
+
+    private int id;
+
     private String name;
+
+    private String schoolID;
 
     private String updateTime;
 

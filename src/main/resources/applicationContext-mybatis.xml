@@ -68,4 +68,6 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
     <bean id="configService" class="com.admin.service.impl.ConfigServiceImpl"/>
+    <bean id="userService" class="com.admin.service.impl.UserServiceImpl"/>
+    <bean id="tokenService" class="com.admin.service.impl.TokenServiceImpl"/>
 </beans>

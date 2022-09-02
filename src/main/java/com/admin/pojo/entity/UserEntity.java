@@ -10,15 +10,23 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentEntity implements Serializable {
+public class UserEntity implements Serializable {
 
     private int id;
 
+    private String account;
+
     private String name;
 
-    private int schoolID;
+    private String password;
 
-    private String updateTime;
+    private String role;
+
+    private String belongType;
+
+    private String belongID;
+
+    private String isAdmin;
 
     private String status;
 }

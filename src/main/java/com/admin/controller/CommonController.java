@@ -8,7 +8,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.admin.util.CommonUtils;
 import com.admin.util.Result;
 import com.admin.util.Config;
+
 import java.util.Objects;
+
 @RestController
 @RequestMapping("/common")
 public class CommonController {
@@ -65,21 +67,21 @@ public class CommonController {
             int b = splitstr[0].indexOf(';');
             type = splitstr[0].substring(a + 1, b);
             if (!type.equals("jpg") && !type.equals("jpeg") && !type.equals("png") && !type.equals("mp4") && !type.equals("pdf")
-                    && !type.equals("vnd.openxmlformats-officedocument.wordprocessingml.document")&& !type.equals("msword")
+                    && !type.equals("vnd.openxmlformats-officedocument.wordprocessingml.document") && !type.equals("msword")
                     && !type.equals("vnd.openxmlformats-officedocument.spreadsheetml.sheet") && !type.equals("x-zip-compressed")) {
                 //限定格式，jpg、jpeg、png，mp4、pdf、doc(msword)、docx(vnd.openxmlformats-officedocument.wordprocessingml.document)、excel
                 return Result.showInfo("00000002", "资源格式有误", null);
             }
-            if(type.equals("vnd.openxmlformats-officedocument.wordprocessingml.document")){
-                type="docx";
+            if (type.equals("vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+                type = "docx";
             }
-            if(type.equals("vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
-                type="xlsx";
+            if (type.equals("vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
+                type = "xlsx";
             }
             fileBstr = splitstr[1];
             module = sourceDto.getModule();
-            System.out.println("type6:"+type);
-            if(module.equals("6") && !type.equals("x-zip-compressed")){
+            System.out.println("type6:" + type);
+            if (module.equals("6") && !type.equals("x-zip-compressed")) {
                 return Result.showInfo("00000002", "资源格式有误", null);
             }
             String basePath = CommonUtils.sourceModuleType(module);
