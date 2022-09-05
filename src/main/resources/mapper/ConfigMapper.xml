@@ -39,4 +39,15 @@
         </if>
         WHERE id = #{id}
     </update>
+
+    <select id="getFunctionModuleList" resultType="com.admin.pojo.vo.config.FunctionModuleListVo" >
+        SELECT * FROM function_modules
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND name = #{name}
+        </if>
+        <if test="status != null and status !=''">
+            AND status = #{status}
+        </if>
+    </select>
 </mapper>

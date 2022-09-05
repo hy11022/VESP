@@ -1,5 +1,7 @@
 package com.admin.controller;
 
+import com.admin.pojo.entity.FunctionModuleEntity;
+import com.admin.pojo.vo.config.FunctionModuleListVo;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -201,6 +203,102 @@ public class ConfigController {
             return Result.showInfo("00000000", "Success", null);
         } else {
             return Result.showInfo("00000002", "删除失败", null);
+        }
+    }
+
+    //查询功能模块列表
+    @PostMapping("/getFunctionModuleList")
+    public Result getFunctionModuleList(@Validated @RequestBody FunctionModuleFilterDto functionModuleFilterDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<FunctionModuleListVo> functionModuleList = configService.getFunctionModuleList(functionModuleFilterDto);
+        int totalCount = configService.getFunctionModuleListTotalCount(functionModuleFilterDto);
+        return Result.showList("00000000", "Success", functionModuleList, totalCount);
+    }
+
+    //新增功能模块
+    @PostMapping("/addFunctionModule")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result addFunctionModule(@Validated @RequestBody AddFunctionModuleDto addFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<FunctionModuleEntity> functionModuleList = configService.checkFunctionModuleByDto(addFunctionModuleDto);
+        if (functionModuleList.size() > 0) {
+            return Result.showInfo("00000002", "该模块已存在", null);
+        }
+        addFunctionModuleDto.setStatus("1");
+        boolean isSuccess = configService.addFunctionModule(addFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "新增失败", null);
+        }
+    }
+
+    //删除功能模块
+    @PostMapping("/deleteFunctionModule")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result deleteFunctionModule(@Validated @RequestBody DeleteFunctionModuleDto deleteFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int functionModuleID = deleteFunctionModuleDto.getId();
+        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
+        if (functionModuleList.size() < 1) {
+            return Result.showInfo("00000002", "查无此功能模块", null);
+        }
+        boolean isSuccess = configService.deleteFunctionModule(deleteFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "删除失败", null);
+        }
+    }
+
+    //更新功能模块
+    @PostMapping("/updateFunctionModule")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateFunctionModule(@Validated @RequestBody UpdateFunctionModuleDto updateFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int functionModuleID = updateFunctionModuleDto.getId();
+        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
+        if (functionModuleList.size() < 1) {
+            return Result.showInfo("00000002", "查无此功能模块", null);
+        }
+        boolean isSuccess = configService.updateFunctionModule(updateFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "更新失败", null);
+        }
+    }
+
+    //更改功能模块状态
+    @PostMapping("/changeFunctionModuleStatus")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result changeFunctionModuleStatus(@Validated @RequestBody ChangeFunctionModuleDto changeFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int functionModuleID = changeFunctionModuleDto.getId();
+        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
+        if (functionModuleList.size() < 1) {
+            return Result.showInfo("00000002", "查无此功能模块", null);
+        }
+        boolean isSuccess = configService.changeFunctionModuleStatus(changeFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000002", "更改失败", null);
         }
     }
 }

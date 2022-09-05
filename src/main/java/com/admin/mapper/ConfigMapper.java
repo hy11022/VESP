@@ -3,8 +3,10 @@ package com.admin.mapper;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.ClassesEntity;
 import com.admin.pojo.entity.DepartmentEntity;
+import com.admin.pojo.entity.FunctionModuleEntity;
 import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.vo.config.DepartmentListVo;
+import com.admin.pojo.vo.config.FunctionModuleListVo;
 import com.admin.pojo.vo.config.SchoolListVo;
 import org.apache.ibatis.annotations.*;
 
@@ -52,4 +54,24 @@ public interface ConfigMapper {
     List<DepartmentEntity> getDepartmentByName(String name);
 
     boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
+
+    List<FunctionModuleListVo> getFunctionModuleList(FunctionModuleFilterDto functionModuleFilterDto);
+
+    @Select("SELECT * FROM function_modules WHERE name = #{name}")
+    List<FunctionModuleEntity> checkFunctionModuleByDto(AddFunctionModuleDto addFunctionModuleDto);
+
+    @Insert("INSERT INTO function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},path=#{path}")
+    boolean addFunctionModule(AddFunctionModuleDto addFunctionModuleDto);
+
+    @Select("SELECT * FROM function_modules WHERE id=#{id}")
+    List<FunctionModuleEntity> getFunctionModuleByID(int id);
+
+    @Delete("DELETE FROM function_modules WHERE id=#{id}")
+    boolean deleteFunctionModule(DeleteFunctionModuleDto deleteFunctionModuleDto);
+
+    @Update("UPDATE function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},path = #{path} WHERE id= #{id}")
+    boolean updateFunctionModule(UpdateFunctionModuleDto updateFunctionModuleDto);
+
+    @Update("UPDATE function_modules SET status = #{status} WHERE id=#{id}")
+    boolean changeFunctionModuleStatus(ChangeFunctionModuleDto changeFunctionModuleDto);
 }

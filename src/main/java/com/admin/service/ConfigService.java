@@ -3,8 +3,10 @@ package com.admin.service;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.ClassesEntity;
 import com.admin.pojo.entity.DepartmentEntity;
+import com.admin.pojo.entity.FunctionModuleEntity;
 import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.vo.config.DepartmentListVo;
+import com.admin.pojo.vo.config.FunctionModuleListVo;
 import com.admin.pojo.vo.config.SchoolListVo;
 import org.springframework.stereotype.Service;
 
@@ -45,4 +47,20 @@ public interface ConfigService {
     List<DepartmentEntity> getDepartmentByName(String name);
 
     boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
+
+    List<FunctionModuleListVo> getFunctionModuleList(FunctionModuleFilterDto functionModuleFilterDto);
+
+    int getFunctionModuleListTotalCount(FunctionModuleFilterDto functionModuleFilterDto);
+
+    List<FunctionModuleEntity> checkFunctionModuleByDto(AddFunctionModuleDto addFunctionModuleDto);
+
+    boolean addFunctionModule(AddFunctionModuleDto addFunctionModuleDto);
+
+    List<FunctionModuleEntity> getFunctionModuleByID(int id);
+
+    boolean deleteFunctionModule(DeleteFunctionModuleDto deleteFunctionModuleDto);
+
+    boolean updateFunctionModule(UpdateFunctionModuleDto updateFunctionModuleDto);
+
+    boolean changeFunctionModuleStatus(ChangeFunctionModuleDto changeFunctionModuleDto);
 }

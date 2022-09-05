@@ -4,8 +4,10 @@ import com.admin.mapper.ConfigMapper;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.ClassesEntity;
 import com.admin.pojo.entity.DepartmentEntity;
+import com.admin.pojo.entity.FunctionModuleEntity;
 import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.vo.config.DepartmentListVo;
+import com.admin.pojo.vo.config.FunctionModuleListVo;
 import com.admin.pojo.vo.config.SchoolListVo;
 import com.admin.service.ConfigService;
 import com.github.pagehelper.PageHelper;
@@ -101,5 +103,45 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto) {
         return configMapper.updateDepartment(updateDepartmentDto);
+    }
+
+    @Override
+    public List<FunctionModuleListVo> getFunctionModuleList(FunctionModuleFilterDto functionModuleFilterDto) {
+        return configMapper.getFunctionModuleList(functionModuleFilterDto);
+    }
+
+    @Override
+    public int getFunctionModuleListTotalCount(FunctionModuleFilterDto functionModuleFilterDto) {
+        return configMapper.getFunctionModuleList(functionModuleFilterDto).size();
+    }
+
+    @Override
+    public List<FunctionModuleEntity> checkFunctionModuleByDto(AddFunctionModuleDto addFunctionModuleDto) {
+        return configMapper.checkFunctionModuleByDto(addFunctionModuleDto);
+    }
+
+    @Override
+    public boolean addFunctionModule(AddFunctionModuleDto addFunctionModuleDto) {
+        return configMapper.addFunctionModule(addFunctionModuleDto);
+    }
+
+    @Override
+    public List<FunctionModuleEntity> getFunctionModuleByID(int id) {
+        return configMapper.getFunctionModuleByID(id);
+    }
+
+    @Override
+    public boolean deleteFunctionModule(DeleteFunctionModuleDto deleteFunctionModuleDto) {
+        return configMapper.deleteFunctionModule(deleteFunctionModuleDto);
+    }
+
+    @Override
+    public boolean updateFunctionModule(UpdateFunctionModuleDto updateFunctionModuleDto) {
+        return configMapper.updateFunctionModule(updateFunctionModuleDto);
+    }
+
+    @Override
+    public boolean changeFunctionModuleStatus(ChangeFunctionModuleDto changeFunctionModuleDto) {
+        return configMapper.changeFunctionModuleStatus(changeFunctionModuleDto);
     }
 }
