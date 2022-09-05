@@ -21,6 +21,8 @@ public class FunctionModuleListVo implements Serializable {
 
     private String coverImg;
 
+    private String headImg;
+
     private String path;
 
     private String status;

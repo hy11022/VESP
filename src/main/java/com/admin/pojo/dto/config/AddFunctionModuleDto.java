@@ -20,6 +20,8 @@ public class AddFunctionModuleDto implements Serializable {
 
     private String coverImg;
 
+    private String headImg;
+
     @NotBlank(message = "封面不能为空")
     private String path;
 

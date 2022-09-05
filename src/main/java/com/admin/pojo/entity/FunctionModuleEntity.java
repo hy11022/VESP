@@ -19,7 +19,9 @@ public class FunctionModuleEntity implements Serializable {
 
     private String remark;
 
-    private String cover_img;
+    private String coverImg;
+
+    private String headImg;
 
     private String path;
 

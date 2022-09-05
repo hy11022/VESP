@@ -60,7 +60,7 @@ public interface ConfigMapper {
     @Select("SELECT * FROM function_modules WHERE name = #{name}")
     List<FunctionModuleEntity> checkFunctionModuleByDto(AddFunctionModuleDto addFunctionModuleDto);
 
-    @Insert("INSERT INTO function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},path=#{path}")
+    @Insert("INSERT INTO function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},head_img = #{headImg},path=#{path}")
     boolean addFunctionModule(AddFunctionModuleDto addFunctionModuleDto);
 
     @Select("SELECT * FROM function_modules WHERE id=#{id}")
@@ -69,7 +69,8 @@ public interface ConfigMapper {
     @Delete("DELETE FROM function_modules WHERE id=#{id}")
     boolean deleteFunctionModule(DeleteFunctionModuleDto deleteFunctionModuleDto);
 
-    @Update("UPDATE function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},path = #{path} WHERE id= #{id}")
+    @Update("UPDATE function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg}," +
+            "head_img = #{headImg},path = #{path} WHERE id= #{id}")
     boolean updateFunctionModule(UpdateFunctionModuleDto updateFunctionModuleDto);
 
     @Update("UPDATE function_modules SET status = #{status} WHERE id=#{id}")
