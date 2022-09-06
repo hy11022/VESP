@@ -20,7 +20,7 @@
     <!--项目往往拥有会话名称-->
     <name>VESP</name>
     <!--与名称一样，URL不是必需的。但是这对于项目用户来说是一个很好的gesture，以便于让他们知道the project lives-->
-    <url>192.168.0.50</url>
+    <url>127.0.0.1</url>
     <repositories>
         <repository>
             <id>com.e-iceblue</id>
@@ -98,7 +98,6 @@
             <artifactId>druid</artifactId>
             <version>1.2.11</version>
         </dependency>
-
         <!-- 负责数据库资源和错误处理-->
         <dependency>
             <groupId>org.springframework</groupId>

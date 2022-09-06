@@ -1,7 +1,5 @@
 package com.admin.controller;
 
-import com.admin.pojo.entity.FunctionModuleEntity;
-import com.admin.pojo.vo.config.FunctionModuleListVo;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -10,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.admin.pojo.vo.config.FunctionModuleListVo;
 import org.springframework.validation.BindingResult;
+import com.admin.pojo.entity.FunctionModuleEntity;
 import com.admin.pojo.vo.config.DepartmentListVo;
 import com.admin.pojo.entity.DepartmentEntity;
 import com.admin.pojo.vo.config.SchoolListVo;

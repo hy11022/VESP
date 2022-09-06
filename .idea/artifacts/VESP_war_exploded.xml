@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" build-on-make="true" name="VESP:war exploded">
-    <output-path>$PROJECT_DIR$/../../apache-tomcat-9.0.64/webapps/VESP</output-path>
+    <output-path>$PROJECT_DIR$/target/VESP</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
@@ -27,6 +27,7 @@
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.10" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.7" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.2.11" />
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.3.22" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.22" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:2.0.12" />

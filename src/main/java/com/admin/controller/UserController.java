@@ -109,6 +109,9 @@ public class UserController {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
         List<UserVo> userInfo = userService.getUserInfoByToken(tokenInfoDto);
+        if(userInfo.size()<1){
+            return Result.showInfo("00000000", "失败", null);
+        }
         JSONObject resInfo = (JSONObject)JSONObject.toJSON(userInfo.get(0));//Entity转JSONObject
         return Result.showInfo("00000000", "Success", resInfo);
     }
