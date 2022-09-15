@@ -160,7 +160,7 @@ public class UserController {
         if (userList.size() > 0) {
             return Result.showInfo("00000002", "用户已存在", null);
         }
-        String now = CommonUtils.getTime(0);    //获取当前时间
+        String now = CommonUtils.getTime(0);    //获取当前时间auth_levelflag
         addUserDto.setUpdateTime(now);
         addUserDto.setStatus("1");
         boolean isSuccess = userService.addUser(addUserDto);

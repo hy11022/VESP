@@ -4,7 +4,6 @@ import com.admin.pojo.dto.user.*;
 import com.admin.pojo.entity.UserEntity;
 import com.admin.pojo.vo.user.UserVo;
 import org.apache.ibatis.annotations.*;
-
 import java.util.List;
 
 @Mapper
@@ -21,11 +20,11 @@ public interface UserMapper {
     @Update("UPDATE users SET last_login_time = #{lastLoginTime} WHERE account=#{account}")
     void updateLastLoginTime(LoginDto loginDto);
 
-    @Select("SELECT * FROM users WHERE account=#{account} AND authLevel=#{auth_level} AND belong_id=#{belongID}")
+    @Select("SELECT * FROM users WHERE account=#{account} AND auth_level=#{authLevel} AND belong_id=#{belongID}")
     List<UserEntity> checkUserByDto(AddUserDto addUserDto);
 
-    @Insert("INSERT INTO users WHERE account=#{account},name =#{name},password=#{password},role = #{role}," +
-            "auth_level=#{authLevel},belong_id=#{belongID},flag=#{flag},update_time=#{updateTime},status=#{status}")
+    @Insert("INSERT INTO users SET account=#{account},name =#{name},password=#{password},role = #{role}," +
+            "auth_level=#{authLevel},belong_id=#{belongID},update_time=#{updateTime},status=#{status}")
     boolean addUser(AddUserDto addUserDto);
 
     @Select("SELECT * FROM users WHERE id = #{id}")
