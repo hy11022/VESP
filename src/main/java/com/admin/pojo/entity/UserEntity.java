@@ -12,6 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserEntity implements Serializable {
 
+    private static final long serialVersionUID = 1991634085349581566L;
+
     private int id;
 
     private String account;
@@ -22,11 +24,17 @@ public class UserEntity implements Serializable {
 
     private String role;
 
-    private String belongType;
+    private String authLevel;
 
     private String belongID;
 
-    private String isAdmin;
+    private String belongName;
+
+    private String flag;
+
+    private String lastLoginTime;
+
+    private String updateTime;
 
     private String status;
 }

@@ -1,9 +1,7 @@
 package com.admin.service.impl;
 
 import com.admin.mapper.UserMapper;
-import com.admin.pojo.dto.user.LoginDto;
-import com.admin.pojo.dto.user.TokenInfoDto;
-import com.admin.pojo.dto.user.UserFilterDto;
+import com.admin.pojo.dto.user.*;
 import com.admin.pojo.entity.UserEntity;
 import com.admin.pojo.vo.user.UserVo;
 import com.admin.service.UserService;
@@ -14,11 +12,12 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     UserMapper userMapper;
 
     @Override
-    public List<UserEntity> getUserList(UserFilterDto userFilterDto) {
+    public List<UserVo> getUserList(UserFilterDto userFilterDto) {
         PageHelper.startPage(userFilterDto.getPageNum(), userFilterDto.getPageSize());
         return userMapper.getUserList(userFilterDto);
     }
@@ -36,5 +35,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserVo> getUserInfoByToken(TokenInfoDto tokenInfoDto) {
         return userMapper.getUserInfoByToken(tokenInfoDto);
+    }
+
+    @Override
+    public List<UserEntity> checkUserByDto(AddUserDto addUserDto) {
+        return userMapper.checkUserByDto(addUserDto);
+    }
+
+    @Override
+    public List<UserEntity> getUserByID(int id) {
+        return userMapper.getUserByID(id);
+    }
+
+    @Override
+    public void updateLastLoginTime(LoginDto loginDto) {
+        userMapper.updateLastLoginTime(loginDto);
+    }
+
+    @Override
+    public boolean addUser(AddUserDto addUserDto) {
+        return userMapper.addUser(addUserDto);
+    }
+
+    @Override
+    public boolean deleteUser(DeleteUserDto deleteUserDto) {
+        return userMapper.deleteUser(deleteUserDto);
+    }
+
+    @Override
+    public boolean updateUser(UpdateUserDto updateUserDto) {
+        return userMapper.updateUser(updateUserDto);
+    }
+
+    @Override
+    public boolean updateUserPassword(UpdateUserPasswordDto updateUserPasswordDto) {
+        return userMapper.updateUserPassword(updateUserPasswordDto);
+    }
+
+    @Override
+    public boolean updateUserStatus(UpdateUserStatusDto updateUserStatusDto) {
+        return userMapper.updateUserStatus(updateUserStatusDto);
     }
 }

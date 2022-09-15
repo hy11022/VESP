@@ -6,48 +6,101 @@
         SELECT * FROM schools
         WHERE 1=1
         <if test="name != null and name !=''">
-            AND name = #{name}
+            AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="code != null and code !=''">
+            AND code LIKE CONCAT('%',#{code},'%')
         </if>
         <if test="status != null and status !=''">
             AND status = #{status}
         </if>
     </select>
-
-    <update id="updateSchool">
-        UPDATE schools SET status = #{status},update_time=#{updateTime}
-        <if test="name != null and name !=''">
-            ,name = #{name}
-        </if>
-        WHERE id = #{id}
-    </update>
 
     <select id="getDepartmentList" resultType="com.admin.pojo.vo.config.DepartmentListVo" >
-        SELECT * FROM departments
-        WHERE school_id= #{schoolID}
+        SELECT a.*,b.name AS schoolName FROM departments a LEFT JOIN schools b ON a.school_id = b.id
+        WHERE 1=1
+        <if test="schoolID != null and schoolID !=''">
+            AND a.school_id =#{schoolID}
+        </if>
         <if test="name != null and name !=''">
-            AND name = #{name}
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="code != null and code !=''">
+            AND a.code LIKE CONCAT('%',#{code},'%')
         </if>
         <if test="status != null and status !=''">
-            AND status = #{status}
+            AND a.status = #{status}
         </if>
+        ORDER BY a.school_id,a.id
     </select>
-
-    <update id="updateDepartment">
-        UPDATE departments SET status = #{status},update_time=#{updateTime}
-        <if test="name != null and name !=''">
-            ,name = #{name}
-        </if>
-        WHERE id = #{id}
-    </update>
 
     <select id="getFunctionModuleList" resultType="com.admin.pojo.vo.config.FunctionModuleListVo" >
         SELECT * FROM function_modules
         WHERE 1=1
         <if test="name != null and name !=''">
-            AND name = #{name}
+            AND name LIKE CONCAT('%',#{name},'%')
         </if>
         <if test="status != null and status !=''">
             AND status = #{status}
         </if>
+        <if test="pathType != null and pathType !=''">
+            AND path_type = #{pathType}
+        </if>
+        <if test="isNeedLogin != null and isNeedLogin !=''">
+            AND is_need_login = #{isNeedLogin}
+        </if>
+    </select>
+
+    <select id="getProvinceList" resultType="com.admin.pojo.entity.ProvinceEntity" >
+        SELECT * FROM provinces
+        WHERE 1=1
+        <if test="status != null and status !=''">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <select id="getSpecialityList" resultType="com.admin.pojo.vo.config.SpecialityListVo" >
+        SELECT a.*,b.name AS departmentName,b.school_id AS schoolID,c.name AS schoolName  FROM specialities a
+        LEFT JOIN departments b ON a.department_id = b.id
+        LEFT JOIN schools c ON b.school_id = c.id
+        WHERE 1=1
+        <if test="departmentID != null and departmentID !=''">
+            AND a.department_id =#{departmentID}
+        </if>
+        <if test="code != null and code !=''">
+            AND a.code LIKE CONCAT('%',#{code},'%')
+        </if>
+        <if test="name != null and name !=''">
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+        ORDER BY b.school_id,a.department_id
+    </select>
+
+    <select id="getClassList" resultType="com.admin.pojo.vo.config.ClassListVo" >
+        SELECT a.*,b.`name` AS specialityName,c.`name` AS departmentName,d.`name` AS schoolName
+        FROM `classes` a
+        LEFT JOIN specialities b ON a.speciality_id = b.id
+        LEFT JOIN departments c ON b.department_id = c.id
+        LEFT JOIN schools d ON c.school_id = d.id
+        WHERE 1=1
+        <if test="specialityID != null and specialityID !=''">
+            AND a.speciality_id =#{specialityID}
+        </if>
+        <if test="code != null and code !=''">
+            AND a.code LIKE CONCAT('%',#{code},'%')
+        </if>
+        <if test="name != null and name !=''">
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+        <if test="beginYear != null and beginYear !=''">
+            AND a.begin_year = #{beginYear}
+        </if>
+        ORDER BY c.school_id,b.department_id,a.speciality_id
     </select>
 </mapper>

@@ -1,13 +1,9 @@
 package com.admin.service;
 
+import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
-import com.admin.pojo.entity.ClassesEntity;
-import com.admin.pojo.entity.DepartmentEntity;
-import com.admin.pojo.entity.FunctionModuleEntity;
-import com.admin.pojo.entity.SchoolEntity;
-import com.admin.pojo.vo.config.DepartmentListVo;
-import com.admin.pojo.vo.config.FunctionModuleListVo;
-import com.admin.pojo.vo.config.SchoolListVo;
+import com.admin.pojo.entity.*;
+import com.admin.pojo.vo.config.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,9 +20,15 @@ public interface ConfigService {
 
     boolean updateSchool(UpdateSchoolDto updateSchoolDto);
 
+    boolean changeSchoolStatus(UpdateSchoolDto updateSchoolDto);
+
     List<SchoolEntity> getSchoolByID(int id);
 
     List<SchoolEntity> getSchoolByName(String name);
+
+    List<SchoolEntity> getSchoolByCode(String code);
+
+    List<SchoolEntity> getSchoolByDto(UpdateSchoolDto updateSchoolDto);
 
     List<DepartmentEntity> getDepartmentsBySchoolID(int id);
 
@@ -34,7 +36,15 @@ public interface ConfigService {
 
     List<DepartmentEntity> checkDepartmentByDto(AddDepartmentDto addDepartmentDto);
 
+    List<DepartmentEntity> getDepartmentByDto(UpdateDepartmentDto updateDepartmentDto);
+
     int getDepartmentListTotalCount(DepartmentFilterDto departmentFilterDto);
+
+    List<SpecialityListVo> getSpecialityList(SpecialityFilterDto specialityFilterDto);
+
+    List<SpecialityEntity> checkSpecialityByDto(AddSpecialityDto addSpecialityDto);
+
+    int getSpecialityListTotalCount(SpecialityFilterDto specialityFilterDto);
 
     boolean addDepartment(AddDepartmentDto addDepartmentDto);
 
@@ -44,9 +54,11 @@ public interface ConfigService {
 
     boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto);
 
-    List<DepartmentEntity> getDepartmentByName(String name);
+    List<DepartmentEntity> checkDepartmentByName(String name);
 
     boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
+
+    boolean changeDepartmentStatus(UpdateDepartmentDto updateDepartmentDto);
 
     List<FunctionModuleListVo> getFunctionModuleList(FunctionModuleFilterDto functionModuleFilterDto);
 
@@ -58,9 +70,39 @@ public interface ConfigService {
 
     List<FunctionModuleEntity> getFunctionModuleByID(int id);
 
+    List<ProvinceEntity> getProvinceList(ProvinceFilterDto provinceFilterDto);
+
+    int getProvinceListTotalCount(ProvinceFilterDto provinceFilterDto);
+
     boolean deleteFunctionModule(DeleteFunctionModuleDto deleteFunctionModuleDto);
 
     boolean updateFunctionModule(UpdateFunctionModuleDto updateFunctionModuleDto);
 
+    boolean updateSpeciality(UpdateSpecialityDto updateSpecialityDto);
+
     boolean changeFunctionModuleStatus(ChangeFunctionModuleDto changeFunctionModuleDto);
+
+    boolean addSpeciality(AddSpecialityDto addSpecialityDto);
+
+    boolean deleteSpeciality(DeleteSpecialityDto deleteSpecialityDto);
+
+    List<SpecialityEntity> getSpecialitiesByID(int specialityID);
+
+    List<ClassListVo> getClassList(ClassFilterDto classFilterDto);
+
+    List<ClassesEntity> checkClassByDto(AddClassDto addClassDto);
+
+    int getClassListTotalCount(ClassFilterDto classFilterDto);
+
+    boolean changeSpecialityStatus(ChangeSpecialityDto changeSpecialityDto);
+
+    boolean addClass(AddClassDto addClassDto);
+
+    boolean deleteClass(DeleteClassDto deleteClassDto);
+
+    boolean updateClass(UpdateClassDto updateClassDto);
+
+    boolean changeClassStatus(ChangeClassDto changeClassDto);
+
+    List<ClassesEntity> getClassesByID(int classID);
 }

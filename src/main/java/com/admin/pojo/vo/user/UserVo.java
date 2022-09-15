@@ -13,7 +13,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserVo implements Serializable {
 
-    private int id;
+    private static final long serialVersionUID = -446673132087636121L;
+
+    private String id;
 
     private String account;
 
@@ -21,10 +23,15 @@ public class UserVo implements Serializable {
 
     private String role;
 
-    private String belongType;
+    private String authLevel;
 
     private String belongID;
 
-    private String isAdmin;
+    private String belongName;
 
+    private String lastLoginTime;
+
+    private String updateTime;
+
+    private String status;
 }

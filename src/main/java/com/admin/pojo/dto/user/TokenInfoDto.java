@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
 /**
- * @BelongsProject: STMS-End
+ * @BelongsProject: VESP
  * @BelongsPackage: com.admin.pojo.dto
  * @Author: Du Rongjun
  * @CreateTime: 2022-07-12  16:18
@@ -19,6 +18,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenInfoDto implements Serializable{
+public class TokenInfoDto implements Serializable {
+
+  private static final long serialVersionUID = -5882162558940065583L;
+
   private String token;
 }

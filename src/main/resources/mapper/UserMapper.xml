@@ -2,13 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.admin.mapper.UserMapper">
-    <select id="getUserList" resultType="com.admin.pojo.dto.user.UserFilterDto" >
-        SELECT * FROM users WHERE 1=1
+    <select id="getUserList" resultType="com.admin.pojo.vo.user.UserVo" >
+        SELECT a.* ,b.name AS belongName
+        FROM users a
+        <if test="authLevel == 1">
+            LEFT JOIN classes b ON a.belong_id = b.id
+        </if>
+        <if test="authLevel == 2">
+            LEFT JOIN specialities b ON a.belong_id = b.id
+        </if>
+        <if test="authLevel == 3">
+            LEFT JOIN departments b ON a.belong_id = b.id
+        </if>
+        <if test="authLevel == 4">
+            LEFT JOIN schools b ON a.belong_id = b.id
+        </if>
+        <if test="authLevel == 5">
+            LEFT JOIN systems b ON a.belong_id = b.id
+        </if>
+        WHERE a.auth_level= #{authLevel}
         <if test="account != null and account !=''">
-            AND account LIKE CONCAT('%',#{account},'%')
+            AND a.account LIKE CONCAT('%',#{account},'%')
         </if>
         <if test="name != null and name !=''">
-            AND name LIKE CONCAT('%',#{name},'%')
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="role != null and role !=''">
+            AND a.role = #{role}
+        </if>
+        <if test="status == null or status ==''">
+            AND a.status in (1,2)
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
         </if>
     </select>
 </mapper>

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @BelongsProject: SPCA-end
+ * @BelongsProject: VESP
  * @BelongsPackage: com.admin.util
  * @Author: Du Rongjun
  * @CreateTime: 2022-06-22  09:29
@@ -39,13 +39,11 @@ public class JWTUtils {
         return JWT.create().withHeader(header)
                 .withClaim("account", account)
                 .withClaim("name", name)
-                .withExpiresAt(expireTime)
                 .sign(algorithm);
     }
 
     /**
      * 生成tokenInfo
-     *
      * @param account,user,accExpTime,refExpTime 账户ID,用户,accessToken有效时间，refreshToken有效时间
      * @return tokenInfo
      */
@@ -81,7 +79,6 @@ public class JWTUtils {
 
     /**
      * 获得token中的信息无需secret解密也能获得
-     *
      * @return token中包含的用户名
      */
     public static String getName(String token) {

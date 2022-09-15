@@ -19,7 +19,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginDto implements Serializable{
+public class LoginDto implements Serializable {
+
+  private static final long serialVersionUID = -8409292382767020294L;
 
   @NotBlank(message = "账户不能为空")
   private String account;
@@ -28,4 +30,6 @@ public class LoginDto implements Serializable{
   private String password;
 
   private String status;
+
+  private String lastLoginTime;
 }

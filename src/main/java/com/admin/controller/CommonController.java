@@ -1,19 +1,26 @@
 package com.admin.controller;
 
+import com.admin.pojo.entity.ProvinceEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import com.admin.pojo.dto.common.ProvinceFilterDto;
+import com.admin.service.ConfigService;
 import com.admin.pojo.dto.common.SourceDto;
 import com.alibaba.fastjson.JSONObject;
 import com.admin.util.CommonUtils;
 import com.admin.util.Result;
 import com.admin.util.Config;
-
+import java.util.List;
 import java.util.Objects;
 
 @RestController
 @RequestMapping("/common")
 public class CommonController {
+
+    @Autowired
+    private ConfigService configService;
 
     /**
      * @author hy 2022年7月16日下午12:38:29
@@ -78,10 +85,12 @@ public class CommonController {
             if (type.equals("vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
                 type = "xlsx";
             }
+            if (type.equals("x-zip-compressed")) {
+                type = "zip";
+            }
             fileBstr = splitstr[1];
             module = sourceDto.getModule();
-            System.out.println("type6:" + type);
-            if (module.equals("6") && !type.equals("x-zip-compressed")) {
+            if (module.equals("6") && !type.equals("zip")) {
                 return Result.showInfo("00000002", "资源格式有误", null);
             }
             String basePath = CommonUtils.sourceModuleType(module);
@@ -91,5 +100,17 @@ public class CommonController {
         } catch (Exception e) {
             return Result.showInfo("00000002", "上传失败", null);
         }
+    }
+
+    //查询省列表
+    @PostMapping("/getProvinceList")
+    public Result getProvinceList(@Validated @RequestBody ProvinceFilterDto provinceFilterDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<ProvinceEntity> schoolList = configService.getProvinceList(provinceFilterDto);
+        int totalCount = configService.getProvinceListTotalCount(provinceFilterDto);
+        return Result.showList("00000000", "Success", schoolList, totalCount);
     }
 }

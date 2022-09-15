@@ -12,7 +12,7 @@ public class VideoUtils{
 
     public static ByteArrayOutputStream fetchFrame(String videoPath) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try(FFmpegFrameGrabber ff = new FFmpegFrameGrabber(videoPath);) {
+        try(FFmpegFrameGrabber ff = new FFmpegFrameGrabber(videoPath)) {
             ff.start();
             int lenght = ff.getLengthInFrames();
             int i = 0;

@@ -13,9 +13,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class SchoolListVo implements Serializable {
 
+    private static final long serialVersionUID = 2534826380338982447L;
+
     private int id;
 
     private String name;
+
+    private String code;
 
     private String updateTime;
 

@@ -13,6 +13,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class FunctionModuleEntity implements Serializable {
 
+    private static final long serialVersionUID = -7507796896225495812L;
+
     private int id;
 
     private String name;
@@ -24,6 +26,12 @@ public class FunctionModuleEntity implements Serializable {
     private String headImg;
 
     private String path;
+
+    private String isNeedLogin;
+
+    private String updateTime;
+
+    private String roleLimits;
 
     private String status;
 }

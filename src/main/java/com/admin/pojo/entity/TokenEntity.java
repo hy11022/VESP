@@ -20,6 +20,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class TokenEntity implements Serializable {
 
+    private static final long serialVersionUID = -8644080350073924483L;
+
     private String accountID;
 
     private String accessToken;

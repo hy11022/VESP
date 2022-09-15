@@ -20,15 +20,23 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserFilterDto implements Serializable{
+public class UserFilterDto implements Serializable {
 
-  @NotNull(message = "页数不能为空")
-  private int pageNum;
+    private static final long serialVersionUID = 2304972182277305780L;
 
-  @NotNull(message = "页码不能为空")
-  private int pageSize;
+    @NotNull(message = "页数不能为空")
+    private int pageNum;
 
-  private String account;
+    @NotNull(message = "页码不能为空")
+    private int pageSize;
 
-  private String name;
+    private String account;
+
+    private String name;
+
+    private String role;
+
+    private String authLevel;
+
+    private String status;
 }

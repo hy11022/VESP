@@ -36,7 +36,6 @@ public class TestReadFile {
                 e.printStackTrace();
             }
         }
-        System.out.println("excelpicPathPath:"+picPath);
         return picPath;
     }
 

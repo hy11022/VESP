@@ -1,10 +1,11 @@
 package com.admin.pojo.dto.config;
 
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotBlank;
+
 import java.io.Serializable;
 
 @Builder
@@ -12,11 +13,16 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddDepartmentDto implements Serializable {
+
+    private static final long serialVersionUID = 5084292058332134753L;
+
     @NotBlank(message = "院系名称不能为空")
     private String name;
 
     @NotBlank(message = "学校不能为空")
     private String schoolID;
+
+    private String code;
 
     private String updateTime;
 

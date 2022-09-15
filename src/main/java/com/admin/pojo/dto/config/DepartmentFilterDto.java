@@ -1,10 +1,10 @@
 package com.admin.pojo.dto.config;
 
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Builder
@@ -12,6 +12,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentFilterDto implements Serializable {
+
+    private static final long serialVersionUID = -8533552328047104081L;
+
     @NotNull(message = "页数不能为空")
     private int pageNum;
 
@@ -22,6 +25,8 @@ public class DepartmentFilterDto implements Serializable {
     private int schoolID;
 
     private String name;
+
+    private String code;
 
     private String status;
 }

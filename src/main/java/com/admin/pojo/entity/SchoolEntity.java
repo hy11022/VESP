@@ -12,9 +12,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class SchoolEntity implements Serializable {
 
+    private static final long serialVersionUID = -4363028148082663109L;
+
     private int id;
 
     private String name;
+
+    private String code;
 
     private String updateTime;
 
