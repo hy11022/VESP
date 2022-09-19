@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class FunctionModuleListVo implements Serializable {
 
     private static final long serialVersionUID = 145740741008380004L;

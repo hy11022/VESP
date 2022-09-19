@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class SchoolListVo implements Serializable {
 
     private static final long serialVersionUID = 2534826380338982447L;

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -16,11 +17,11 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class TokenInfoDto implements Serializable {
 
-  private static final long serialVersionUID = -5882162558940065583L;
+    private static final long serialVersionUID = -5882162558940065583L;
 
-  private String token;
+    private String token;
 }

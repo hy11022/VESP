@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ClassesEntity implements Serializable {
 
     private static final long serialVersionUID = -4642597429318640127L;

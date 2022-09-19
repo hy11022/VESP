@@ -2,8 +2,6 @@ package com.admin.util;
 
 import org.apache.commons.codec.binary.Base64;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -161,32 +159,6 @@ public class CommonUtils {
         return result.toString();
     }
 
-    public static String picModuleType(String str) {
-        String ostype = getType();
-        String filepath = "";
-        switch (str.trim()) {
-            case "1"://培训封面
-                filepath = "D://source/VESP/trainCover/";
-                if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/trainCover/";
-                }
-                return filepath;
-            case "2"://题目附件
-                filepath = "D://source/VESP/questionPic/";
-                if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/questionPic/";
-                }
-                return filepath;
-            case "3"://培训视频封面
-                filepath = "D://source/VESP/videoCover/";
-                if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/videoCover/";
-                }
-                return filepath;
-        }
-        return filepath;
-    }
-
     public static String sourceModuleType(String str) {
         String ostype = getType();
         String filepath = "";
@@ -197,10 +169,10 @@ public class CommonUtils {
                     filepath = "usr/local/source/VESP/function/";
                 }
                 return filepath;
-            case "2"://批量导入培训用户信息
-                filepath = "D://source/VESP/word/";
+            case "2"://新闻
+                filepath = "D://source/VESP/news/";
                 if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/word/";
+                    filepath = "usr/local/source/VESP/news/";
                 }
                 return filepath;
             case "3"://视频
@@ -259,31 +231,6 @@ public class CommonUtils {
             throw new RuntimeException(e);
         }
         return getThirdLocation(filePath);// 获取倒数第三个/之后字符
-    }
-
-    public static String saveVideoCover(String fileStr) throws IOException {//保存培训视频封面
-        ByteArrayOutputStream os = VideoUtils.fetchFrame(fileStr);
-        String basePath = CommonUtils.picModuleType("3");
-        File dir = new File(basePath);// 创建文件夹
-        // 判断是否存在，不存在创建
-        if (!dir.exists()) dir.mkdirs();
-        String uuid = (UUID.randomUUID().toString()).replaceAll("-", "");// uuid
-        String filePath = basePath + uuid + ".png";
-        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)){
-            fileOutputStream.write(os.toByteArray());
-        }
-        return filePath;
-    }
-
-    public static String savePic(BufferedImage images,String type) throws IOException {//保存题目附件图片
-        //将图片以png文件格式保存
-        String basePath = CommonUtils.picModuleType(type);
-        String uuid = (UUID.randomUUID().toString()).replaceAll("-", "");// uuid
-        String picName = uuid + ".png";
-        String picPath = basePath+picName;
-        File imagefile = new File(picPath);
-        ImageIO.write(images, "png", imagefile);
-        return picPath;
     }
 
     public static String getThirdLocation(String url) {// 获取倒数第三个/之后字符

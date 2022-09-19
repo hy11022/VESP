@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UpdateSchoolDto implements Serializable {
 
     private static final long serialVersionUID = 3029367482332801093L;

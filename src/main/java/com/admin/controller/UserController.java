@@ -1,14 +1,14 @@
 package com.admin.controller;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.admin.pojo.entity.TokenEntity;
-import com.alibaba.fastjson.JSONObject;
 import com.admin.pojo.entity.UserEntity;
+import com.alibaba.fastjson.JSONObject;
 import com.admin.service.TokenService;
 import com.alibaba.fastjson.JSONArray;
 import com.admin.service.UserService;
@@ -65,7 +65,7 @@ public class UserController {
                 userService.updateLastLoginTime(loginDto);
                 return Result.showInfo("00000000", "Success", tokenInfo);
             } else {
-                return Result.showInfo("00000004", "登录失败", null);
+                return Result.showInfo("00000002", "登录失败", null);
             }
         } else {
             return Result.showInfo("00000003", "账户名或密码不正确", null);
@@ -79,14 +79,14 @@ public class UserController {
         try {
             authorization = JSONObject.parseObject(headers.get("authorization").toString());
         } catch (Exception e) {
-            return Result.showInfo("00000002", "入参有误，退出失败", null);
+            return Result.showInfo("00000001", "入参有误，退出失败", null);
         }
         String accessToken = authorization.getString("accessToken");
         boolean isSuccess = tokenService.deleteToken(accessToken);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000001", "操作数据库出错，退出失败", null);
+            return Result.showInfo("00000002", "操作数据库出错，退出失败", null);
         }
     }
 
@@ -99,7 +99,7 @@ public class UserController {
         }
         //校验入参格式，账户ID不能超过20位，账户名称不能超过20位
         if (userFilterDto.getAccount().length() > 20 || userFilterDto.getName().length() > 20) {
-            return Result.showInfo("00000001", "入参格式有误", null);
+            return Result.showInfo("00000002", "入参格式有误", null);
         }
         JSONArray ja = new JSONArray();
         int totalCount;
@@ -142,7 +142,7 @@ public class UserController {
         }
         List<UserVo> userInfo = userService.getUserInfoByToken(tokenInfoDto);
         if(userInfo.size()<1){
-            return Result.showInfo("00000001", "失败", null);
+            return Result.showInfo("00000002", "失败", null);
         }
         JSONObject resInfo = (JSONObject)JSONObject.toJSON(userInfo.get(0));//Entity转JSONObject
         return Result.showInfo("00000000", "Success", resInfo);
@@ -167,7 +167,7 @@ public class UserController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "新增失败", null);
+            return Result.showInfo("00000003", "新增失败", null);
         }
     }
 
@@ -191,7 +191,7 @@ public class UserController {
         if(isSuccess){
             return Result.showInfo("00000000", "Success", null);
         }else{
-            return Result.showInfo("00000002", "删除失败", null);
+            return Result.showInfo("00000003", "删除失败", null);
         }
     }
 
@@ -214,7 +214,7 @@ public class UserController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "更新失败", null);
+            return Result.showInfo("00000003", "更新失败", null);
         }
     }
 
@@ -237,7 +237,7 @@ public class UserController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "修改失败", null);
+            return Result.showInfo("00000003", "修改失败", null);
         }
     }
 
@@ -260,7 +260,7 @@ public class UserController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "修改失败", null);
+            return Result.showInfo("00000003", "修改失败", null);
         }
     }
 }

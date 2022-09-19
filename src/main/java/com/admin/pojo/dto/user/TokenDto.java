@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -16,19 +17,19 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class TokenDto implements Serializable {
 
-  private static final long serialVersionUID = 841457404138935852L;
+    private static final long serialVersionUID = 841457404138935852L;
 
-  private String account;
+    private String account;
 
-  private String accessToken;
+    private String accessToken;
 
-  private String accessTokenExpireTime;
+    private String accessTokenExpireTime;
 
-  private String refreshToken;
+    private String refreshToken;
 
-  private String refreshTokenExpireTime;
+    private String refreshTokenExpireTime;
 }

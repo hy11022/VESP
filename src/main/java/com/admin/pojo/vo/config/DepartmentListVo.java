@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DepartmentListVo implements Serializable {
 
     private static final long serialVersionUID = 5496273581404166755L;

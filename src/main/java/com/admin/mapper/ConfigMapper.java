@@ -50,14 +50,14 @@ public interface ConfigMapper {
     @Select("SELECT * FROM departments WHERE id=#{id}")
     List<DepartmentEntity> getDepartmentByID(int id);
 
-    @Select("SELECT * FROM classes WHERE department_id=#{id}")
-    List<ClassesEntity> getClassesByDepartmentID(int id);
+    @Select("SELECT * FROM specialities WHERE department_id=#{id}")
+    List<SpecialityEntity> getSpecialityByDepartmentID(int id);
+
+    @Select("SELECT * FROM classes WHERE speciality_id=#{id}")
+    List<ClassesEntity> getClassBySpecialityID(int specialityID);
 
     @Delete("DELETE FROM departments WHERE id=#{id}")
     boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto);
-
-    @Select("SELECT * FROM departments WHERE name = #{name}")
-    List<DepartmentEntity> checkDepartmentByName(String name);
 
     @Update(" UPDATE departments SET name = #{name},update_time=#{updateTime} WHERE id = #{id}")
     boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
@@ -133,4 +133,7 @@ public interface ConfigMapper {
 
     @Update("UPDATE classes SET status = #{status},update_time = #{updateTime} WHERE id= #{id}")
     boolean changeClassStatus(ChangeClassDto changeClassDto);
+
+    @Select("SELECT * FROM users WHERE auth_level=#{authLevel} AND belong_id=#{belongID}")
+    List<UserEntity> getUserByBelongID(DeleteDto deleteDto);
 }

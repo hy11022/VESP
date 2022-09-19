@@ -19,26 +19,26 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UpdateUserDto implements Serializable {
 
-  private static final long serialVersionUID = -8409292382767020294L;
+    private static final long serialVersionUID = -8409292382767020294L;
 
-  @NotNull(message = "唯一编号不能为空")
-  private int id;
+    @NotNull(message = "唯一编号不能为空")
+    private int id;
 
-  private String name;
+    private String name;
 
-  private String role;
+    private String role;
 
-  @NotBlank(message = "权限层级不能为空")
-  private String authLevel;
+    @NotBlank(message = "权限层级不能为空")
+    private String authLevel;
 
-  @NotBlank(message = "所属机构不能为空")
-  private String belongID;
+    @NotBlank(message = "所属机构不能为空")
+    private String belongID;
 
-  private String status;
+    private String status;
 
-  private String updateTime;
+    private String updateTime;
 }

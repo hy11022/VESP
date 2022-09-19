@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class SpecialityEntity implements Serializable {
 
     private static final long serialVersionUID = 1605094182012415020L;

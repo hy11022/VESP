@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddSpecialityDto implements Serializable {
 
     private static final long serialVersionUID = -4826255229176510073L;

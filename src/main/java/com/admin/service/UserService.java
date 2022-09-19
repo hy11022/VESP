@@ -4,10 +4,12 @@ import com.admin.pojo.dto.user.*;
 import com.admin.pojo.entity.UserEntity;
 import com.admin.pojo.vo.user.UserVo;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public interface UserService {
+
     List<UserVo> getUserList(UserFilterDto userFilterDto);
 
     int getUserListTotalCount(UserFilterDto userFilterDto);

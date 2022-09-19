@@ -19,17 +19,17 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UpdateUserPasswordDto implements Serializable {
 
-  private static final long serialVersionUID = -6835375409079756869L;
+    private static final long serialVersionUID = -6835375409079756869L;
 
-  @NotNull(message = "唯一编号不能为空")
-  private int id;
+    @NotNull(message = "唯一编号不能为空")
+    private int id;
 
-  @NotBlank(message = "密码不能为空")
-  private String password;
+    @NotBlank(message = "密码不能为空")
+    private String password;
 
-  private String updateTime;
+    private String updateTime;
 }

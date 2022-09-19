@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -17,19 +18,19 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class LoginDto implements Serializable {
 
-  private static final long serialVersionUID = -8409292382767020294L;
+    private static final long serialVersionUID = -8409292382767020294L;
 
-  @NotBlank(message = "账户不能为空")
-  private String account;
+    @NotBlank(message = "账户不能为空")
+    private String account;
 
-  @NotBlank(message = "密码不能为空")
-  private String password;
+    @NotBlank(message = "密码不能为空")
+    private String password;
 
-  private String status;
+    private String status;
 
-  private String lastLoginTime;
+    private String lastLoginTime;
 }

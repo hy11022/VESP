@@ -1,43 +1,11 @@
 package com.admin.util;
 
 import org.apache.poi.ooxml.POIXMLDocumentPart;
-import org.apache.poi.ss.usermodel.PictureData;
 import org.apache.poi.xssf.usermodel.*;
 import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.*;
 
 public class TestReadFile {
-
-    public static String writeImg(Map<String, XSSFPictureData> picMap, int row, int col) {
-        //将图片以png文件格式保存
-        String basePath = CommonUtils.picModuleType("1");
-        String uuid = (UUID.randomUUID().toString()).replaceAll("-", "");// uuid
-        String picName = uuid + ".png";
-        String picPath = basePath+picName;
-        PictureData picData = picMap.get(row+":"+col);
-        if (picData == null) {
-            return "";
-        }
-        byte[] data = picData.getData();
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(picPath);
-            out.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return picPath;
-    }
 
     /**
      * 获取图片和位置 (xlsx)

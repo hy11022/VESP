@@ -5,11 +5,11 @@ import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
 import com.admin.pojo.vo.config.*;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public interface ConfigService {
+
     List<SchoolListVo> getSchoolList(SchoolFilterDto schoolFilterDto);
 
     int getSchoolListTotalCount(SchoolFilterDto schoolFilterDto);
@@ -23,6 +23,10 @@ public interface ConfigService {
     boolean changeSchoolStatus(UpdateSchoolDto updateSchoolDto);
 
     List<SchoolEntity> getSchoolByID(int id);
+
+    List<UserEntity> getUserByBelongID(DeleteDto deleteDto);
+
+    List<ClassesEntity> getClassBySpecialityID(int specialityID);
 
     List<SchoolEntity> getSchoolByName(String name);
 
@@ -50,11 +54,9 @@ public interface ConfigService {
 
     List<DepartmentEntity> getDepartmentByID(int id);
 
-    List<ClassesEntity> getClassesByDepartmentID(int id);
+    List<SpecialityEntity> getSpecialityByDepartmentID(int id);
 
     boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto);
-
-    List<DepartmentEntity> checkDepartmentByName(String name);
 
     boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
 

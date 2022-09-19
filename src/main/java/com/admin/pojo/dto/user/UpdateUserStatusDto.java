@@ -19,17 +19,17 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UpdateUserStatusDto implements Serializable {
 
-  private static final long serialVersionUID = -6835375409079756869L;
+    private static final long serialVersionUID = -6835375409079756869L;
 
-  @NotNull(message = "唯一编号不能为空")
-  private int id;
+    @NotNull(message = "唯一编号不能为空")
+    private int id;
 
-  @NotBlank(message = "状态不能为空")
-  private String status;
+    @NotBlank(message = "状态不能为空")
+    private String status;
 
-  private String updateTime;
+    private String updateTime;
 }

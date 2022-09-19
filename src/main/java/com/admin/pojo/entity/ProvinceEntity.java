@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProvinceEntity implements Serializable {
 
     private static final long serialVersionUID = 978849462629910512L;

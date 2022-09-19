@@ -4,26 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class ClasseesEntity implements Serializable {
+@AllArgsConstructor
+public class NewsTypeEntity implements Serializable {
 
-    private static final long serialVersionUID = 6078964018848684407L;
+    private static final long serialVersionUID = -1386301076752171135L;
 
     private int id;
 
-    private String code;
-
     private String name;
-
-    private String specialityID;
-
-    private String beginYear;
 
     private String updateTime;
 

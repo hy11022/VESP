@@ -1,19 +1,19 @@
 package com.admin.controller;
 
-import com.admin.pojo.entity.ProvinceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
-import com.admin.service.ConfigService;
+import org.springframework.web.bind.annotation.*;
+import com.admin.pojo.entity.ProvinceEntity;
 import com.admin.pojo.dto.common.SourceDto;
+import com.admin.service.ConfigService;
 import com.alibaba.fastjson.JSONObject;
 import com.admin.util.CommonUtils;
 import com.admin.util.Result;
 import com.admin.util.Config;
-import java.util.List;
 import java.util.Objects;
+import java.util.List;
 
 @RestController
 @RequestMapping("/common")
@@ -21,39 +21,6 @@ public class CommonController {
 
     @Autowired
     private ConfigService configService;
-
-    /**
-     * @author hy 2022年7月16日下午12:38:29
-     * 阿里云上传图片
-     */
-    @PostMapping("/uploadImg")
-    public Result uploadImg(@Validated @RequestBody SourceDto sourceDto, BindingResult bindingResult) {
-        //会把校验失败情况下的信息反馈到前端
-        if (bindingResult.hasErrors()) {
-            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
-        }
-        try {
-            JSONObject resInfo = new JSONObject();
-            String[] splitstr;
-            String fileB64, fileBstr, module, type;
-            fileB64 = sourceDto.getImgB64();
-            splitstr = fileB64.split(",");
-            int a = splitstr[0].indexOf('/');
-            int b = splitstr[0].indexOf(';');
-            type = splitstr[0].substring(a + 1, b);
-            if (!type.equals("jpg") && !type.equals("jpeg") && !type.equals("png")) {//jpg、jpeg、png
-                return Result.showInfo("00000002", "图片格式有误", null);
-            }
-            fileBstr = splitstr[1];
-            module = sourceDto.getModule();
-            String basePath = CommonUtils.picModuleType(module);
-            String url = CommonUtils.saveFileLocal(basePath, fileBstr, type);
-            resInfo.put("url", Config.baseurl + url);
-            return Result.showInfo("00000000", "Success", resInfo);
-        } catch (Exception e) {
-            return Result.showInfo("00000002", "上传失败", null);
-        }
-    }
 
     /**
      * @author hy 2022年7月16日下午12:38:29
@@ -98,7 +65,7 @@ public class CommonController {
             resInfo.put("url", Config.baseurl + url);
             return Result.showInfo("00000000", "Success", resInfo);
         } catch (Exception e) {
-            return Result.showInfo("00000002", "上传失败", null);
+            return Result.showInfo("00000003", "上传失败", null);
         }
     }
 

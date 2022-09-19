@@ -14,10 +14,10 @@ import java.io.Serializable;
  * @Description: 验证
  * @Version: 1.0
  */
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class TokenEntity implements Serializable {
 
     private static final long serialVersionUID = -8644080350073924483L;

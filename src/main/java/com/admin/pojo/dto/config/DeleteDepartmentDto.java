@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DeleteDepartmentDto implements Serializable {
 
     private static final long serialVersionUID = -5675286886999971382L;

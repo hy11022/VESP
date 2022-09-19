@@ -8,10 +8,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddDepartmentDto implements Serializable {
 
     private static final long serialVersionUID = 5084292058332134753L;

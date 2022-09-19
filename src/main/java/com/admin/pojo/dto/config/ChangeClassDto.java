@@ -9,10 +9,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChangeClassDto implements Serializable {
 
     private static final long serialVersionUID = 3314808135629057260L;

@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DeleteClassDto implements Serializable {
 
     private static final long serialVersionUID = -243905403605475970L;

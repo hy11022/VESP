@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class FunctionModuleFilterDto implements Serializable {
 
     private static final long serialVersionUID = 6809323766937496201L;

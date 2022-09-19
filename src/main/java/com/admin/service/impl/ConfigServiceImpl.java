@@ -54,6 +54,16 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    public List<UserEntity> getUserByBelongID(DeleteDto deleteDto) {
+        return configMapper.getUserByBelongID(deleteDto);
+    }
+
+    @Override
+    public List<ClassesEntity> getClassBySpecialityID(int specialityID) {
+        return configMapper.getClassBySpecialityID(specialityID);
+    }
+
+    @Override
     public List<SchoolEntity> getSchoolByName(String name) {
         return configMapper.getSchoolByName(name);
     }
@@ -120,18 +130,13 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public List<ClassesEntity> getClassesByDepartmentID(int id) {
-        return configMapper.getClassesByDepartmentID(id);
+    public List<SpecialityEntity> getSpecialityByDepartmentID(int id) {
+        return configMapper.getSpecialityByDepartmentID(id);
     }
 
     @Override
     public boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto) {
         return configMapper.deleteDepartment(deleteDepartmentDto);
-    }
-
-    @Override
-    public List<DepartmentEntity> checkDepartmentByName(String name) {
-        return configMapper.checkDepartmentByName(name);
     }
 
     @Override

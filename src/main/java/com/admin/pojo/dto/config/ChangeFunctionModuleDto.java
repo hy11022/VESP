@@ -8,10 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChangeFunctionModuleDto implements Serializable {
 
     private static final long serialVersionUID = -9090705911698802171L;

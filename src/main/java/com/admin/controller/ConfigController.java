@@ -1,12 +1,10 @@
 package com.admin.controller;
 
-import com.admin.pojo.entity.*;
-import com.admin.pojo.vo.config.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import com.admin.service.ConfigService;
 import com.admin.pojo.dto.config.*;
 import com.admin.util.CommonUtils;
+import com.admin.pojo.vo.config.*;
+import com.admin.pojo.entity.*;
 import com.admin.util.Result;
 import java.util.Objects;
 import java.util.List;
@@ -53,7 +53,7 @@ public class ConfigController {
             return Result.showInfo("00000002", "该学校名称已存在", null);
         }
         if (schoolList2.size() > 0) {
-            return Result.showInfo("00000002", "该学校编号已存在", null);
+            return Result.showInfo("00000003", "该学校编号已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
         addSchoolDto.setUpdateTime(now);
@@ -62,7 +62,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "新增失败", null);
+            return Result.showInfo("00000004", "新增失败", null);
         }
     }
 
@@ -81,13 +81,20 @@ public class ConfigController {
         }
         List<DepartmentEntity> departmentList = configService.getDepartmentsBySchoolID(schoolID);
         if (departmentList.size() > 0) {
-            return Result.showInfo("00000002", "该学校尚有院系存在，不可删除", null);
+            return Result.showInfo("00000003", "该学校尚有院系存在，不可删除", null);
+        }
+        DeleteDto deleteDto = new DeleteDto();
+        deleteDto.setAuthLevel(4);
+        deleteDto.setBelongID(schoolID);
+        List<UserEntity> userList = configService.getUserByBelongID(deleteDto);
+        if (userList.size() > 0) {
+            return Result.showInfo("00000004", "该学校尚有用户存在，不可删除", null);
         }
         boolean isSuccess = configService.deleteSchool(deleteSchoolDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "删除失败", null);
+            return Result.showInfo("00000005", "删除失败", null);
         }
     }
 
@@ -106,7 +113,7 @@ public class ConfigController {
         }
         List<SchoolEntity> schoolList2 = configService.getSchoolByDto(updateSchoolDto);
         if (schoolList2.size() > 0) {
-            return Result.showInfo("00000002", "该学校名称或编号重复", null);
+            return Result.showInfo("00000003", "该学校名称或编号重复", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
         updateSchoolDto.setUpdateTime(now);
@@ -114,7 +121,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "修改失败", null);
+            return Result.showInfo("00000004", "修改失败", null);
         }
     }
 
@@ -137,7 +144,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "修改失败", null);
+            return Result.showInfo("00000003", "修改失败", null);
         }
     }
 
@@ -172,7 +179,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "新增失败", null);
+            return Result.showInfo("00000003", "新增失败", null);
         }
     }
 
@@ -189,15 +196,22 @@ public class ConfigController {
         if (departmentList.size() < 1) {
             return Result.showInfo("00000002", "查无此院系", null);
         }
-        List<ClassesEntity> classesList = configService.getClassesByDepartmentID(departmentID);
-        if (classesList.size() > 0) {
-            return Result.showInfo("00000002", "该院系尚有班级存在，不可删除", null);
+        List<SpecialityEntity> specialityList = configService.getSpecialityByDepartmentID(departmentID);
+        if (specialityList.size() > 0) {
+            return Result.showInfo("00000003", "该院系尚有专业存在，不可删除", null);
+        }
+        DeleteDto deleteDto = new DeleteDto();
+        deleteDto.setAuthLevel(3);
+        deleteDto.setBelongID(departmentID);
+        List<UserEntity> userList = configService.getUserByBelongID(deleteDto);
+        if (userList.size() > 0) {
+            return Result.showInfo("00000004", "该院系尚有用户存在，不可删除", null);
         }
         boolean isSuccess = configService.deleteDepartment(deleteDepartmentDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "删除失败", null);
+            return Result.showInfo("00000005", "删除失败", null);
         }
     }
 
@@ -216,7 +230,7 @@ public class ConfigController {
         }
         List<DepartmentEntity> departmentList2 = configService.getDepartmentByDto(updateDepartmentDto);
         if (departmentList2.size() > 0) {
-            return Result.showInfo("00000002", "该院系名称或编号重复", null);
+            return Result.showInfo("00000003", "该院系名称或编号重复", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
         updateDepartmentDto.setUpdateTime(now);
@@ -224,7 +238,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "更新失败", null);
+            return Result.showInfo("00000004", "更新失败", null);
         }
     }
 
@@ -247,109 +261,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "更新失败", null);
-        }
-    }
-
-    //查询功能模块列表
-    @PostMapping("/getFunctionModuleList")
-    public Result getFunctionModuleList(@Validated @RequestBody FunctionModuleFilterDto functionModuleFilterDto, BindingResult bindingResult) {
-        //会把校验失败情况下的信息反馈到前端
-        if (bindingResult.hasErrors()) {
-            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
-        }
-        List<FunctionModuleListVo> functionModuleList = configService.getFunctionModuleList(functionModuleFilterDto);
-        int totalCount = configService.getFunctionModuleListTotalCount(functionModuleFilterDto);
-        return Result.showList("00000000", "Success", functionModuleList, totalCount);
-    }
-
-    //新增功能模块
-    @PostMapping("/addFunctionModule")
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result addFunctionModule(@Validated @RequestBody AddFunctionModuleDto addFunctionModuleDto, BindingResult bindingResult) {
-        //会把校验失败情况下的信息反馈到前端
-        if (bindingResult.hasErrors()) {
-            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
-        }
-        List<FunctionModuleEntity> functionModuleList = configService.checkFunctionModuleByDto(addFunctionModuleDto);
-        if (functionModuleList.size() > 0) {
-            return Result.showInfo("00000002", "该模块已存在", null);
-        }
-        String now = CommonUtils.getTime(0);    //获取当前时间
-        addFunctionModuleDto.setUpdateTime(now);
-        addFunctionModuleDto.setStatus("1");
-        boolean isSuccess = configService.addFunctionModule(addFunctionModuleDto);
-        if (isSuccess) {
-            return Result.showInfo("00000000", "Success", null);
-        } else {
-            return Result.showInfo("00000002", "新增失败", null);
-        }
-    }
-
-    //删除功能模块
-    @PostMapping("/deleteFunctionModule")
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result deleteFunctionModule(@Validated @RequestBody DeleteFunctionModuleDto deleteFunctionModuleDto, BindingResult bindingResult) {
-        //会把校验失败情况下的信息反馈到前端
-        if (bindingResult.hasErrors()) {
-            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
-        }
-        int functionModuleID = deleteFunctionModuleDto.getId();
-        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
-        if (functionModuleList.size() < 1) {
-            return Result.showInfo("00000002", "查无此功能模块", null);
-        }
-        boolean isSuccess = configService.deleteFunctionModule(deleteFunctionModuleDto);
-        if (isSuccess) {
-            return Result.showInfo("00000000", "Success", null);
-        } else {
-            return Result.showInfo("00000002", "删除失败", null);
-        }
-    }
-
-    //更新功能模块
-    @PostMapping("/updateFunctionModule")
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result updateFunctionModule(@Validated @RequestBody UpdateFunctionModuleDto updateFunctionModuleDto, BindingResult bindingResult) {
-        //会把校验失败情况下的信息反馈到前端
-        if (bindingResult.hasErrors()) {
-            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
-        }
-        int functionModuleID = updateFunctionModuleDto.getId();
-        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
-        if (functionModuleList.size() < 1) {
-            return Result.showInfo("00000002", "查无此功能模块", null);
-        }
-        String now = CommonUtils.getTime(0);    //获取当前时间
-        updateFunctionModuleDto.setUpdateTime(now);
-        boolean isSuccess = configService.updateFunctionModule(updateFunctionModuleDto);
-        if (isSuccess) {
-            return Result.showInfo("00000000", "Success", null);
-        } else {
-            return Result.showInfo("00000002", "更新失败", null);
-        }
-    }
-
-    //更改功能模块状态
-    @PostMapping("/changeFunctionModuleStatus")
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result changeFunctionModuleStatus(@Validated @RequestBody ChangeFunctionModuleDto changeFunctionModuleDto, BindingResult bindingResult) {
-        //会把校验失败情况下的信息反馈到前端
-        if (bindingResult.hasErrors()) {
-            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
-        }
-        int functionModuleID = changeFunctionModuleDto.getId();
-        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
-        if (functionModuleList.size() < 1) {
-            return Result.showInfo("00000002", "查无此功能模块", null);
-        }
-        String now = CommonUtils.getTime(0);    //获取当前时间
-        changeFunctionModuleDto.setUpdateTime(now);
-        boolean isSuccess = configService.changeFunctionModuleStatus(changeFunctionModuleDto);
-        if (isSuccess) {
-            return Result.showInfo("00000000", "Success", null);
-        } else {
-            return Result.showInfo("00000002", "更改失败", null);
+            return Result.showInfo("00000003", "更新失败", null);
         }
     }
 
@@ -384,7 +296,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "新增失败", null);
+            return Result.showInfo("00000003", "新增失败", null);
         }
     }
 
@@ -401,11 +313,22 @@ public class ConfigController {
         if (specialitiesList.size() < 1) {
             return Result.showInfo("00000002", "查无此专业", null);
         }
+        List<ClassesEntity> calssList = configService.getClassBySpecialityID(specialityID);
+        if (calssList.size() > 0) {
+            return Result.showInfo("00000003", "该专业尚有班级存在，不可删除", null);
+        }
+        DeleteDto deleteDto = new DeleteDto();
+        deleteDto.setAuthLevel(2);
+        deleteDto.setBelongID(specialityID);
+        List<UserEntity> userList = configService.getUserByBelongID(deleteDto);
+        if (userList.size() > 0) {
+            return Result.showInfo("00000004", "该专业尚有用户存在，不可删除", null);
+        }
         boolean isSuccess = configService.deleteSpeciality(deleteSpecialityDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "删除失败", null);
+            return Result.showInfo("00000005", "删除失败", null);
         }
     }
 
@@ -428,7 +351,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "更新失败", null);
+            return Result.showInfo("00000003", "更新失败", null);
         }
     }
 
@@ -451,7 +374,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "更改失败", null);
+            return Result.showInfo("00000003", "更改失败", null);
         }
     }
 
@@ -486,7 +409,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "新增失败", null);
+            return Result.showInfo("00000003", "新增失败", null);
         }
     }
 
@@ -503,11 +426,18 @@ public class ConfigController {
         if (classesList.size() < 1) {
             return Result.showInfo("00000002", "查无此班级", null);
         }
+        DeleteDto deleteDto = new DeleteDto();
+        deleteDto.setAuthLevel(1);
+        deleteDto.setBelongID(classID);
+        List<UserEntity> userList = configService.getUserByBelongID(deleteDto);
+        if (userList.size() > 0) {
+            return Result.showInfo("00000003", "该班级尚有用户存在，不可删除", null);
+        }
         boolean isSuccess = configService.deleteClass(deleteClassDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "删除失败", null);
+            return Result.showInfo("00000004", "删除失败", null);
         }
     }
 
@@ -530,7 +460,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "更新失败", null);
+            return Result.showInfo("00000003", "更新失败", null);
         }
     }
 
@@ -553,7 +483,109 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000002", "修改失败", null);
+            return Result.showInfo("00000003", "修改失败", null);
+        }
+    }
+
+    //查询功能模块列表
+    @PostMapping("/getFunctionModuleList")
+    public Result getFunctionModuleList(@Validated @RequestBody FunctionModuleFilterDto functionModuleFilterDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<FunctionModuleListVo> functionModuleList = configService.getFunctionModuleList(functionModuleFilterDto);
+        int totalCount = configService.getFunctionModuleListTotalCount(functionModuleFilterDto);
+        return Result.showList("00000000", "Success", functionModuleList, totalCount);
+    }
+
+    //新增功能模块
+    @PostMapping("/addFunctionModule")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result addFunctionModule(@Validated @RequestBody AddFunctionModuleDto addFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<FunctionModuleEntity> functionModuleList = configService.checkFunctionModuleByDto(addFunctionModuleDto);
+        if (functionModuleList.size() > 0) {
+            return Result.showInfo("00000002", "该模块已存在", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        addFunctionModuleDto.setUpdateTime(now);
+        addFunctionModuleDto.setStatus("1");
+        boolean isSuccess = configService.addFunctionModule(addFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000003", "新增失败", null);
+        }
+    }
+
+    //删除功能模块
+    @PostMapping("/deleteFunctionModule")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result deleteFunctionModule(@Validated @RequestBody DeleteFunctionModuleDto deleteFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int functionModuleID = deleteFunctionModuleDto.getId();
+        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
+        if (functionModuleList.size() < 1) {
+            return Result.showInfo("00000002", "查无此功能模块", null);
+        }
+        boolean isSuccess = configService.deleteFunctionModule(deleteFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000003", "删除失败", null);
+        }
+    }
+
+    //更新功能模块
+    @PostMapping("/updateFunctionModule")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateFunctionModule(@Validated @RequestBody UpdateFunctionModuleDto updateFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int functionModuleID = updateFunctionModuleDto.getId();
+        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
+        if (functionModuleList.size() < 1) {
+            return Result.showInfo("00000002", "查无此功能模块", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateFunctionModuleDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateFunctionModule(updateFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000003", "更新失败", null);
+        }
+    }
+
+    //更改功能模块状态
+    @PostMapping("/changeFunctionModuleStatus")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result changeFunctionModuleStatus(@Validated @RequestBody ChangeFunctionModuleDto changeFunctionModuleDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int functionModuleID = changeFunctionModuleDto.getId();
+        List<FunctionModuleEntity> functionModuleList = configService.getFunctionModuleByID(functionModuleID);
+        if (functionModuleList.size() < 1) {
+            return Result.showInfo("00000002", "查无此功能模块", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        changeFunctionModuleDto.setUpdateTime(now);
+        boolean isSuccess = configService.changeFunctionModuleStatus(changeFunctionModuleDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000003", "更改失败", null);
         }
     }
 }

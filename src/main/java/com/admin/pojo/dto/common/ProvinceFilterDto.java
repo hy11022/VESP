@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProvinceFilterDto implements Serializable {
 
     private static final long serialVersionUID = -2696801846480214702L;

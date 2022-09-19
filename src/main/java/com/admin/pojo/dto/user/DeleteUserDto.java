@@ -18,16 +18,16 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class DeleteUserDto implements Serializable {
 
-  private static final long serialVersionUID = -8409292382767020294L;
+    private static final long serialVersionUID = -8409292382767020294L;
 
-  @NotNull(message = "唯一编号不能为空")
-  private int id;
+    @NotNull(message = "唯一编号不能为空")
+    private int id;
 
-  private String status;
+    private String status;
 
-  private String updateTime;
+    private String updateTime;
 }

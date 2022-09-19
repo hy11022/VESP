@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Service
 public class TokenServiceImpl implements TokenService {
+
     @Autowired
     TokenMapper tokenMapper;
 

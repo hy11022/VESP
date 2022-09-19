@@ -18,8 +18,8 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserFilterDto implements Serializable {
 
     private static final long serialVersionUID = 2304972182277305780L;
