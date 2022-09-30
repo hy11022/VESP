@@ -1,5 +1,7 @@
 package com.admin.service;
 
+import com.admin.pojo.dto.config.AddLabelDto;
+import com.admin.pojo.dto.config.LabelFilterDto;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
@@ -90,9 +92,15 @@ public interface ConfigService {
 
     List<SpecialityEntity> getSpecialitiesByID(int specialityID);
 
+    List<SpecialityEntity> getSpecialitiesByDto(UpdateSpecialityDto updateSpecialityDto);
+
     List<ClassListVo> getClassList(ClassFilterDto classFilterDto);
 
     List<ClassesEntity> checkClassByDto(AddClassDto addClassDto);
+
+    List<LabelEntity> getLabelByID(int labelID);
+
+    List<ExperimentEntity> checkLabelByID(int labelID);
 
     int getClassListTotalCount(ClassFilterDto classFilterDto);
 
@@ -102,9 +110,25 @@ public interface ConfigService {
 
     boolean deleteClass(DeleteClassDto deleteClassDto);
 
+    boolean deleteLabel(DeleteLabelDto deleteLabelDto);
+
+    boolean updateLabel(UpdateLabelDto updateLabelDto);
+
+    boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto);
+
     boolean updateClass(UpdateClassDto updateClassDto);
 
     boolean changeClassStatus(ChangeClassDto changeClassDto);
 
+    boolean addLabel(AddLabelDto addLabelDto);
+
     List<ClassesEntity> getClassesByID(int classID);
+
+    List<ClassesEntity> getClassByDto(UpdateClassDto updateClassDto);
+
+    List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto);
+
+    List<LabelEntity> getLabelList(LabelFilterDto labelFilterDto);
+
+    int getLabelListTotalCount(LabelFilterDto labelFilterDto);
 }

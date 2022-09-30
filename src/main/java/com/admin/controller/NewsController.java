@@ -1,5 +1,6 @@
 package com.admin.controller;
 
+import com.admin.pojo.vo.news.NewsInfoVo;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -190,7 +191,7 @@ public class NewsController {
         int newsID = deleteNewsDto.getId();
         NewsInfoDto newsInfoDto = new NewsInfoDto();
         newsInfoDto.setId(newsID);
-        List<NewsEntity> newsInfo = newsService.getNewsInfo(newsInfoDto);
+        List<NewsInfoVo> newsInfo = newsService.getNewsInfo(newsInfoDto);
         if(newsInfo.get(0).getStatus().equals("1")){
             return Result.showInfo("00000010", "状态有误，请刷新", null);
         }
@@ -213,7 +214,7 @@ public class NewsController {
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<NewsEntity> newsInfo = newsService.getNewsInfo(newsInfoDto);
+        List<NewsInfoVo> newsInfo = newsService.getNewsInfo(newsInfoDto);
         if(newsInfoDto.getVisitSource()==2){
             if(newsInfo.get(0).getStatus().equals("2")){
                 return Result.showInfo("00000002", "该新闻不存在",null);

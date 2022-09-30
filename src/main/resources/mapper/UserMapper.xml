@@ -36,5 +36,6 @@
         <if test="status != null and status !=''">
             AND a.status = #{status}
         </if>
+        ORDER BY a.role DESC,a.auth_level DESC
     </select>
 </mapper>

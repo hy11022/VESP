@@ -31,14 +31,14 @@ public class JWTUtils {
      * @param: @param account,accountName,expireTime 账户ID,账户名称,有效时间
      * @return: 加密的token
      **/
-    public static String createToken(String account, String name, Date expireTime) {
+    public static String createToken(String account, Date expireTime) {
         Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
         Map<String, Object> header = new HashMap<>(2);
         header.put("typ", "JWT");
         header.put("alg", "HS256");
         return JWT.create().withHeader(header)
                 .withClaim("account", account)
-                .withClaim("name", name)
+                .withClaim("expireTime", expireTime)
                 .sign(algorithm);
     }
 
@@ -47,15 +47,15 @@ public class JWTUtils {
      * @param account,user,accExpTime,refExpTime 账户ID,用户,accessToken有效时间，refreshToken有效时间
      * @return tokenInfo
      */
-    public static JSONObject createTokenInfo(String account, String name, Integer accExpTime, Integer refExpTime) {
+    public static JSONObject createTokenInfo(String account, Integer accExpTime, Integer refExpTime) {
         JSONObject tokenInfo = new JSONObject();
         Calendar ae = Calendar.getInstance();
         Calendar re = Calendar.getInstance();
         ae.add(Calendar.SECOND, accExpTime);
         re.add(Calendar.SECOND, refExpTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        tokenInfo.put("accessToken", createToken(account, name, ae.getTime()));
-        tokenInfo.put("refreshToken", createToken(account, name, re.getTime()));
+        tokenInfo.put("accessToken", createToken(account, ae.getTime()));
+        tokenInfo.put("refreshToken", createToken(account, re.getTime()));
         tokenInfo.put("accessTokenExpireTime", dateFormat.format(ae.getTime()));
         tokenInfo.put("refreshTokenExpireTime", dateFormat.format(re.getTime()));
         return tokenInfo;

@@ -3,6 +3,7 @@ package com.admin.mapper;
 import com.admin.pojo.dto.news.*;
 import com.admin.pojo.entity.NewsEntity;
 import com.admin.pojo.entity.NewsTypeEntity;
+import com.admin.pojo.vo.news.NewsInfoVo;
 import com.admin.pojo.vo.news.NewsTypeVo;
 import com.admin.pojo.vo.news.NewsVo;
 import org.apache.ibatis.annotations.*;
@@ -47,8 +48,8 @@ public interface NewsMapper {
     @Delete("DELETE FROM news WHERE id = #{id}")
     boolean deleteNews(DeleteNewsDto deleteNewsDto);
 
-    @Select("SELECT * FROM news WHERE id = #{id}")
-    List<NewsEntity> getNewsInfo(NewsInfoDto newsInfoDto);
+    @Select("SELECT a.*,b.name AS typeName FROM news a LEFT JOIN news_types b ON a.type_id = b.id WHERE a.id = #{id}")
+    List<NewsInfoVo> getNewsInfo(NewsInfoDto newsInfoDto);
 
     boolean updateNews(UpdateNewsDto updateNewsDto);
 

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.entity.TokenEntity;
 import com.admin.pojo.entity.UserEntity;
 import com.alibaba.fastjson.JSONObject;
@@ -47,7 +48,7 @@ public class UserController {
             List<TokenEntity> tokenList = tokenService.getTokenList(account);
             UserEntity user = userList.get(0);
             user.setPassword(null);
-            JSONObject tokenInfo = JWTUtils.createTokenInfo(account, user.getName(), 6 * 60 * 60, 24 * 60 * 60);
+            JSONObject tokenInfo = JWTUtils.createTokenInfo(account, 6 * 60 * 60, 24 * 60 * 60);
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAccount(account);
             tokenDto.setRefreshToken(tokenInfo.getString("refreshToken"));
@@ -82,12 +83,8 @@ public class UserController {
             return Result.showInfo("00000001", "入参有误，退出失败", null);
         }
         String accessToken = authorization.getString("accessToken");
-        boolean isSuccess = tokenService.deleteToken(accessToken);
-        if (isSuccess) {
-            return Result.showInfo("00000000", "Success", null);
-        } else {
-            return Result.showInfo("00000002", "操作数据库出错，退出失败", null);
-        }
+        tokenService.deleteToken(accessToken);
+        return Result.showInfo("00000000", "Success", null);
     }
 
     //查询用户列表
@@ -104,26 +101,30 @@ public class UserController {
         JSONArray ja = new JSONArray();
         int totalCount;
         if(userFilterDto.getAuthLevel().equals("")){
-            userFilterDto.setAuthLevel("1");
-            List<UserVo> userList1 = userService.getUserList(userFilterDto);
-            ja.addAll(userList1);
-            int count1 = userService.getUserListTotalCount(userFilterDto);
-            userFilterDto.setAuthLevel("2");
-            List<UserVo> userList2 = userService.getUserList(userFilterDto);
-            ja.addAll(userList2);
-            int count2 = userService.getUserListTotalCount(userFilterDto);
-            userFilterDto.setAuthLevel("3");
-            List<UserVo> userList3 = userService.getUserList(userFilterDto);
-            ja.addAll(userList3);
-            int count3 = userService.getUserListTotalCount(userFilterDto);
-            userFilterDto.setAuthLevel("4");
-            List<UserVo> userList4 = userService.getUserList(userFilterDto);
-            ja.addAll(userList4);
-            int count4 = userService.getUserListTotalCount(userFilterDto);
             userFilterDto.setAuthLevel("5");
             List<UserVo> userList5 = userService.getUserList(userFilterDto);
             ja.addAll(userList5);
             int count5 = userService.getUserListTotalCount(userFilterDto);
+
+            userFilterDto.setAuthLevel("4");
+            List<UserVo> userList4 = userService.getUserList(userFilterDto);
+            ja.addAll(userList4);
+            int count4 = userService.getUserListTotalCount(userFilterDto);
+
+            userFilterDto.setAuthLevel("3");
+            List<UserVo> userList3 = userService.getUserList(userFilterDto);
+            ja.addAll(userList3);
+            int count3 = userService.getUserListTotalCount(userFilterDto);
+
+            userFilterDto.setAuthLevel("2");
+            List<UserVo> userList2 = userService.getUserList(userFilterDto);
+            ja.addAll(userList2);
+            int count2 = userService.getUserListTotalCount(userFilterDto);
+
+            userFilterDto.setAuthLevel("1");
+            List<UserVo> userList1 = userService.getUserList(userFilterDto);
+            ja.addAll(userList1);
+            int count1 = userService.getUserListTotalCount(userFilterDto);
             totalCount = count1+count2+count3+count4+count5;
         }else{
             List<UserVo> userList = userService.getUserList(userFilterDto);
@@ -156,9 +157,36 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<UserEntity> userList = userService.checkUserByDto(addUserDto);
-        if (userList.size() > 0) {
-            return Result.showInfo("00000002", "用户已存在", null);
+        List<SchoolEntity> schoolInfo = null;
+        if("1234".contains(addUserDto.getAuthLevel())){
+            String level = addUserDto.getAuthLevel();
+            if(level.equals("4")){
+                addUserDto.setSchoolID(addUserDto.getBelongID());
+            }else{
+                if(level.equals("1")){
+                    int classID = addUserDto.getBelongID();
+                    schoolInfo = userService.getSchoolByClassID(classID);
+                }
+                if(level.equals("2")){
+                    int specialityID = addUserDto.getBelongID();
+                    schoolInfo = userService.getSchoolBySpecialityID(specialityID);
+                }
+                if(level.equals("3")){
+                    int departmentID = addUserDto.getBelongID();
+                    schoolInfo = userService.getSchoolByDepartmentID(departmentID);
+                }
+                assert schoolInfo != null;
+                addUserDto.setSchoolID(schoolInfo.get(0).getId());
+            }
+            List<UserEntity> userList = userService.checkUserInSchool(addUserDto);
+            if (userList.size() > 0) {
+                return Result.showInfo("00000002", "账户重复", null);
+            }
+        }else{
+            List<UserEntity> userList = userService.checkUserByDto(addUserDto);
+            if (userList.size() > 0) {
+                return Result.showInfo("00000003", "用户已存在", null);
+            }
         }
         String now = CommonUtils.getTime(0);    //获取当前时间auth_levelflag
         addUserDto.setUpdateTime(now);
@@ -167,7 +195,7 @@ public class UserController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000003", "新增失败", null);
+            return Result.showInfo("00000004", "新增失败", null);
         }
     }
 

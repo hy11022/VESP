@@ -1,5 +1,7 @@
 package com.admin.mapper;
 
+import com.admin.pojo.dto.config.AddLabelDto;
+import com.admin.pojo.dto.config.LabelFilterDto;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
@@ -38,7 +40,7 @@ public interface ConfigMapper {
 
     List<DepartmentListVo> getDepartmentList(DepartmentFilterDto departmentFilterDto);
 
-    @Select("SELECT * FROM departments WHERE school_id = #{schoolID} AND name = #{name}")
+    @Select("SELECT * FROM departments WHERE school_id = #{schoolID} AND (name = #{name} OR code =#{code})")
     List<DepartmentEntity> checkDepartmentByDto(AddDepartmentDto addDepartmentDto);
 
     @Select("SELECT * FROM departments WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND school_id = #{schoolID}")
@@ -56,10 +58,13 @@ public interface ConfigMapper {
     @Select("SELECT * FROM classes WHERE speciality_id=#{id}")
     List<ClassesEntity> getClassBySpecialityID(int specialityID);
 
+    @Select("SELECT * FROM classes WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND speciality_id = #{specialityID}")
+    List<ClassesEntity> getClassByDto(UpdateClassDto updateClassDto);
+
     @Delete("DELETE FROM departments WHERE id=#{id}")
     boolean deleteDepartment(DeleteDepartmentDto deleteDepartmentDto);
 
-    @Update(" UPDATE departments SET name = #{name},update_time=#{updateTime} WHERE id = #{id}")
+    @Update(" UPDATE departments SET name = #{name},code=#{code},update_time=#{updateTime} WHERE id = #{id}")
     boolean updateDepartment(UpdateDepartmentDto updateDepartmentDto);
 
     @Update(" UPDATE departments SET status = #{status},update_time=#{updateTime} WHERE id = #{id}")
@@ -104,6 +109,9 @@ public interface ConfigMapper {
     @Select("SELECT * FROM specialities WHERE id = #{specialityID}")
     List<SpecialityEntity> getSpecialitiesByID(int specialityID);
 
+    @Select("SELECT * FROM specialities WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND department_id = #{departmentID}")
+    List<SpecialityEntity> getSpecialitiesByDto(UpdateSpecialityDto updateSpecialityDto);
+
     @Delete("DELETE FROM specialities WHERE id = #{id}")
     boolean deleteSpeciality(DeleteSpecialityDto deleteSpecialityDto);
 
@@ -136,4 +144,26 @@ public interface ConfigMapper {
 
     @Select("SELECT * FROM users WHERE auth_level=#{authLevel} AND belong_id=#{belongID}")
     List<UserEntity> getUserByBelongID(DeleteDto deleteDto);
+
+    List<LabelEntity> getLabelList(LabelFilterDto labelFilterDto);
+
+    @Select("SELECT * FROM labels WHERE name=#{name} AND type =#{type}")
+    List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto);
+
+    @Insert("INSERT INTO labels SET name = #{name},type=#{type},update_time=#{updateTime}")
+    boolean addLabel(AddLabelDto addLabelDto);
+
+    @Select("SELECT * FROM labels WHERE id=#{labelID}")
+    List<LabelEntity> getLabelByID(int labelID);
+
+    List<ExperimentEntity> checkLabelByID(int labelID);
+
+    @Delete("DELETE FROM labels WHERE id = #{id}")
+    boolean deleteLabel(DeleteLabelDto deleteLabelDto);
+
+    @Update("UPDATE labels SET name = #{name},type = #{type},update_time = #{updateTime} WHERE id= #{id}")
+    boolean updateLabel(UpdateLabelDto updateLabelDto);
+
+    @Update("UPDATE labels SET status = #{status},update_time = #{updateTime} WHERE id= #{id}")
+    boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto);
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface TokenMapper {
+
     @Select("SELECT * FROM tokens WHERE account = #{account}")
     List<TokenEntity> getTokenList(String account);
 
@@ -18,7 +19,7 @@ public interface TokenMapper {
     @Delete("DELETE FROM tokens WHERE access_token = #{accessToken}")
     Boolean deleteToken(String accessToken);
 
-    @Update("UPDATE tokens SET access_token_expire_time = #{accessTokenExpireTime}," +
+    @Update("UPDATE tokens SET access_token_expire_time = #{accessTokenExpireTime},access_token = #{accessToken}," +
             "refresh_token = #{refreshToken},refresh_token_expire_time = #{refreshTokenExpireTime} WHERE account = #{account}")
     Boolean updateToken(TokenDto tokenDto);
 }

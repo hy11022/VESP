@@ -23,5 +23,7 @@ public class UpdateSpecialityDto implements Serializable {
 
     private String code;
 
+    private String departmentID;
+
     private String updateTime;
 }

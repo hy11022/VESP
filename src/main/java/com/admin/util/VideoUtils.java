@@ -1,11 +1,11 @@
 package com.admin.util;
 
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import java.awt.image.BufferedImage;
+import org.bytedeco.javacv.Frame;
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class VideoUtils{
@@ -20,7 +20,7 @@ public class VideoUtils{
             while (i < lenght) {
                 // 取第一帧。避免出现全黑的图片，可取后面几帧
                 f = ff.grabFrame();
-                if ((i > 0) && (f.image != null)) {
+                if ((i >= 1) && (f.image != null)) {
                     break;
                 }
                 i++;
@@ -30,7 +30,7 @@ public class VideoUtils{
             if (rotate != null) {
                 bi = rotate(bi, Integer.parseInt(rotate));
             }
-            ImageIO.write(bi, "jpg", os);
+            ImageIO.write(bi,"jpg", os);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,6 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.validation.BindingResult;
+import com.admin.pojo.dto.config.LabelFilterDto;
+import com.admin.pojo.dto.config.AddLabelDto;
 import com.admin.service.ConfigService;
 import com.admin.pojo.dto.config.*;
 import com.admin.util.CommonUtils;
@@ -228,6 +230,7 @@ public class ConfigController {
         if (departmentList1.size() < 1) {
             return Result.showInfo("00000002", "查无此院系", null);
         }
+        updateDepartmentDto.setSchoolID(departmentList1.get(0).getSchoolID());
         List<DepartmentEntity> departmentList2 = configService.getDepartmentByDto(updateDepartmentDto);
         if (departmentList2.size() > 0) {
             return Result.showInfo("00000003", "该院系名称或编号重复", null);
@@ -261,7 +264,7 @@ public class ConfigController {
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
-            return Result.showInfo("00000003", "更新失败", null);
+            return Result.showInfo("00000003", "修改失败", null);
         }
     }
 
@@ -344,6 +347,11 @@ public class ConfigController {
         List<SpecialityEntity> specialitiesList = configService.getSpecialitiesByID(specialityID);
         if (specialitiesList.size() < 1) {
             return Result.showInfo("00000002", "查无此专业", null);
+        }
+        updateSpecialityDto.setDepartmentID(specialitiesList.get(0).getDepartmentID());
+        List<SpecialityEntity> specialitiesList2 = configService.getSpecialitiesByDto(updateSpecialityDto);
+        if (specialitiesList2.size() > 0) {
+            return Result.showInfo("00000003", "该专业名称或编号重复", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
         updateSpecialityDto.setUpdateTime(now);
@@ -453,6 +461,11 @@ public class ConfigController {
         List<ClassesEntity> classesList = configService.getClassesByID(classID);
         if (classesList.size() < 1) {
             return Result.showInfo("00000002", "查无此班级", null);
+        }
+        updateClassDto.setSpecialityID(classesList.get(0).getSpecialityID());
+        List<ClassesEntity> classList2 = configService.getClassByDto(updateClassDto);
+        if (classList2.size() > 0) {
+            return Result.showInfo("00000003", "该班级名称或编号重复", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
         updateClassDto.setUpdateTime(now);
@@ -586,6 +599,111 @@ public class ConfigController {
             return Result.showInfo("00000000", "Success", null);
         } else {
             return Result.showInfo("00000003", "更改失败", null);
+        }
+    }
+
+    //获取标签列表
+    @PostMapping("/getLabelList")
+    public Result getLabelList(@Validated @RequestBody LabelFilterDto labelFilterDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<LabelEntity> labelList = configService.getLabelList(labelFilterDto);
+        int totalCount = configService.getLabelListTotalCount(labelFilterDto);
+        return Result.showList("00000000", "Success", labelList, totalCount);
+    }
+
+    //新增标签
+    @PostMapping("/addLabel")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result addLabel(@Validated @RequestBody AddLabelDto addLabelDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<LabelEntity> labelList = configService.checkLabelByName(addLabelDto);
+        if (labelList.size() > 0) {
+            return Result.showInfo("00000002", "该标签已存在", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        addLabelDto.setUpdateTime(now);
+        boolean isSuccess = configService.addLabel(addLabelDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000003", "新增失败", null);
+        }
+    }
+
+    //删除标签
+    @PostMapping("/deleteLabel")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result deleteLabel(@Validated @RequestBody DeleteLabelDto deleteLabelDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int labelID = deleteLabelDto.getId();
+        List<LabelEntity> labelList = configService.getLabelByID(labelID);
+        if (labelList.size() < 1) {
+            return Result.showInfo("00000002", "查无此标签", null);
+        }
+        List<ExperimentEntity> checkList = configService.checkLabelByID(labelID);
+        if (checkList.size() > 0) {
+            return Result.showInfo("00000003", "该标签被引用中，不可删除", null);
+        }
+        boolean isSuccess = configService.deleteLabel(deleteLabelDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000004", "删除失败", null);
+        }
+    }
+
+    //更新标签
+    @PostMapping("/updateLabel")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateLabel(@Validated @RequestBody UpdateLabelDto updateLabelDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int labelID = updateLabelDto.getId();
+        List<LabelEntity> labelList = configService.getLabelByID(labelID);
+        if (labelList.size() < 1) {
+            return Result.showInfo("00000002", "查无此标签", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateLabelDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateLabel(updateLabelDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000004", "更新失败", null);
+        }
+    }
+
+    //更新标签状态
+    @PostMapping("/updateLabelStatus")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateLabelStatus(@Validated @RequestBody UpdateLabelStatusDto updateLabelStatusDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int labelID = updateLabelStatusDto.getId();
+        List<LabelEntity> labelList = configService.getLabelByID(labelID);
+        if (labelList.size() < 1) {
+            return Result.showInfo("00000002", "查无此标签", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateLabelStatusDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateLabelStatus(updateLabelStatusDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000004", "更新失败", null);
         }
     }
 }

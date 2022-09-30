@@ -23,4 +23,6 @@ public class UpdateClassDto implements Serializable {
     private String beginYear;
 
     private String updateTime;
+
+    private int specialityID;
 }

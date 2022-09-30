@@ -105,7 +105,7 @@ public class CommonUtils {
         try {
             assert conn != null;
             try(PrintWriter out = new PrintWriter(conn.getOutputStream());
-                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(),StandardCharsets.UTF_8))) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(),StandardCharsets.UTF_8))) {
                 // 发送请求参数
                 out.print(param);
                 // flush输出流的缓冲
@@ -175,28 +175,28 @@ public class CommonUtils {
                     filepath = "usr/local/source/VESP/news/";
                 }
                 return filepath;
-            case "3"://视频
-                filepath = "D://source/VESP/video/";
+            case "3"://实验封面
+                filepath = "D://source/VESP/experimentCover/";
                 if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/video/";
+                    filepath = "usr/local/source/VESP/experimentCover/";
                 }
                 return filepath;
-            case "4"://用户
+            case "4"://实验视频
+                filepath = "D://source/VESP/experimentVideo/";
+                if (ostype.equals("1")) {
+                    filepath = "usr/local/source/VESP/experimentVideo/";
+                }
+                return filepath;
+            case "5"://用户头像
                 filepath = "D://source/VESP/user/";
                 if (ostype.equals("1")) {
                     filepath = "usr/local/source/VESP/user/";
                 }
                 return filepath;
-            case "5"://培训
-                filepath = "D://source/VESP/train/";
+            case "6"://课程
+                filepath = "D://source/VESP/course/";
                 if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/train/";
-                }
-                return filepath;
-            case "6"://答题文件资源
-                filepath = "D://source/VESP/answer/";
-                if (ostype.equals("1")) {
-                    filepath = "usr/local/source/VESP/answer/";
+                    filepath = "usr/local/source/VESP/course/";
                 }
                 return filepath;
         }

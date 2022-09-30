@@ -57,9 +57,6 @@ public class CommonController {
             }
             fileBstr = splitstr[1];
             module = sourceDto.getModule();
-            if (module.equals("6") && !type.equals("zip")) {
-                return Result.showInfo("00000002", "资源格式有误", null);
-            }
             String basePath = CommonUtils.sourceModuleType(module);
             String url = CommonUtils.saveFileLocal(basePath, fileBstr, type);
             resInfo.put("url", Config.baseurl + url);
@@ -76,8 +73,8 @@ public class CommonController {
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<ProvinceEntity> schoolList = configService.getProvinceList(provinceFilterDto);
+        List<ProvinceEntity> provinceList = configService.getProvinceList(provinceFilterDto);
         int totalCount = configService.getProvinceListTotalCount(provinceFilterDto);
-        return Result.showList("00000000", "Success", schoolList, totalCount);
+        return Result.showList("00000000", "Success", provinceList, totalCount);
     }
 }

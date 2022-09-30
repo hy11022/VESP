@@ -20,6 +20,8 @@ public class ClassesEntity implements Serializable {
 
     private int departmentID;
 
+    private int specialityID;
+
     private String updateTime;
 
     private String status;

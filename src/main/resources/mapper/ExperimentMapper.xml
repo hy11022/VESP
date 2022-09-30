@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.admin.mapper.ExperimentMapper">
+    <select id="getExperimentList" resultType="com.admin.pojo.vo.experiment.ExperimentFilterVo" >
+        SELECT a.*,b.name AS departmentName,c.name AS lastPublisherName
+        FROM experiments a
+        LEFT JOIN departments b ON a.department_id = b.id
+        LEFT JOIN users c ON a.last_publisher_account = c.account
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="departmentID != null and departmentID !=''">
+            AND a.department_id =#{departmentID}
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+    </select>
+
+    <select id="getLabelList" resultType="com.admin.pojo.entity.LabelEntity">
+        SELECT * FROM labels WHERE FIND_IN_SET(id,replace(replace(#{labelIDs},'[',''),']',''))
+    </select>
+
+    <update id="updateExperimentStatus">
+        UPDATE experiments SET status=#{status},update_time=#{updateTime}
+        <if test="status == 1">
+            ,last_publisher_account=#{lastPublisherAccount},last_publishtime=#{lastPublishtime}
+        </if>
+        WHERE id=#{id}
+    </update>
+
+    <select id="getExperimentItemList" resultType="com.admin.pojo.vo.experiment.ExperimentItemFilterVo" >
+        SELECT a.*,b.name AS experimentName
+        FROM experiment_items a
+        LEFT JOIN experiments b ON a.experiment_id = b.id
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="experimentID != null and experimentID !=''">
+            AND a.experiment_id =#{experimentID}
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+    </select>
+</mapper>

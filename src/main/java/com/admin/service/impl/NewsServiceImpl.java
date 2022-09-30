@@ -4,6 +4,7 @@ import com.admin.mapper.NewsMapper;
 import com.admin.pojo.dto.news.*;
 import com.admin.pojo.entity.NewsEntity;
 import com.admin.pojo.entity.NewsTypeEntity;
+import com.admin.pojo.vo.news.NewsInfoVo;
 import com.admin.pojo.vo.news.NewsTypeVo;
 import com.admin.pojo.vo.news.NewsVo;
 import com.admin.service.NewsService;
@@ -46,7 +47,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<NewsEntity> getNewsInfo(NewsInfoDto newsInfoDto) {
+    public List<NewsInfoVo> getNewsInfo(NewsInfoDto newsInfoDto) {
         return newsMapper.getNewsInfo(newsInfoDto);
     }
 

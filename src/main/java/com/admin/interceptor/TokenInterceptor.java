@@ -50,12 +50,22 @@ public class TokenInterceptor implements HandlerInterceptor {
                 LocalDateTime date = LocalDateTime.now();
                 String aeTime = date.plusHours(6).format(DateTimeFormatter.ofPattern(format));
                 String reTime = date.plusHours(24).format(DateTimeFormatter.ofPattern(format));
+
+                JSONObject newtokenInfo = JWTUtils.createTokenInfo(account,6 * 60 * 60, 24 * 60 * 60);
+
                 tokenDto.setAccessTokenExpireTime(aeTime);
-                tokenDto.setRefreshToken(tokenInfo.getString("refreshToken"));
+                tokenDto.setRefreshToken(newtokenInfo.getString("refreshToken"));
                 tokenDto.setRefreshTokenExpireTime(reTime);
                 tokenDto.setAccount(account);
-                tokenDto.setAccessToken(tokenInfo.getString("accessToken"));
+                tokenDto.setAccessToken(newtokenInfo.getString("accessToken"));
                 tokenService.updateToken(tokenDto);
+                JSONObject newToken = new JSONObject();
+                newToken.put("accessToken",newtokenInfo.getString("accessToken"));
+                newToken.put("refreshToken",newtokenInfo.getString("refreshToken"));
+                newToken.put("accessTokenExpireTime",aeTime);
+                newToken.put("refreshTokenExpireTime",reTime);
+                response.setHeader("Access-Control-Expose-Headers","newToken");
+                response.setHeader("newToken",newToken.toString());
             }
             return true;
         }else{
@@ -63,5 +73,4 @@ public class TokenInterceptor implements HandlerInterceptor {
             return false;
         }
     }
-
 }

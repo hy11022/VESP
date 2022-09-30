@@ -3,6 +3,7 @@ package com.admin.service;
 import com.admin.pojo.dto.news.*;
 import com.admin.pojo.entity.NewsEntity;
 import com.admin.pojo.entity.NewsTypeEntity;
+import com.admin.pojo.vo.news.NewsInfoVo;
 import com.admin.pojo.vo.news.NewsTypeVo;
 import com.admin.pojo.vo.news.NewsVo;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public interface NewsService {
 
     List<NewsEntity> getNewsByID(int newsID);
 
-    List<NewsEntity> getNewsInfo(NewsInfoDto newsInfoDto);
+    List<NewsInfoVo> getNewsInfo(NewsInfoDto newsInfoDto);
 
     List<NewsTypeEntity> getNewsTypeByName(String name);
 

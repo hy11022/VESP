@@ -1,6 +1,8 @@
 package com.admin.service.impl;
 
 import com.admin.mapper.ConfigMapper;
+import com.admin.pojo.dto.config.AddLabelDto;
+import com.admin.pojo.dto.config.LabelFilterDto;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
@@ -222,6 +224,11 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    public List<SpecialityEntity> getSpecialitiesByDto(UpdateSpecialityDto updateSpecialityDto) {
+        return configMapper.getSpecialitiesByDto(updateSpecialityDto);
+    }
+
+    @Override
     public List<ClassListVo> getClassList(ClassFilterDto classFilterDto) {
         PageHelper.startPage(classFilterDto.getPageNum(), classFilterDto.getPageSize());
         return configMapper.getClassList(classFilterDto);
@@ -230,6 +237,16 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public List<ClassesEntity> checkClassByDto(AddClassDto addClassDto) {
         return configMapper.checkClassByDto(addClassDto);
+    }
+
+    @Override
+    public List<LabelEntity> getLabelByID(int labelID) {
+        return configMapper.getLabelByID(labelID);
+    }
+
+    @Override
+    public List<ExperimentEntity> checkLabelByID(int labelID) {
+        return configMapper.checkLabelByID(labelID);
     }
 
     @Override
@@ -253,6 +270,21 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    public boolean deleteLabel(DeleteLabelDto deleteLabelDto) {
+        return configMapper.deleteLabel(deleteLabelDto);
+    }
+
+    @Override
+    public boolean updateLabel(UpdateLabelDto updateLabelDto) {
+        return configMapper.updateLabel(updateLabelDto);
+    }
+
+    @Override
+    public boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto) {
+        return configMapper.updateLabelStatus(updateLabelStatusDto);
+    }
+
+    @Override
     public boolean updateClass(UpdateClassDto updateClassDto) {
         return configMapper.updateClass(updateClassDto);
     }
@@ -263,7 +295,33 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    public boolean addLabel(AddLabelDto addLabelDto) {
+        return configMapper.addLabel(addLabelDto);
+    }
+
+    @Override
     public List<ClassesEntity> getClassesByID(int classID) {
         return configMapper.getClassesByID(classID);
+    }
+
+    @Override
+    public List<ClassesEntity> getClassByDto(UpdateClassDto updateClassDto) {
+        return configMapper.getClassByDto(updateClassDto);
+    }
+
+    @Override
+    public List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto) {
+        return configMapper.checkLabelByName(addLabelDto);
+    }
+
+    @Override
+    public List<LabelEntity> getLabelList(LabelFilterDto labelFilterDto) {
+        PageHelper.startPage(labelFilterDto.getPageNum(), labelFilterDto.getPageSize());
+        return configMapper.getLabelList(labelFilterDto);
+    }
+
+    @Override
+    public int getLabelListTotalCount(LabelFilterDto labelFilterDto) {
+        return configMapper.getLabelList(labelFilterDto).size();
     }
 }

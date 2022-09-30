@@ -20,7 +20,11 @@ public class UpdateDepartmentDto implements Serializable {
 
     private String name;
 
+    private String code;
+
     private String status;
+
+    private int schoolID;
 
     private String updateTime;
 }

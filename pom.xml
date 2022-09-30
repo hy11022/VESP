@@ -92,7 +92,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.2.11</version>
+            <version>1.2.13-SNSAPSHOT</version>
         </dependency>
         <!-- 负责数据库资源和错误处理-->
         <dependency>
@@ -246,7 +246,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>11</release>
+                    <release>1.8</release>
                 </configuration>
             </plugin>
         </plugins>

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -37,8 +38,10 @@ public class AddUserDto implements Serializable {
     @NotBlank(message = "权限层级不能为空")
     private String authLevel;
 
-    @NotBlank(message = "所属机构不能为空")
-    private String belongID;
+    @NotNull(message = "所属机构不能为空")
+    private int belongID;
+
+    private int schoolID;
 
     private String status;
 
