@@ -25,7 +25,7 @@ public class AddSpecialityDto implements Serializable {
     @NotBlank(message = "专业名称不能为空")
     private String name;
 
-    private String updateTime;
+    private String createTime;
 
     private String status;
 }

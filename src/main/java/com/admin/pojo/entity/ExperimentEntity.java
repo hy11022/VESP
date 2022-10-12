@@ -36,6 +36,8 @@ public class ExperimentEntity implements Serializable {
 
     private String lastPublisherAccount;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

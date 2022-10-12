@@ -31,6 +31,8 @@ public class FunctionModuleListVo implements Serializable {
 
     private String isNeedLogin;
 
+    private String createTime;
+
     private String updateTime;
 
     private String roleLimits;

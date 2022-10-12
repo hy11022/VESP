@@ -35,5 +35,5 @@ public class AddNewsDto implements Serializable {
 
     private String lastPublisherAccount;
 
-    private String updateTime;
+    private String createTime;
 }

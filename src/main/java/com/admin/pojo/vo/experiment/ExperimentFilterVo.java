@@ -42,17 +42,19 @@ public class ExperimentFilterVo implements Serializable {
 
     private int exUserCount;
 
-    private String lastPublishtime;
-
-    private String lastPublisherAccount;
-
-    private String lastPublisherName;
+    private String lastPublishTime;
 
     private String teamMember;
 
     private String intro;
 
     private String mustRead;
+
+    private String lastPublisherAccount;
+
+    private String lastPublisherName;
+
+    private String createTime;
 
     private String updateTime;
 

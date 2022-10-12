@@ -26,7 +26,7 @@ public class AddClassDto implements Serializable {
 
     private String beginYear;
 
-    private String updateTime;
+    private String createTime;
 
     private String status;
 }

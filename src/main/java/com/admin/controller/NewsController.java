@@ -53,7 +53,7 @@ public class NewsController {
             return Result.showInfo("00000002", "该新闻类别名称已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addNewsTypeDto.setUpdateTime(now);
+        addNewsTypeDto.setCreateTime(now);
         boolean isSuccess = newsService.addNewsType(addNewsTypeDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
@@ -167,7 +167,7 @@ public class NewsController {
         String accessToken = authorization.getString("accessToken");
         String account = JWTUtils.getAccount(accessToken);
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addNewsDto.setUpdateTime(now);
+        addNewsDto.setCreateTime(now);
         if(addNewsDto.getStatus().equals("1")){
             addNewsDto.setLastPublishtime(now);
             addNewsDto.setLastPublisherAccount(account);

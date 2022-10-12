@@ -25,6 +25,8 @@ public class DepartmentListVo implements Serializable {
 
     private String schoolName;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

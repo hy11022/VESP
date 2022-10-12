@@ -22,6 +22,8 @@ public class SpecialityEntity implements Serializable {
 
     private String departmentID;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

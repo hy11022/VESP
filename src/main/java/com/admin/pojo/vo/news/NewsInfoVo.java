@@ -39,6 +39,8 @@ public class NewsInfoVo implements Serializable {
 
     private String readCount;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

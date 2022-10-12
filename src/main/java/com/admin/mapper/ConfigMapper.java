@@ -14,7 +14,7 @@ public interface ConfigMapper {
 
     List<SchoolListVo> getSchoolList(SchoolFilterDto schoolFilterDto);
 
-    @Insert("INSERT INTO schools SET name = #{name}, update_time = #{updateTime}, status = #{status},code=${code}")
+    @Insert("INSERT INTO schools SET name = #{name}, create_time = #{createTime}, status = #{status},code=#{code}")
     boolean addSchool(AddSchoolDto addSchoolDto);
 
     @Select("SELECT * FROM schools WHERE id = #{id}")
@@ -46,7 +46,7 @@ public interface ConfigMapper {
     @Select("SELECT * FROM departments WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND school_id = #{schoolID}")
     List<DepartmentEntity> getDepartmentByDto(UpdateDepartmentDto updateDepartmentDto);
 
-    @Insert("INSERT INTO departments SET name=#{name},school_id=#{schoolID},update_time = #{updateTime},status=#{status},code =#{code}")
+    @Insert("INSERT INTO departments SET name=#{name},school_id=#{schoolID},create_time = #{createTime},status=#{status},code =#{code}")
     boolean addDepartment(AddDepartmentDto addDepartmentDto);
 
     @Select("SELECT * FROM departments WHERE id=#{id}")
@@ -76,7 +76,7 @@ public interface ConfigMapper {
     List<FunctionModuleEntity> checkFunctionModuleByDto(AddFunctionModuleDto addFunctionModuleDto);
 
     @Insert("INSERT INTO function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},is_need_login=#{isNeedLogin}," +
-            "head_img = #{headImg},path=#{path},path_type=#{pathType},update_time=#{updateTime},role_limits = #{roleLimits}")
+            "head_img = #{headImg},path=#{path},path_type=#{pathType},create_time=#{createTime},role_limits = #{roleLimits}")
     boolean addFunctionModule(AddFunctionModuleDto addFunctionModuleDto);
 
     @Select("SELECT * FROM function_modules WHERE id=#{id}")
@@ -85,8 +85,9 @@ public interface ConfigMapper {
     @Delete("DELETE FROM function_modules WHERE id=#{id}")
     boolean deleteFunctionModule(DeleteFunctionModuleDto deleteFunctionModuleDto);
 
-    @Update("UPDATE function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},role_limits = #{roleLimits}," +
-            "is_need_login=#{isNeedLogin}, head_img = #{headImg},path = #{path},path_type = #{pathType},update_time=#{updateTime} WHERE id= #{id}")
+    @Update("UPDATE function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg}," +
+            "role_limits = #{roleLimits},is_need_login=#{isNeedLogin}, head_img = #{headImg}," +
+            "path = #{path},path_type = #{pathType},update_time=#{updateTime} WHERE id= #{id}")
     boolean updateFunctionModule(UpdateFunctionModuleDto updateFunctionModuleDto);
 
     @Update("UPDATE function_modules SET status = #{status},update_time=#{updateTime} WHERE id=#{id}")
@@ -103,7 +104,7 @@ public interface ConfigMapper {
     List<SpecialityEntity> checkSpecialityByDto(AddSpecialityDto addSpecialityDto);
 
     @Insert("INSERT INTO specialities SET code = #{code},name =#{name}," +
-            "department_id=#{departmentID},update_time=#{updateTime},status=#{status}")
+            "department_id=#{departmentID},create_time=#{createTime},status=#{status}")
     boolean addSpeciality(AddSpecialityDto addSpecialityDto);
 
     @Select("SELECT * FROM specialities WHERE id = #{specialityID}")
@@ -127,7 +128,7 @@ public interface ConfigMapper {
     List<ClassesEntity> checkClassByDto(AddClassDto addClassDto);
 
     @Insert("INSERT INTO classes SET code=#{code},name = #{name},speciality_id=#{specialityID}," +
-            "begin_year=#{beginYear},update_time=#{updateTime},status=#{status}")
+            "begin_year=#{beginYear},create_time=#{createTime},status=#{status}")
     boolean addClass(AddClassDto addClassDto);
 
     @Select("SELECT * FROM classes WHERE id = #{classID}")
@@ -150,7 +151,7 @@ public interface ConfigMapper {
     @Select("SELECT * FROM labels WHERE name=#{name} AND type =#{type}")
     List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto);
 
-    @Insert("INSERT INTO labels SET name = #{name},type=#{type},update_time=#{updateTime}")
+    @Insert("INSERT INTO labels SET name = #{name},type=#{type},create_time=#{createTime}")
     boolean addLabel(AddLabelDto addLabelDto);
 
     @Select("SELECT * FROM labels WHERE id=#{labelID}")

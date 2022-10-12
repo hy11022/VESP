@@ -19,5 +19,5 @@ public class AddNewsTypeDto implements Serializable {
     @NotBlank(message = "名称不能为空")
     private String name;
 
-    private String updateTime;
+    private String createTime;
 }

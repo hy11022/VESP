@@ -1,14 +1,12 @@
 package com.admin.pojo.dto.experiment;
 
-import com.alibaba.fastjson.JSONArray;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import java.io.Serializable;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
@@ -38,5 +36,5 @@ public class AddExperimentDto implements Serializable {
 
     private String teachVideoPath;
 
-    private String updateTime;
+    private String createTime;
 }

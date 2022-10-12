@@ -29,6 +29,8 @@ public class SpecialityListVo implements Serializable {
 
     private String departmentName;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

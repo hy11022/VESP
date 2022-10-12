@@ -27,5 +27,5 @@ public class UpdateExperimentStatusDto implements Serializable {
 
     private String lastPublisherAccount;
 
-    private String lastPublishtime;
+    private String lastPublishTime;
 }

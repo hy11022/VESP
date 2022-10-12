@@ -40,6 +40,8 @@ public class ExperimentItemFilterVo implements Serializable {
 
     private String checkPath;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

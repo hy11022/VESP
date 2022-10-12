@@ -21,6 +21,8 @@ public class LabelEntity implements Serializable {
 
     private String type;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

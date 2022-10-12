@@ -58,7 +58,7 @@ public class ConfigController {
             return Result.showInfo("00000003", "该学校编号已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addSchoolDto.setUpdateTime(now);
+        addSchoolDto.setCreateTime(now);
         addSchoolDto.setStatus("1");
         boolean isSuccess = configService.addSchool(addSchoolDto);
         if (isSuccess) {
@@ -175,7 +175,7 @@ public class ConfigController {
             return Result.showInfo("00000002", "该院系已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addDepartmentDto.setUpdateTime(now);
+        addDepartmentDto.setCreateTime(now);
         addDepartmentDto.setStatus("1");
         boolean isSuccess = configService.addDepartment(addDepartmentDto);
         if (isSuccess) {
@@ -293,7 +293,7 @@ public class ConfigController {
             return Result.showInfo("00000002", "该专业编号或名称已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addSpecialityDto.setUpdateTime(now);
+        addSpecialityDto.setCreateTime(now);
         addSpecialityDto.setStatus("1");
         boolean isSuccess = configService.addSpeciality(addSpecialityDto);
         if (isSuccess) {
@@ -411,7 +411,7 @@ public class ConfigController {
             return Result.showInfo("00000002", "该班级编号或名称已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addClassDto.setUpdateTime(now);
+        addClassDto.setCreateTime(now);
         addClassDto.setStatus("1");
         boolean isSuccess = configService.addClass(addClassDto);
         if (isSuccess) {
@@ -525,7 +525,7 @@ public class ConfigController {
             return Result.showInfo("00000002", "该模块已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addFunctionModuleDto.setUpdateTime(now);
+        addFunctionModuleDto.setCreateTime(now);
         addFunctionModuleDto.setStatus("1");
         boolean isSuccess = configService.addFunctionModule(addFunctionModuleDto);
         if (isSuccess) {
@@ -627,7 +627,7 @@ public class ConfigController {
             return Result.showInfo("00000002", "该标签已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addLabelDto.setUpdateTime(now);
+        addLabelDto.setCreateTime(now);
         boolean isSuccess = configService.addLabel(addLabelDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);

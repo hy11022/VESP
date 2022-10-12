@@ -63,7 +63,7 @@ public class ExperimentController {
             return Result.showInfo("00000002", "该实验名称已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addExperimentDto.setUpdateTime(now);
+        addExperimentDto.setCreateTime(now);
         boolean isSuccess = experimentService.addExperiment(addExperimentDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
@@ -141,7 +141,7 @@ public class ExperimentController {
         updateExperimentStatusDto.setUpdateTime(now);
         if(updateExperimentStatusDto.getStatus().equals("1")){
             updateExperimentStatusDto.setLastPublisherAccount(account);
-            updateExperimentStatusDto.setLastPublishtime(now);
+            updateExperimentStatusDto.setLastPublishTime(now);
         }
         boolean isSuccess = experimentService.updateExperimentStatus(updateExperimentStatusDto);
         if (isSuccess) {
@@ -195,7 +195,8 @@ public class ExperimentController {
             return Result.showInfo("00000003", "更新失败", null);
         }
     }
-    //更新实验小组成员
+
+    //更新实验必读
     @PostMapping("/updateExperimentMust")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Result updateExperimentMust(@Validated @RequestBody UpdateExperimentMustDto updateExperimentMustDto, BindingResult bindingResult) {
@@ -226,9 +227,12 @@ public class ExperimentController {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
         List<ExperimentInfoVo> experimentInfo = experimentService.getExperimentInfo(experimentInfoDto);
+        if(experimentInfo.size()<1){
+            return Result.showInfo("00000002", "查无此实验", null);
+        }
         if(experimentInfoDto.getVisitSource()==2){
             if(experimentInfo.get(0).getStatus().equals("2")){
-                return Result.showInfo("00000002", "该实验不存在",null);
+                return Result.showInfo("00000003", "该实验不存在",null);
             }else{
                 experimentService.updateExperimentReadCount(experimentInfoDto);
             }
@@ -269,7 +273,7 @@ public class ExperimentController {
             return Result.showInfo("00000002", "该分项名称已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addExperimentItemDto.setUpdateTime(now);
+        addExperimentItemDto.setCreateTime(now);
         boolean isSuccess = experimentService.addExperimentItem(addExperimentItemDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
@@ -353,8 +357,11 @@ public class ExperimentController {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
         List<ExperimentItemInfoVo> experimentItemInfo = experimentService.getExperimentItemInfo(experimentItemInfoDto);
+        if (experimentItemInfo.isEmpty()) {
+            return Result.showInfo("00000002", "查无此实验分项", null);
+        }
         if(experimentItemInfo.get(0).getStatus().equals("2")){
-            return Result.showInfo("00000002", "该实验不存在",null);
+            return Result.showInfo("00000003", "该实验分项不存在",null);
         }
         JSONObject resInfo = (JSONObject)JSONObject.toJSON(experimentItemInfo.get(0));//Entity转JSONObject
         return Result.showInfo("00000000", "Success", resInfo);

@@ -18,6 +18,8 @@ public class NewsTypeEntity implements Serializable {
 
     private String name;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

@@ -1,18 +1,17 @@
 package com.admin.interceptor;
 
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
 /**
  * @BelongsProject: VESP
  * @BelongsPackage: com.admin.interceptor
  * @Author: Du Rongjun
- * @CreateTime: 2022-07-07  18:34
+ * @CreateTime: 2022-07-07 18:34
  * @Description: 跨域
  * @Version: 1.0
  */

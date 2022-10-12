@@ -21,7 +21,7 @@ public class AddSchoolDto implements Serializable {
     @NotBlank(message = "学校编码不能为空")
     private String code;
 
-    private String updateTime;
+    private String createTime;
 
     private String status;
 }

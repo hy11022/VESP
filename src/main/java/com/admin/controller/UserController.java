@@ -22,8 +22,10 @@ import java.util.Objects;
 import java.util.List;
 import java.util.Map;
 
-//@RestController是@Controller和@ResponseBody的结合体。@Controller类中的方法可以直接通过返回String跳转到jsp、ftl、html等模版页面。
-// 在方法上加@ResponseBody注解，也可以返回实体对象。@RestController类中的所有方法只能返回String、Object、Json等实体对象，不能跳转到模版页面。
+//@RestController是@Controller和@ResponseBody的结合体。
+//@Controller类中的方法可以直接通过返回String跳转到jsp、ftl、html等模版页面。
+// 在方法上加@ResponseBody注解，可以返回实体对象。
+// @RestController类中的所有方法只能返回String、Object、Json等实体对象，不能跳转到模版页面。
 @RestController
 @RequestMapping("/user")
 public class UserController {

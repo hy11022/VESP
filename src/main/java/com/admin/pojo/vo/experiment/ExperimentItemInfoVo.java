@@ -39,6 +39,8 @@ public class ExperimentItemInfoVo implements Serializable {
 
     private String checkPath;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

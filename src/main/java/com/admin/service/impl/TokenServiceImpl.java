@@ -33,8 +33,8 @@ public class TokenServiceImpl implements TokenService {
         return tokenMapper.addToken(tokenDto);
     }
 
-    public Boolean deleteToken(String accessToken) {
-        return tokenMapper.deleteToken(accessToken);
+    public void deleteToken(String accessToken) {
+        tokenMapper.deleteToken(accessToken);
     }
 
     public Boolean updateToken(TokenDto tokenDto) {

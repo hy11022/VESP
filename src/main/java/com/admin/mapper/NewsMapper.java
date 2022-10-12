@@ -17,7 +17,7 @@ public interface NewsMapper {
     @Select("SELECT * FROM news_types WHERE name = #{name}")
     List<NewsTypeEntity> getNewsTypeByName(String name);
 
-    @Insert("INSERT INTO news_types SET name = #{name},update_time = #{updateTime}")
+    @Insert("INSERT INTO news_types SET name = #{name},create_time = #{createTime}")
     boolean addNewsType(AddNewsTypeDto addNewsTypeDto);
 
     @Select("SELECT * FROM news_types WHERE id = #{newsTypeID}")
@@ -39,7 +39,7 @@ public interface NewsMapper {
 
     @Insert("INSERT INTO news SET name = #{name},type_id=#{typeID},introduction=#{introduction}," +
             "cover=#{cover},content=#{content},author=#{author},last_publisher_account = #{lastPublisherAccount}," +
-            "last_publishtime=#{lastPublishtime},status = #{status},update_time = #{updateTime}")
+            "last_publishtime=#{lastPublishtime},status = #{status},create_time = #{createTime}")
     boolean addNews(AddNewsDto addNewsDto);
 
     @Select("SELECT * FROM news WHERE id = #{newsID}")

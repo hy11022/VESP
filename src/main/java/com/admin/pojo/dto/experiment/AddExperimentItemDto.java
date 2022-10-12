@@ -42,5 +42,5 @@ public class AddExperimentItemDto implements Serializable {
 
     private String checkPath;
 
-    private String updateTime;
+    private String createTime;
 }

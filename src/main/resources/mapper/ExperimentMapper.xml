@@ -26,7 +26,7 @@
     <update id="updateExperimentStatus">
         UPDATE experiments SET status=#{status},update_time=#{updateTime}
         <if test="status == 1">
-            ,last_publisher_account=#{lastPublisherAccount},last_publishtime=#{lastPublishtime}
+            ,last_publisher_account=#{lastPublisherAccount},last_publish_time=#{lastPublishTime}
         </if>
         WHERE id=#{id}
     </update>

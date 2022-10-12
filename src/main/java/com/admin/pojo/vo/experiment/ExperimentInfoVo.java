@@ -52,6 +52,8 @@ public class ExperimentInfoVo implements Serializable {
 
     private String lastPublisherName;
 
+    private String createTime;
+
     private String updateTime;
 
     private String status;

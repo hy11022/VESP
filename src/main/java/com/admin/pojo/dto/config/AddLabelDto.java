@@ -18,5 +18,5 @@ public class AddLabelDto implements Serializable {
 
     private String type;
 
-    private String updateTime;
+    private String createTime;
 }

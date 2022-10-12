@@ -23,7 +23,7 @@ public interface ExperimentMapper {
 
     @Insert("INSERT INTO experiments SET name =#{name},cover_img=#{coverImg},label_ids=#{labelIDs}," +
             "introduction=#{introduction},author=#{author},department_id=#{departmentID}," +
-            "update_time=#{updateTime},intro_video_path=#{introVideoPath},teach_video_path=#{teachVideoPath}")
+            "create_time=#{createTime},intro_video_path=#{introVideoPath},teach_video_path=#{teachVideoPath}")
     boolean addExperiment(AddExperimentDto addExperimentDto);
 
     @Select("SELECT * FROM experiments WHERE id=#{id}")
@@ -52,10 +52,10 @@ public interface ExperimentMapper {
     @Select("SELECT * FROM experiment_items WHERE name = #{name} AND experiment_id = #{experimentID}")
     List<ExperimentItemEntity> checkExperimentItemByDto(AddExperimentItemDto addExperimentItemDto);
 
-    @Insert("INSERT INTO experiment_items SET experiment_id=#{experimentID},name =#{name},cover_img=#{coverImg}," +
-            "is_teach=#{isTeach},teach_content=#{teachContent},teach_video=#{teachVideo}," +
-            "is_train=#{isTrain},train_path=#{trainPath},is_check=#{isCheck}," +
-            "check_path=#{checkPath},update_time=#{updateTime}")
+    @Insert("INSERT INTO experiment_items SET experiment_id=#{experimentID},name =#{name}," +
+            "cover_img=#{coverImg},is_teach=#{isTeach},teach_content=#{teachContent}," +
+            "teach_video=#{teachVideo},is_train=#{isTrain},train_path=#{trainPath}," +
+            "is_check=#{isCheck}, check_path=#{checkPath},create_time=#{createTime}")
     boolean addExperimentItem(AddExperimentItemDto addExperimentItemDto);
 
     @Select("SELECT * FROM experiment_items WHERE id=#{id}")

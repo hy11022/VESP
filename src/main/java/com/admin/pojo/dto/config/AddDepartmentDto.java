@@ -25,7 +25,7 @@ public class AddDepartmentDto implements Serializable {
     @NotBlank(message = "院系编码不能为空")
     private String code;
 
-    private String updateTime;
+    private String createTime;
 
     private String status;
 }

@@ -13,7 +13,7 @@ public interface TokenService {
 
     Boolean addToken(TokenDto tokenDto);
 
-    Boolean deleteToken(String accessToken);
+    void deleteToken(String accessToken);
 
     Boolean updateToken(TokenDto tokenDto);
 }
