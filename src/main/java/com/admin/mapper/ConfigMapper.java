@@ -43,10 +43,12 @@ public interface ConfigMapper {
     @Select("SELECT * FROM departments WHERE school_id = #{schoolID} AND (name = #{name} OR code =#{code})")
     List<DepartmentEntity> checkDepartmentByDto(AddDepartmentDto addDepartmentDto);
 
-    @Select("SELECT * FROM departments WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND school_id = #{schoolID}")
+    @Select("SELECT * FROM departments WHERE (code =#{code} OR name = #{name}) " +
+            "AND id <>#{id} AND school_id = #{schoolID}")
     List<DepartmentEntity> getDepartmentByDto(UpdateDepartmentDto updateDepartmentDto);
 
-    @Insert("INSERT INTO departments SET name=#{name},school_id=#{schoolID},create_time = #{createTime},status=#{status},code =#{code}")
+    @Insert("INSERT INTO departments SET name=#{name},school_id=#{schoolID}," +
+            "create_time = #{createTime},status=#{status},code =#{code}")
     boolean addDepartment(AddDepartmentDto addDepartmentDto);
 
     @Select("SELECT * FROM departments WHERE id=#{id}")
@@ -58,7 +60,8 @@ public interface ConfigMapper {
     @Select("SELECT * FROM classes WHERE speciality_id=#{id}")
     List<ClassesEntity> getClassBySpecialityID(int specialityID);
 
-    @Select("SELECT * FROM classes WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND speciality_id = #{specialityID}")
+    @Select("SELECT * FROM classes WHERE (code =#{code} OR name = #{name}) " +
+            "AND id <>#{id} AND speciality_id = #{specialityID}")
     List<ClassesEntity> getClassByDto(UpdateClassDto updateClassDto);
 
     @Delete("DELETE FROM departments WHERE id=#{id}")
@@ -75,8 +78,10 @@ public interface ConfigMapper {
     @Select("SELECT * FROM function_modules WHERE name = #{name}")
     List<FunctionModuleEntity> checkFunctionModuleByDto(AddFunctionModuleDto addFunctionModuleDto);
 
-    @Insert("INSERT INTO function_modules SET name = #{name},remark = #{remark},cover_img = #{coverImg},is_need_login=#{isNeedLogin}," +
-            "head_img = #{headImg},path=#{path},path_type=#{pathType},create_time=#{createTime},role_limits = #{roleLimits}")
+    @Insert("INSERT INTO function_modules SET name = #{name},remark = #{remark}," +
+            "cover_img = #{coverImg},is_need_login=#{isNeedLogin}," +
+            "head_img = #{headImg},path=#{path},path_type=#{pathType}," +
+            "create_time=#{createTime},role_limits = #{roleLimits}")
     boolean addFunctionModule(AddFunctionModuleDto addFunctionModuleDto);
 
     @Select("SELECT * FROM function_modules WHERE id=#{id}")
@@ -110,7 +115,8 @@ public interface ConfigMapper {
     @Select("SELECT * FROM specialities WHERE id = #{specialityID}")
     List<SpecialityEntity> getSpecialitiesByID(int specialityID);
 
-    @Select("SELECT * FROM specialities WHERE (code =#{code} OR name = #{name}) AND id <>#{id} AND department_id = #{departmentID}")
+    @Select("SELECT * FROM specialities WHERE (code =#{code} OR name = #{name}) " +
+            "AND id <>#{id} AND department_id = #{departmentID}")
     List<SpecialityEntity> getSpecialitiesByDto(UpdateSpecialityDto updateSpecialityDto);
 
     @Delete("DELETE FROM specialities WHERE id = #{id}")
@@ -137,7 +143,8 @@ public interface ConfigMapper {
     @Delete("DELETE FROM classes WHERE id = #{id}")
     boolean deleteClass(DeleteClassDto deleteClassDto);
 
-    @Update("UPDATE classes SET code=#{code},name = #{name},begin_year=#{beginYear},update_time=#{updateTime} WHERE id=#{id}")
+    @Update("UPDATE classes SET code=#{code},name = #{name},begin_year=#{beginYear}," +
+            "update_time=#{updateTime} WHERE id=#{id}")
     boolean updateClass(UpdateClassDto updateClassDto);
 
     @Update("UPDATE classes SET status = #{status},update_time = #{updateTime} WHERE id= #{id}")
@@ -146,12 +153,12 @@ public interface ConfigMapper {
     @Select("SELECT * FROM users WHERE auth_level=#{authLevel} AND belong_id=#{belongID}")
     List<UserEntity> getUserByBelongID(DeleteDto deleteDto);
 
-    List<LabelEntity> getLabelList(LabelFilterDto labelFilterDto);
+    List<LabelListVo> getLabelList(LabelFilterDto labelFilterDto);
 
-    @Select("SELECT * FROM labels WHERE name=#{name} AND type =#{type}")
+    @Select("SELECT * FROM labels WHERE name=#{name} AND type =#{type} AND effect = #{effect}")
     List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto);
 
-    @Insert("INSERT INTO labels SET name = #{name},type=#{type},create_time=#{createTime}")
+    @Insert("INSERT INTO labels SET name = #{name},type=#{type},effect=#{effect}, create_time=#{createTime}")
     boolean addLabel(AddLabelDto addLabelDto);
 
     @Select("SELECT * FROM labels WHERE id=#{labelID}")
@@ -162,9 +169,33 @@ public interface ConfigMapper {
     @Delete("DELETE FROM labels WHERE id = #{id}")
     boolean deleteLabel(DeleteLabelDto deleteLabelDto);
 
-    @Update("UPDATE labels SET name = #{name},type = #{type},update_time = #{updateTime} WHERE id= #{id}")
+    @Update("UPDATE labels SET name = #{name},type = #{type},effect=#{effect}," +
+            "update_time = #{updateTime} WHERE id= #{id}")
     boolean updateLabel(UpdateLabelDto updateLabelDto);
 
     @Update("UPDATE labels SET status = #{status},update_time = #{updateTime} WHERE id= #{id}")
     boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto);
+
+    List<LabelBelongEntity> getLabelBelongList(LabelBelongFilterDto labelBelongFilterDto);
+
+    @Select("SELECT * FROM label_belongs WHERE name=#{name}")
+    List<LabelBelongEntity> checkLabelBelongByName(AddLabelBelongDto addLabelBelongDto);
+
+    @Insert("INSERT INTO label_belongs SET name = #{name},create_time=#{createTime}")
+    boolean addLabelBelong(AddLabelBelongDto addLabelBelongDto);
+
+    @Select("SELECT * FROM label_belongs WHERE id=#{labelBelongID}")
+    List<LabelBelongEntity> getLabelBelongByID(int labelBelongID);
+
+    @Select("SELECT * FROM labels WHERE belong_id=#{labelBelongID}")
+    List<LabelEntity> checkLabelBelongByID(int labelBelongID);
+
+    @Delete("DELETE FROM label_belongs WHERE id=#{id}")
+    boolean deleteLabelBelong(DeleteLabelBelongDto deleteLabelBelongDto);
+
+    @Update("UPDATE label_belongs SET name = #{name},update_time = #{updateTime} WHERE id=#{id}")
+    boolean updateLabelBelong(UpdateLabelBelongDto updateLabelBelongDto);
+
+    @Update("UPDATE label_belongs SET status = #{status},update_time = #{updateTime} WHERE id=#{id}")
+    boolean updateLabelBelongStatus(UpdateLabelBelongStatusDto updateLabelBelongStatusDto);
 }

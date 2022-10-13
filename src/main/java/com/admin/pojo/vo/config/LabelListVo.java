@@ -1,4 +1,4 @@
-package com.admin.pojo.entity;
+package com.admin.pojo.vo.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabelEntity implements Serializable {
+public class LabelListVo implements Serializable {
 
-    private static final long serialVersionUID = 4906718936379213428L;
+    private static final long serialVersionUID = -1562650791223671480L;
 
     private int id;
 
@@ -22,8 +22,6 @@ public class LabelEntity implements Serializable {
     private String type;
 
     private String effect;
-
-    private String belongID;
 
     private String createTime;
 

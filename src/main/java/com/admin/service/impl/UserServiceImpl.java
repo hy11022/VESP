@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserVo> getUserByToken(UserTokenDto userTokenDto) {
+        return userMapper.getUserByToken(userTokenDto);
+    }
+
+    @Override
     public int getUserListTotalCount(UserFilterDto userFilterDto) {
         return userMapper.getUserList(userFilterDto).size();
     }
@@ -36,11 +41,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserVo> getUserInfoByToken(TokenInfoDto tokenInfoDto) {
         return userMapper.getUserInfoByToken(tokenInfoDto);
-    }
-
-    @Override
-    public List<UserEntity> checkUserByDto(AddUserDto addUserDto) {
-        return userMapper.checkUserByDto(addUserDto);
     }
 
     @Override

@@ -27,9 +27,15 @@ public class UserVo implements Serializable {
 
     private String belongID;
 
+    private String schoolID;
+
     private String belongName;
 
+    private String flag;
+
     private String lastLoginTime;
+
+    private String createTime;
 
     private String updateTime;
 

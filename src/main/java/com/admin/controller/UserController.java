@@ -103,16 +103,6 @@ public class UserController {
         JSONArray ja = new JSONArray();
         int totalCount;
         if(userFilterDto.getAuthLevel().equals("")){
-            userFilterDto.setAuthLevel("5");
-            List<UserVo> userList5 = userService.getUserList(userFilterDto);
-            ja.addAll(userList5);
-            int count5 = userService.getUserListTotalCount(userFilterDto);
-
-            userFilterDto.setAuthLevel("4");
-            List<UserVo> userList4 = userService.getUserList(userFilterDto);
-            ja.addAll(userList4);
-            int count4 = userService.getUserListTotalCount(userFilterDto);
-
             userFilterDto.setAuthLevel("3");
             List<UserVo> userList3 = userService.getUserList(userFilterDto);
             ja.addAll(userList3);
@@ -127,7 +117,7 @@ public class UserController {
             List<UserVo> userList1 = userService.getUserList(userFilterDto);
             ja.addAll(userList1);
             int count1 = userService.getUserListTotalCount(userFilterDto);
-            totalCount = count1+count2+count3+count4+count5;
+            totalCount = count1+count2+count3;
         }else{
             List<UserVo> userList = userService.getUserList(userFilterDto);
             ja.addAll(userList);
@@ -147,6 +137,11 @@ public class UserController {
         if(userInfo.size()<1){
             return Result.showInfo("00000002", "失败", null);
         }
+        String authLevel = userInfo.get(0).getAuthLevel();
+        UserTokenDto userTokenDto = new UserTokenDto();
+        userTokenDto.setAuthLevel(authLevel);
+        List<UserVo> userList = userService.getUserByToken(userTokenDto);
+        userInfo.get(0).setBelongName(userList.get(0).getBelongName());
         JSONObject resInfo = (JSONObject)JSONObject.toJSON(userInfo.get(0));//Entity转JSONObject
         return Result.showInfo("00000000", "Success", resInfo);
     }
@@ -159,39 +154,12 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<SchoolEntity> schoolInfo = null;
-        if("1234".contains(addUserDto.getAuthLevel())){
-            String level = addUserDto.getAuthLevel();
-            if(level.equals("4")){
-                addUserDto.setSchoolID(addUserDto.getBelongID());
-            }else{
-                if(level.equals("1")){
-                    int classID = addUserDto.getBelongID();
-                    schoolInfo = userService.getSchoolByClassID(classID);
-                }
-                if(level.equals("2")){
-                    int specialityID = addUserDto.getBelongID();
-                    schoolInfo = userService.getSchoolBySpecialityID(specialityID);
-                }
-                if(level.equals("3")){
-                    int departmentID = addUserDto.getBelongID();
-                    schoolInfo = userService.getSchoolByDepartmentID(departmentID);
-                }
-                assert schoolInfo != null;
-                addUserDto.setSchoolID(schoolInfo.get(0).getId());
-            }
-            List<UserEntity> userList = userService.checkUserInSchool(addUserDto);
-            if (userList.size() > 0) {
-                return Result.showInfo("00000002", "账户重复", null);
-            }
-        }else{
-            List<UserEntity> userList = userService.checkUserByDto(addUserDto);
-            if (userList.size() > 0) {
-                return Result.showInfo("00000003", "用户已存在", null);
-            }
+        List<UserEntity> userList = userService.checkUserInSchool(addUserDto);
+        if (userList.size() > 0) {
+            return Result.showInfo("00000003", "用户已存在", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间auth_levelflag
-        addUserDto.setUpdateTime(now);
+        addUserDto.setCreateTime(now);
         addUserDto.setStatus("1");
         boolean isSuccess = userService.addUser(addUserDto);
         if (isSuccess) {

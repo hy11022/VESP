@@ -104,8 +104,33 @@
         ORDER BY c.school_id,b.department_id,a.speciality_id
     </select>
 
-    <select id="getLabelList" resultType="com.admin.pojo.entity.LabelEntity" >
+    <select id="getLabelList" resultType="com.admin.pojo.vo.config.LabelListVo" >
         SELECT * FROM `labels`
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !=''">
+            AND type =#{type}
+        </if>
+        <if test="effect != null and effect !=''">
+            AND effect =#{effect}
+        </if>
+        <if test="belongID != null and belongID !=''">
+            AND belong_id =#{belongID}
+        </if>
+        <if test="status != null and status !=''">
+            AND status =#{status}
+        </if>
+    </select>
+
+    <select id="checkLabelByID" resultType="com.admin.pojo.entity.ExperimentEntity" >
+        SELECT * FROM `experiments`
+        WHERE FIND_IN_SET(#{labelID},replace(replace(label_ids,'[',''),']',''))
+    </select>
+
+    <select id="getLabelBelongList" resultType="com.admin.pojo.entity.LabelBelongEntity" >
+        SELECT * FROM `label_belongs`
         WHERE 1=1
         <if test="status != null and status !=''">
             AND status =#{status}
@@ -113,10 +138,5 @@
         <if test="name != null and name !=''">
             AND name LIKE CONCAT('%',#{name},'%')
         </if>
-    </select>
-
-    <select id="checkLabelByID" resultType="com.admin.pojo.entity.ExperimentEntity" >
-        SELECT * FROM `experiments`
-        WHERE FIND_IN_SET(#{labelID},replace(replace(label_ids,'[',''),']',''))
     </select>
 </mapper>

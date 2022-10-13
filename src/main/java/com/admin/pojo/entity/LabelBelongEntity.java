@@ -11,19 +11,13 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabelEntity implements Serializable {
+public class LabelBelongEntity implements Serializable {
 
-    private static final long serialVersionUID = 4906718936379213428L;
+    private static final long serialVersionUID = -1570172925179152571L;
 
     private int id;
 
     private String name;
-
-    private String type;
-
-    private String effect;
-
-    private String belongID;
 
     private String createTime;
 

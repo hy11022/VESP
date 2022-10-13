@@ -9,16 +9,10 @@
             LEFT JOIN classes b ON a.belong_id = b.id
         </if>
         <if test="authLevel == 2">
-            LEFT JOIN specialities b ON a.belong_id = b.id
-        </if>
-        <if test="authLevel == 3">
             LEFT JOIN departments b ON a.belong_id = b.id
         </if>
-        <if test="authLevel == 4">
+        <if test="authLevel == 3">
             LEFT JOIN schools b ON a.belong_id = b.id
-        </if>
-        <if test="authLevel == 5">
-            LEFT JOIN systems b ON a.belong_id = b.id
         </if>
         WHERE a.auth_level= #{authLevel}
         <if test="account != null and account !=''">
@@ -36,6 +30,24 @@
         <if test="status != null and status !=''">
             AND a.status = #{status}
         </if>
+        <if test="schoolID != null and schoolID !=''">
+            AND a.school_id = #{schoolID}
+        </if>
         ORDER BY a.role DESC,a.auth_level DESC
+    </select>
+
+    <select id="getUserByToken" resultType="com.admin.pojo.vo.user.UserVo" >
+        SELECT b.name AS belongName
+        FROM users a
+        <if test="authLevel == 1">
+            LEFT JOIN classes b ON a.belong_id = b.id
+        </if>
+        <if test="authLevel == 2">
+            LEFT JOIN departments b ON a.belong_id = b.id
+        </if>
+        <if test="authLevel == 3">
+            LEFT JOIN schools b ON a.belong_id = b.id
+        </if>
+        WHERE a.auth_level= #{authLevel}
     </select>
 </mapper>

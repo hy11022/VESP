@@ -45,5 +45,5 @@ public class AddUserDto implements Serializable {
 
     private String status;
 
-    private String updateTime;
+    private String createTime;
 }

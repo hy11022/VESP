@@ -609,7 +609,7 @@ public class ConfigController {
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<LabelEntity> labelList = configService.getLabelList(labelFilterDto);
+        List<LabelListVo> labelList = configService.getLabelList(labelFilterDto);
         int totalCount = configService.getLabelListTotalCount(labelFilterDto);
         return Result.showList("00000000", "Success", labelList, totalCount);
     }
@@ -624,7 +624,7 @@ public class ConfigController {
         }
         List<LabelEntity> labelList = configService.checkLabelByName(addLabelDto);
         if (labelList.size() > 0) {
-            return Result.showInfo("00000002", "该标签已存在", null);
+            return Result.showInfo("00000002", "已有此标签", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
         addLabelDto.setCreateTime(now);
@@ -674,6 +674,14 @@ public class ConfigController {
         if (labelList.size() < 1) {
             return Result.showInfo("00000002", "查无此标签", null);
         }
+        AddLabelDto addLabelDto = new AddLabelDto();
+        addLabelDto.setType(updateLabelDto.getType());
+        addLabelDto.setEffect(updateLabelDto.getEffect());
+        addLabelDto.setName(updateLabelDto.getName());
+        List<LabelEntity> labelList1 = configService.checkLabelByName(addLabelDto);
+        if (labelList1.size() > 0) {
+            return Result.showInfo("00000002", "已有此标签", null);
+        }
         String now = CommonUtils.getTime(0);    //获取当前时间
         updateLabelDto.setUpdateTime(now);
         boolean isSuccess = configService.updateLabel(updateLabelDto);
@@ -700,6 +708,111 @@ public class ConfigController {
         String now = CommonUtils.getTime(0);    //获取当前时间
         updateLabelStatusDto.setUpdateTime(now);
         boolean isSuccess = configService.updateLabelStatus(updateLabelStatusDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000004", "更新失败", null);
+        }
+    }
+
+    //获取标签归属列表(废弃)
+    @PostMapping("/getLabelBelongList")
+    public Result getLabelBelongList(@Validated @RequestBody LabelBelongFilterDto labelBelongFilterDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongList(labelBelongFilterDto);
+        int totalCount = configService.getLabelBelongListTotalCount(labelBelongFilterDto);
+        return Result.showList("00000000", "Success", labelBelongList, totalCount);
+    }
+
+    //新增标签归属(废弃)
+    @PostMapping("/addLabelBelong")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result addLabelBelong(@Validated @RequestBody AddLabelBelongDto addLabelBelongDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        List<LabelBelongEntity> labelBelongList = configService.checkLabelBelongByName(addLabelBelongDto);
+        if (labelBelongList.size() > 0) {
+            return Result.showInfo("00000002", "该标签归属已存在", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        addLabelBelongDto.setCreateTime(now);
+        boolean isSuccess = configService.addLabelBelong(addLabelBelongDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000003", "新增失败", null);
+        }
+    }
+
+    //删除标签归属(废弃)
+    @PostMapping("/deleteLabelBelong")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result deleteLabelBelong(@Validated @RequestBody DeleteLabelBelongDto deleteLabelBelongDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int labelBelongID = deleteLabelBelongDto.getId();
+        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongByID(labelBelongID);
+        if (labelBelongList.size() < 1) {
+            return Result.showInfo("00000002", "查无此标签归属", null);
+        }
+        List<LabelEntity> checkList = configService.checkLabelBelongByID(labelBelongID);
+        if (checkList.size() > 0) {
+            return Result.showInfo("00000003", "该标签归属被引用中，不可删除", null);
+        }
+        boolean isSuccess = configService.deleteLabelBelong(deleteLabelBelongDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000004", "删除失败", null);
+        }
+    }
+
+    //更新标签归属(废弃)
+    @PostMapping("/updateLabelBelong")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateLabelBelong(@Validated @RequestBody UpdateLabelBelongDto updateLabelBelongDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int labelBelongID = updateLabelBelongDto.getId();
+        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongByID(labelBelongID);
+        if (labelBelongList.size() < 1) {
+            return Result.showInfo("00000002", "查无此标签归属", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateLabelBelongDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateLabelBelong(updateLabelBelongDto);
+        if (isSuccess) {
+            return Result.showInfo("00000000", "Success", null);
+        } else {
+            return Result.showInfo("00000004", "更新失败", null);
+        }
+    }
+
+    //更新标签归属状态(废弃)
+    @PostMapping("/updateLabelBelongStatus")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Result updateLabelBelongStatus(@Validated @RequestBody UpdateLabelBelongStatusDto updateLabelBelongStatusDto, BindingResult bindingResult) {
+        //会把校验失败情况下的信息反馈到前端
+        if (bindingResult.hasErrors()) {
+            return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        int labelBelongID = updateLabelBelongStatusDto.getId();
+        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongByID(labelBelongID);
+        if (labelBelongList.size() < 1) {
+            return Result.showInfo("00000002", "查无此标签归属", null);
+        }
+        String now = CommonUtils.getTime(0);    //获取当前时间
+        updateLabelBelongStatusDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateLabelBelongStatus(updateLabelBelongStatusDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {

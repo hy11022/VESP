@@ -12,6 +12,8 @@ public interface UserMapper {
 
     List<UserVo> getUserList(UserFilterDto userFilterDto);
 
+    List<UserVo> getUserByToken(UserTokenDto userTokenDto);
+
     @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password} AND status = #{status}")
     List<UserEntity> checkUser(LoginDto loginDto);
 
@@ -21,11 +23,8 @@ public interface UserMapper {
     @Update("UPDATE users SET last_login_time = #{lastLoginTime} WHERE account=#{account}")
     void updateLastLoginTime(LoginDto loginDto);
 
-    @Select("SELECT * FROM users WHERE account=#{account} AND auth_level=#{authLevel} AND belong_id=#{belongID}")
-    List<UserEntity> checkUserByDto(AddUserDto addUserDto);
-
     @Insert("INSERT INTO users SET account=#{account},name =#{name},password=#{password},role = #{role}," +
-            "auth_level=#{authLevel},belong_id=#{belongID},school_id=#{schoolID},update_time=#{updateTime},status=#{status}")
+            "auth_level=#{authLevel},belong_id=#{belongID},school_id=#{schoolID},create_time=#{createTime},status=#{status}")
     boolean addUser(AddUserDto addUserDto);
 
     @Select("SELECT * FROM users WHERE id = #{id}")

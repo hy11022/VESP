@@ -13,13 +13,13 @@ public interface UserService {
 
     List<UserVo> getUserList(UserFilterDto userFilterDto);
 
+    List<UserVo> getUserByToken(UserTokenDto userTokenDto);
+
     int getUserListTotalCount(UserFilterDto userFilterDto);
 
     List<UserEntity> checkUser(LoginDto loginDto);
 
     List<UserVo> getUserInfoByToken(TokenInfoDto tokenInfoDto);
-
-    List<UserEntity> checkUserByDto(AddUserDto addUserDto);
 
     List<UserEntity> checkUserInSchool(AddUserDto addUserDto);
 

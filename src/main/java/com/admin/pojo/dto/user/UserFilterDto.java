@@ -36,6 +36,8 @@ public class UserFilterDto implements Serializable {
 
     private String role;
 
+    private String schoolID;
+
     private String authLevel;
 
     private String status;

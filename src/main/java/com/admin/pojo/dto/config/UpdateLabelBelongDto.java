@@ -12,18 +12,14 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateLabelDto implements Serializable {
+public class UpdateLabelBelongDto implements Serializable {
 
-    private static final long serialVersionUID = 6482490166484089889L;
+    private static final long serialVersionUID = -4458208031706866976L;
 
-    @NotNull(message = "标签唯一编号不能为空")
+    @NotNull(message = "唯一编号不能为空")
     private int id;
 
     private String name;
-
-    private String type;
-
-    private String effect;
 
     private String updateTime;
 }

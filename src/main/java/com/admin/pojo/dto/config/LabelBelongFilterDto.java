@@ -12,9 +12,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabelFilterDto implements Serializable {
+public class LabelBelongFilterDto implements Serializable {
 
-    private static final long serialVersionUID = 4906718936379213428L;
+    private static final long serialVersionUID = -4337557188626007398L;
 
     @NotNull(message = "页数不能为空")
     private int pageNum;
@@ -23,10 +23,6 @@ public class LabelFilterDto implements Serializable {
     private int pageSize;
 
     private String name;
-
-    private String type;
-
-    private String effect;
 
     private String status;
 }

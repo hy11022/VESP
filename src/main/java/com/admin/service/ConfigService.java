@@ -102,6 +102,8 @@ public interface ConfigService {
 
     List<ExperimentEntity> checkLabelByID(int labelID);
 
+    List<LabelEntity> checkLabelBelongByID(int labelBelongID);
+
     int getClassListTotalCount(ClassFilterDto classFilterDto);
 
     boolean changeSpecialityStatus(ChangeSpecialityDto changeSpecialityDto);
@@ -116,19 +118,35 @@ public interface ConfigService {
 
     boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto);
 
+    boolean updateLabelBelongStatus(UpdateLabelBelongStatusDto updateLabelBelongStatusDto);
+
     boolean updateClass(UpdateClassDto updateClassDto);
+
+    boolean updateLabelBelong(UpdateLabelBelongDto updateLabelBelongDto);
 
     boolean changeClassStatus(ChangeClassDto changeClassDto);
 
     boolean addLabel(AddLabelDto addLabelDto);
 
+    boolean addLabelBelong(AddLabelBelongDto addLabelBelongDto);
+
     List<ClassesEntity> getClassesByID(int classID);
+
+    List<LabelBelongEntity> getLabelBelongByID(int labelBelongID);
 
     List<ClassesEntity> getClassByDto(UpdateClassDto updateClassDto);
 
     List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto);
 
-    List<LabelEntity> getLabelList(LabelFilterDto labelFilterDto);
+    List<LabelBelongEntity> checkLabelBelongByName(AddLabelBelongDto addLabelBelongDto);
+
+    List<LabelListVo> getLabelList(LabelFilterDto labelFilterDto);
+
+    List<LabelBelongEntity> getLabelBelongList(LabelBelongFilterDto labelBelongFilterDto);
+
+    int getLabelBelongListTotalCount(LabelBelongFilterDto labelBelongFilterDto);
 
     int getLabelListTotalCount(LabelFilterDto labelFilterDto);
+
+    boolean deleteLabelBelong(DeleteLabelBelongDto deleteLabelBelongDto);
 }
