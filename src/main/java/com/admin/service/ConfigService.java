@@ -1,7 +1,5 @@
 package com.admin.service;
 
-import com.admin.pojo.dto.config.AddLabelDto;
-import com.admin.pojo.dto.config.LabelFilterDto;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
@@ -102,8 +100,6 @@ public interface ConfigService {
 
     List<ExperimentEntity> checkLabelByID(int labelID);
 
-    List<LabelEntity> checkLabelBelongByID(int labelBelongID);
-
     int getClassListTotalCount(ClassFilterDto classFilterDto);
 
     boolean changeSpecialityStatus(ChangeSpecialityDto changeSpecialityDto);
@@ -118,35 +114,38 @@ public interface ConfigService {
 
     boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto);
 
-    boolean updateLabelBelongStatus(UpdateLabelBelongStatusDto updateLabelBelongStatusDto);
-
     boolean updateClass(UpdateClassDto updateClassDto);
-
-    boolean updateLabelBelong(UpdateLabelBelongDto updateLabelBelongDto);
 
     boolean changeClassStatus(ChangeClassDto changeClassDto);
 
     boolean addLabel(AddLabelDto addLabelDto);
 
-    boolean addLabelBelong(AddLabelBelongDto addLabelBelongDto);
+    boolean addClassCourse(AddClassCourseDto addClassCourseDto);
+
+    boolean deleteClassCourse(DeleteClassCourseDto deleteClassCourseDto);
+
+    boolean updateClassCourse(UpdateClassCourseDto updateClassCourseDto);
+
+    boolean updateClassCourseStatus(UpdateClassCourseStatusDto updateClassCourseStatusDto);
 
     List<ClassesEntity> getClassesByID(int classID);
-
-    List<LabelBelongEntity> getLabelBelongByID(int labelBelongID);
 
     List<ClassesEntity> getClassByDto(UpdateClassDto updateClassDto);
 
     List<LabelEntity> checkLabelByName(AddLabelDto addLabelDto);
 
-    List<LabelBelongEntity> checkLabelBelongByName(AddLabelBelongDto addLabelBelongDto);
-
     List<LabelListVo> getLabelList(LabelFilterDto labelFilterDto);
-
-    List<LabelBelongEntity> getLabelBelongList(LabelBelongFilterDto labelBelongFilterDto);
-
-    int getLabelBelongListTotalCount(LabelBelongFilterDto labelBelongFilterDto);
 
     int getLabelListTotalCount(LabelFilterDto labelFilterDto);
 
-    boolean deleteLabelBelong(DeleteLabelBelongDto deleteLabelBelongDto);
+    List<ClassCourseFilterVo> getClassCourseList(ClassCourseFilterDto classCourseFilterDto);
+
+    List<ClassCourseEntity> checkClassCourseByDto(AddClassCourseDto addClassCourseDto);
+
+    List<ClassCourseEntity> checkTermCourseByDto(UpdateClassCourseDto updateClassCourseDto);
+
+    List<ClassCourseEntity> getClassCourseByID(int classCourseID);
+
+    int getClassCourseListTotalCount(ClassCourseFilterDto classCourseFilterDto);
+
 }

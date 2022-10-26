@@ -9,8 +9,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.validation.BindingResult;
-import com.admin.pojo.dto.config.LabelFilterDto;
-import com.admin.pojo.dto.config.AddLabelDto;
 import com.admin.service.ConfigService;
 import com.admin.pojo.dto.config.*;
 import com.admin.util.CommonUtils;
@@ -715,33 +713,33 @@ public class ConfigController {
         }
     }
 
-    //获取标签归属列表(废弃)
-    @PostMapping("/getLabelBelongList")
-    public Result getLabelBelongList(@Validated @RequestBody LabelBelongFilterDto labelBelongFilterDto, BindingResult bindingResult) {
+    //获取班级课程列表
+    @PostMapping("/getClassCourseList")
+    public Result getClassCourseList(@Validated @RequestBody ClassCourseFilterDto classCourseFilterDto, BindingResult bindingResult) {
         //会把校验失败情况下的信息反馈到前端
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongList(labelBelongFilterDto);
-        int totalCount = configService.getLabelBelongListTotalCount(labelBelongFilterDto);
-        return Result.showList("00000000", "Success", labelBelongList, totalCount);
+        List<ClassCourseFilterVo> classCourseList = configService.getClassCourseList(classCourseFilterDto);
+        int totalCount = configService.getClassCourseListTotalCount(classCourseFilterDto);
+        return Result.showList("00000000", "Success", classCourseList, totalCount);
     }
 
-    //新增标签归属(废弃)
-    @PostMapping("/addLabelBelong")
+    //新增班级课程
+    @PostMapping("/addClassCourse")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result addLabelBelong(@Validated @RequestBody AddLabelBelongDto addLabelBelongDto, BindingResult bindingResult) {
+    public Result addClassCourse(@Validated @RequestBody AddClassCourseDto addClassCourseDto, BindingResult bindingResult) {
         //会把校验失败情况下的信息反馈到前端
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        List<LabelBelongEntity> labelBelongList = configService.checkLabelBelongByName(addLabelBelongDto);
-        if (labelBelongList.size() > 0) {
-            return Result.showInfo("00000002", "该标签归属已存在", null);
+        List<ClassCourseEntity> classCourseList = configService.checkClassCourseByDto(addClassCourseDto);
+        if (classCourseList.size() > 0) {
+            return Result.showInfo("00000002", "当前学期有此课程", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        addLabelBelongDto.setCreateTime(now);
-        boolean isSuccess = configService.addLabelBelong(addLabelBelongDto);
+        addClassCourseDto.setCreateTime(now);
+        boolean isSuccess = configService.addClassCourse(addClassCourseDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
@@ -749,24 +747,20 @@ public class ConfigController {
         }
     }
 
-    //删除标签归属(废弃)
-    @PostMapping("/deleteLabelBelong")
+    //删除班级课程
+    @PostMapping("/deleteClassCourse")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result deleteLabelBelong(@Validated @RequestBody DeleteLabelBelongDto deleteLabelBelongDto, BindingResult bindingResult) {
+    public Result deleteClassCourse(@Validated @RequestBody DeleteClassCourseDto deleteClassCourseDto, BindingResult bindingResult) {
         //会把校验失败情况下的信息反馈到前端
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        int labelBelongID = deleteLabelBelongDto.getId();
-        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongByID(labelBelongID);
-        if (labelBelongList.size() < 1) {
-            return Result.showInfo("00000002", "查无此标签归属", null);
+        int classCourseID = deleteClassCourseDto.getId();
+        List<ClassCourseEntity> classCourseList = configService.getClassCourseByID(classCourseID);
+        if (classCourseList.size() < 1) {
+            return Result.showInfo("00000002", "没有此课程", null);
         }
-        List<LabelEntity> checkList = configService.checkLabelBelongByID(labelBelongID);
-        if (checkList.size() > 0) {
-            return Result.showInfo("00000003", "该标签归属被引用中，不可删除", null);
-        }
-        boolean isSuccess = configService.deleteLabelBelong(deleteLabelBelongDto);
+        boolean isSuccess = configService.deleteClassCourse(deleteClassCourseDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
@@ -774,22 +768,26 @@ public class ConfigController {
         }
     }
 
-    //更新标签归属(废弃)
-    @PostMapping("/updateLabelBelong")
+    //更新班级课程
+    @PostMapping("/updateClassCourse")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result updateLabelBelong(@Validated @RequestBody UpdateLabelBelongDto updateLabelBelongDto, BindingResult bindingResult) {
+    public Result updateClassCourse(@Validated @RequestBody UpdateClassCourseDto updateClassCourseDto, BindingResult bindingResult) {
         //会把校验失败情况下的信息反馈到前端
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        int labelBelongID = updateLabelBelongDto.getId();
-        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongByID(labelBelongID);
-        if (labelBelongList.size() < 1) {
-            return Result.showInfo("00000002", "查无此标签归属", null);
+        int classCourseID = updateClassCourseDto.getId();
+        List<ClassCourseEntity> classCourseList = configService.getClassCourseByID(classCourseID);
+        if (classCourseList.size() < 1) {
+            return Result.showInfo("00000002", "没有此课程", null);
+        }
+        List<ClassCourseEntity> classCourseList1 = configService.checkTermCourseByDto(updateClassCourseDto);
+        if (classCourseList1.size() > 0) {
+            return Result.showInfo("00000002", "当前学期有此课程", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        updateLabelBelongDto.setUpdateTime(now);
-        boolean isSuccess = configService.updateLabelBelong(updateLabelBelongDto);
+        updateClassCourseDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateClassCourse(updateClassCourseDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {
@@ -797,22 +795,22 @@ public class ConfigController {
         }
     }
 
-    //更新标签归属状态(废弃)
-    @PostMapping("/updateLabelBelongStatus")
+    //更新班级课程状态
+    @PostMapping("/updateClassCourseStatus")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Result updateLabelBelongStatus(@Validated @RequestBody UpdateLabelBelongStatusDto updateLabelBelongStatusDto, BindingResult bindingResult) {
+    public Result updateClassCourseStatus(@Validated @RequestBody UpdateClassCourseStatusDto updateClassCourseStatusDto, BindingResult bindingResult) {
         //会把校验失败情况下的信息反馈到前端
         if (bindingResult.hasErrors()) {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
-        int labelBelongID = updateLabelBelongStatusDto.getId();
-        List<LabelBelongEntity> labelBelongList = configService.getLabelBelongByID(labelBelongID);
-        if (labelBelongList.size() < 1) {
-            return Result.showInfo("00000002", "查无此标签归属", null);
+        int classCourseID = updateClassCourseStatusDto.getId();
+        List<ClassCourseEntity> classCourseList = configService.getClassCourseByID(classCourseID);
+        if (classCourseList.size() < 1) {
+            return Result.showInfo("00000002", "没有此课程", null);
         }
         String now = CommonUtils.getTime(0);    //获取当前时间
-        updateLabelBelongStatusDto.setUpdateTime(now);
-        boolean isSuccess = configService.updateLabelBelongStatus(updateLabelBelongStatusDto);
+        updateClassCourseStatusDto.setUpdateTime(now);
+        boolean isSuccess = configService.updateClassCourseStatus(updateClassCourseStatusDto);
         if (isSuccess) {
             return Result.showInfo("00000000", "Success", null);
         } else {

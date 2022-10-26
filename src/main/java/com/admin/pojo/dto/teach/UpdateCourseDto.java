@@ -20,11 +20,15 @@ public class UpdateCourseDto implements Serializable {
     @NotNull(message = "课程唯一编号不能为空")
     private int id;
 
-    @NotBlank(message = "实验名称不能为空")
+    @NotBlank(message = "课程名称不能为空")
     private String name;
 
     @NotBlank(message = "所属部门不能为空")
     private String departmentID;
+
+    private String teacherAccount;
+
+    private String labelIDs;
 
     private String introduction;
 

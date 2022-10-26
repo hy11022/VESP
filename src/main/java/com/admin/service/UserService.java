@@ -1,11 +1,10 @@
 package com.admin.service;
 
+import com.admin.pojo.dto.task.UserForTaskDto;
 import com.admin.pojo.dto.user.*;
-import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.entity.UserEntity;
 import com.admin.pojo.vo.user.UserVo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -25,11 +24,7 @@ public interface UserService {
 
     List<UserEntity> getUserByID(int id);
 
-    List<SchoolEntity> getSchoolByClassID(int classID);
-
-    List<SchoolEntity> getSchoolBySpecialityID(int specialityID);
-
-    List<SchoolEntity> getSchoolByDepartmentID(int departmentID);
+    List<UserEntity> getUserForTask(UserForTaskDto userForTaskDto);
 
     void updateLastLoginTime(LoginDto loginDto);
 

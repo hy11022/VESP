@@ -25,5 +25,7 @@ public class CourseFilterDto implements Serializable {
 
     private String departmentID;
 
+    private String teacherAccount;
+
     private String status;
 }

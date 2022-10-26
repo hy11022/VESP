@@ -45,7 +45,7 @@ public interface ExperimentMapper {
     List<ExperimentInfoVo> getExperimentInfo(ExperimentInfoDto experimentInfoDto);
 
     @Update("UPDATE experiments SET read_count=read_count+1 WHERE id=#{id}")
-    boolean updateExperimentReadCount(ExperimentInfoDto experimentInfoDto);
+    void updateExperimentReadCount(ExperimentInfoDto experimentInfoDto);
 
     List<ExperimentItemFilterVo> getExperimentItemList(ExperimentItemFilterDto experimentItemFilterDto);
 

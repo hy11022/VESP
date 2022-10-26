@@ -1,7 +1,7 @@
 package com.admin.mapper;
 
+import com.admin.pojo.dto.task.UserForTaskDto;
 import com.admin.pojo.dto.user.*;
-import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.entity.UserEntity;
 import com.admin.pojo.vo.user.UserVo;
 import org.apache.ibatis.annotations.*;
@@ -14,7 +14,7 @@ public interface UserMapper {
 
     List<UserVo> getUserByToken(UserTokenDto userTokenDto);
 
-    @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password} AND status = #{status}")
+    @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password}")
     List<UserEntity> checkUser(LoginDto loginDto);
 
     @Select("SELECT a.* FROM users a LEFT JOIN tokens b ON a.account = b.account WHERE b.access_token = #{token}")
@@ -43,21 +43,9 @@ public interface UserMapper {
     @Update("UPDATE users SET status =#{status},update_time=#{updateTime} WHERE id =#{id}")
     boolean updateUserStatus(UpdateUserStatusDto updateUserStatusDto);
 
-    @Select("SELECT a.* FROM schools a LEFT JOIN departments b ON a.id = b.school_id" +
-            " LEFT JOIN specialities C ON b.id = c.department_id " +
-            " LEFT JOIN classes d ON c.id = D.speciality_id " +
-            " WHERE d.id = #{classID}")
-    List<SchoolEntity> getSchoolByClassID(int classID);
-
-    @Select("SELECT a.* FROM schools a LEFT JOIN departments b ON a.id = b.school_id" +
-            " LEFT JOIN specialities C ON b.id = c.department_id " +
-            " WHERE c.id = #{specialityID}")
-    List<SchoolEntity> getSchoolBySpecialityID(int specialityID);
-
-    @Select("SELECT a.* FROM schools a LEFT JOIN departments b ON a.id = b.school_id" +
-            " WHERE b.id = #{departmentID}")
-    List<SchoolEntity> getSchoolByDepartmentID(int departmentID);
-
     @Select("SELECT * FROM users WHERE account=#{account} AND school_id=#{schoolID}")
     List<UserEntity> checkUserInSchool(AddUserDto addUserDto);
+
+    @Select("SELECT * FROM users WHERE role=#{role} AND auth_level=#{authLevel} AND belong_id=#{belongID} AND status=#{status}")
+    List<UserEntity> getUserForTask(UserForTaskDto userForTaskDto);
 }

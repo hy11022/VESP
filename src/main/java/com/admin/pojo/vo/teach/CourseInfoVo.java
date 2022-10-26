@@ -1,5 +1,6 @@
 package com.admin.pojo.vo.teach;
 
+import com.alibaba.fastjson.JSONArray;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +24,15 @@ public class CourseInfoVo implements Serializable {
 
     private String departmentName;
 
+    private JSONArray labelList;
+
+    private String labelIDs;
+
     private String introduction;
 
     private String cover;
+
+    private String createTime;
 
     private String updateTime;
 

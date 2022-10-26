@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -23,9 +22,13 @@ public class AddCourseDto implements Serializable {
     @NotBlank(message = "所属部门不能为空")
     private String departmentID;
 
+    private String teacherAccount;
+
+    private String labelIDs;
+
     private String introduction;
 
     private String cover;
 
-    private String updateTime;
+    private String createTime;
 }

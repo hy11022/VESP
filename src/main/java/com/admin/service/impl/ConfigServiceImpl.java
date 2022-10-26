@@ -1,8 +1,6 @@
 package com.admin.service.impl;
 
 import com.admin.mapper.ConfigMapper;
-import com.admin.pojo.dto.config.AddLabelDto;
-import com.admin.pojo.dto.config.LabelFilterDto;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
@@ -11,7 +9,6 @@ import com.admin.service.ConfigService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -25,6 +22,7 @@ public class ConfigServiceImpl implements ConfigService {
         PageHelper.startPage(schoolFilterDto.getPageNum(), schoolFilterDto.getPageSize());
         return configMapper.getSchoolList(schoolFilterDto);
     }
+
     @Override
     public int getSchoolListTotalCount(SchoolFilterDto schoolFilterDto) {
         return configMapper.getSchoolList(schoolFilterDto).size();
@@ -250,11 +248,6 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public List<LabelEntity> checkLabelBelongByID(int labelBelongID) {
-        return configMapper.checkLabelBelongByID(labelBelongID);
-    }
-
-    @Override
     public int getClassListTotalCount(ClassFilterDto classFilterDto) {
         return configMapper.getClassList(classFilterDto).size();
     }
@@ -290,18 +283,8 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public boolean updateLabelBelongStatus(UpdateLabelBelongStatusDto updateLabelBelongStatusDto) {
-        return configMapper.updateLabelBelongStatus(updateLabelBelongStatusDto);
-    }
-
-    @Override
     public boolean updateClass(UpdateClassDto updateClassDto) {
         return configMapper.updateClass(updateClassDto);
-    }
-
-    @Override
-    public boolean updateLabelBelong(UpdateLabelBelongDto updateLabelBelongDto) {
-        return configMapper.updateLabelBelong(updateLabelBelongDto);
     }
 
     @Override
@@ -315,18 +298,28 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public boolean addLabelBelong(AddLabelBelongDto addLabelBelongDto) {
-        return configMapper.addLabelBelong(addLabelBelongDto);
+    public boolean addClassCourse(AddClassCourseDto addClassCourseDto) {
+        return configMapper.addClassCourse(addClassCourseDto);
+    }
+
+    @Override
+    public boolean deleteClassCourse(DeleteClassCourseDto deleteClassCourseDto) {
+        return configMapper.deleteClassCourse(deleteClassCourseDto);
+    }
+
+    @Override
+    public boolean updateClassCourse(UpdateClassCourseDto updateClassCourseDto) {
+        return configMapper.updateClassCourse(updateClassCourseDto);
+    }
+
+    @Override
+    public boolean updateClassCourseStatus(UpdateClassCourseStatusDto updateClassCourseStatusDto) {
+        return configMapper.updateClassCourseStatus(updateClassCourseStatusDto);
     }
 
     @Override
     public List<ClassesEntity> getClassesByID(int classID) {
         return configMapper.getClassesByID(classID);
-    }
-
-    @Override
-    public List<LabelBelongEntity> getLabelBelongByID(int labelBelongID) {
-        return configMapper.getLabelBelongByID(labelBelongID);
     }
 
     @Override
@@ -340,25 +333,9 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public List<LabelBelongEntity> checkLabelBelongByName(AddLabelBelongDto addLabelBelongDto) {
-        return configMapper.checkLabelBelongByName(addLabelBelongDto);
-    }
-
-    @Override
     public List<LabelListVo> getLabelList(LabelFilterDto labelFilterDto) {
         PageHelper.startPage(labelFilterDto.getPageNum(), labelFilterDto.getPageSize());
         return configMapper.getLabelList(labelFilterDto);
-    }
-
-    @Override
-    public List<LabelBelongEntity> getLabelBelongList(LabelBelongFilterDto labelBelongFilterDto) {
-        PageHelper.startPage(labelBelongFilterDto.getPageNum(), labelBelongFilterDto.getPageSize());
-        return configMapper.getLabelBelongList(labelBelongFilterDto);
-    }
-
-    @Override
-    public int getLabelBelongListTotalCount(LabelBelongFilterDto labelBelongFilterDto) {
-        return configMapper.getLabelBelongList(labelBelongFilterDto).size();
     }
 
     @Override
@@ -367,7 +344,28 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public boolean deleteLabelBelong(DeleteLabelBelongDto deleteLabelBelongDto) {
-        return configMapper.deleteLabelBelong(deleteLabelBelongDto);
+    public List<ClassCourseFilterVo> getClassCourseList(ClassCourseFilterDto classCourseFilterDto) {
+        PageHelper.startPage(classCourseFilterDto.getPageNum(), classCourseFilterDto.getPageSize());
+        return configMapper.getClassCourseList(classCourseFilterDto);
+    }
+
+    @Override
+    public List<ClassCourseEntity> checkClassCourseByDto(AddClassCourseDto addClassCourseDto) {
+        return configMapper.checkClassCourseByDto(addClassCourseDto);
+    }
+
+    @Override
+    public List<ClassCourseEntity> checkTermCourseByDto(UpdateClassCourseDto updateClassCourseDto) {
+        return configMapper.checkTermCourseByDto(updateClassCourseDto);
+    }
+
+    @Override
+    public List<ClassCourseEntity> getClassCourseByID(int classCourseID) {
+        return configMapper.getClassCourseByID(classCourseID);
+    }
+
+    @Override
+    public int getClassCourseListTotalCount(ClassCourseFilterDto classCourseFilterDto) {
+        return configMapper.getClassCourseList(classCourseFilterDto).size();
     }
 }

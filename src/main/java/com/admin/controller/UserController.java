@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.entity.TokenEntity;
 import com.admin.pojo.entity.UserEntity;
 import com.alibaba.fastjson.JSONObject;
@@ -43,13 +42,15 @@ public class UserController {
             return Result.showInfo("00000001", Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
         }
         boolean isSuccess;
-        loginDto.setStatus("1");
         String account = loginDto.getAccount();
         List<UserEntity> userList = userService.checkUser(loginDto);//判断用户是否可登录
         if (userList.size() > 0) {//用户可登录
             List<TokenEntity> tokenList = tokenService.getTokenList(account);
             UserEntity user = userList.get(0);
             user.setPassword(null);
+            if(user.getStatus().equals("2")){
+                return Result.showInfo("00000003", "账户已停用", null);
+            }
             JSONObject tokenInfo = JWTUtils.createTokenInfo(account, 6 * 60 * 60, 24 * 60 * 60);
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAccount(account);

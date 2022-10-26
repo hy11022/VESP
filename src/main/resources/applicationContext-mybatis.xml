@@ -73,4 +73,5 @@
     <bean id="newsService" class="com.admin.service.impl.NewsServiceImpl"/>
     <bean id="experimentService" class="com.admin.service.impl.ExperimentServiceImpl"/>
     <bean id="teachService" class="com.admin.service.impl.TeachServiceImpl"/>
+    <bean id="taskService" class="com.admin.service.impl.TaskServiceImpl"/>
 </beans>

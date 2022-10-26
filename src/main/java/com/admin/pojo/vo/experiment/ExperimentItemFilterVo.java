@@ -1,6 +1,5 @@
 package com.admin.pojo.vo.experiment;
 
-import com.alibaba.fastjson.JSONArray;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

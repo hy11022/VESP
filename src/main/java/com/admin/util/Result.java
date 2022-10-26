@@ -1,6 +1,5 @@
 package com.admin.util;
 
-import com.admin.interceptor.TokenInterceptor;
 import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;

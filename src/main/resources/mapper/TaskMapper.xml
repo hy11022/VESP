@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.admin.mapper.TaskMapper">
+    <select id="getTaskList" resultType="com.admin.pojo.vo.task.TaskFilterVo" >
+        SELECT a.*,b.remark AS contentRemark,b.title AS contentName,b.duration AS contentDuration,d.name AS createrName,
+        SUM(CASE WHEN c.status in (3,4) THEN 1 END) AS submitCount,SUM(CASE WHEN c.status in (2) THEN 1 END) AS noSubmitCount
+        FROM tasks a LEFT JOIN course_contents b ON a.content_id = b.id
+        LEFT JOIN tasks_child c ON a.id = c.task_id
+        LEFT JOIN users d ON a.creater_account = d.account
+        WHERE 1=1
+        <if test="termID != null and termID !=''">
+            AND a.term_id =#{termID}
+        </if>
+        <if test="courseID != null and courseID !=''">
+            AND b.course_id =#{courseID}
+        </if>
+        <if test="type != null and type !=''">
+            AND a.type =#{type}
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+        GROUP BY a.id
+    </select>
+
+    <select id="getChildTaskList" resultType="com.admin.pojo.vo.task.TaskChildFilterVo" >
+        SELECT a.*,b.name AS makerName FROM tasks_child a LEFT JOIN users b ON a.maker_account = b.account
+        WHERE 1=1
+        <if test="taskID != null and taskID !=''">
+            AND a.task_id =#{taskID}
+        </if>
+        <choose>
+            <when test="sort != null and sort !=''">
+                <if test="sort == 1">
+                    ORDER BY status DESC,submit_time DESC,id
+                </if>
+                <if test="sort == 2">
+                    ORDER BY submit_time DESC,id
+                </if>
+                <if test="sort == 3">
+                    ORDER BY score DESC,submit_time DESC,id
+                </if>
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getCSelectsRecords" resultType="com.admin.pojo.entity.QuestionSelectsCopyEntity">
+        SELECT * FROM question_selects_copy
+        WHERE id IN (
+        <foreach collection="list" item="u" separator=",">
+            #{u}
+        </foreach>
+        )
+    </select>
+
+    <select id="getISelectsRecords" resultType="com.admin.pojo.entity.QuestionSelectsCopyEntity">
+        SELECT * FROM question_selects_copy
+        WHERE id NOT IN (
+        <foreach collection="list" item="u" separator=",">
+            #{u}
+        </foreach>
+        )
+    </select>
+
+    <select id="getStudentTaskList" resultType="com.admin.pojo.vo.task.StudentTaskFilterVo" >
+        SELECT a.*,b.term_id,b.type,b.content_id,c.title AS contentName,b.start_time AS startTime,b.end_time AS endTime
+        FROM tasks_child a LEFT JOIN tasks b ON a.task_id = b.id
+        LEFT JOIN course_contents c ON b.content_id = c.id
+        WHERE 1=1
+        <if test="termID != null and termID !=''">
+            AND b.term_id =#{termID}
+        </if>
+        <if test="courseID != null and courseID !=''">
+            AND c.course_id =#{courseID}
+        </if>
+        <if test="type != null and type !=''">
+            AND b.type =#{type}
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+        <if test="account != null and account !=''">
+            AND a.maker_account = #{account}
+        </if>
+    </select>
+</mapper>

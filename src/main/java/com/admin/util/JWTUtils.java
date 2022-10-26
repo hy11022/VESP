@@ -24,6 +24,8 @@ import java.util.Map;
 public class JWTUtils {
     //token秘钥,公司首字母缩写+日期+DRJ
     private static final String TOKEN_SECRET = "HWZNKJYXZRGS20220622DRJ";
+    private static String token;
+
     /**
      * @description:生成tokenInfo
      * @author: Du Rongjun
@@ -82,6 +84,7 @@ public class JWTUtils {
      * @return token中包含的用户名
      */
     public static String getName(String token) {
+        JWTUtils.token = token;
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("name").asString();

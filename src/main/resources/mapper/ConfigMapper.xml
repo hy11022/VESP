@@ -116,9 +116,6 @@
         <if test="effect != null and effect !=''">
             AND effect =#{effect}
         </if>
-        <if test="belongID != null and belongID !=''">
-            AND belong_id =#{belongID}
-        </if>
         <if test="status != null and status !=''">
             AND status =#{status}
         </if>
@@ -129,14 +126,25 @@
         WHERE FIND_IN_SET(#{labelID},replace(replace(label_ids,'[',''),']',''))
     </select>
 
-    <select id="getLabelBelongList" resultType="com.admin.pojo.entity.LabelBelongEntity" >
-        SELECT * FROM `label_belongs`
+    <select id="getClassCourseList" resultType="com.admin.pojo.vo.config.ClassCourseFilterVo" >
+        SELECT a.*,b.name AS termName,c.name AS className,d.name AS courseName,e.name AS teacherName
+        FROM rel_class_course a LEFT JOIN terms b ON a.term_id = b.id
+        LEFT JOIN classes c ON a.class_id = c.id
+        LEFT JOIN courses d ON a.course_id = d.id
+        LEFT JOIN users e ON d.teacher_account = e.account
         WHERE 1=1
-        <if test="status != null and status !=''">
-            AND status =#{status}
+        <if test="termID != null and termID !=''">
+            AND a.term_id=#{termID}
         </if>
-        <if test="name != null and name !=''">
-            AND name LIKE CONCAT('%',#{name},'%')
+        <if test="classID != null and classID !=''">
+            AND a.class_id=#{classID}
+        </if>
+        <if test="courseID != null and courseID !=''">
+            AND a.course_id=#{courseID}
+        </if>
+        <if test="status != null and status !=''">
+            AND c.status=#{status}
         </if>
     </select>
+
 </mapper>

@@ -3,7 +3,6 @@ package com.admin.mapper;
 import com.admin.pojo.dto.user.TokenDto;
 import com.admin.pojo.entity.TokenEntity;
 import org.apache.ibatis.annotations.*;
-
 import java.util.List;
 
 @Mapper
@@ -14,12 +13,12 @@ public interface TokenMapper {
 
     @Insert("INSERT INTO tokens (account,access_token,access_token_expire_time,refresh_token,refresh_token_expire_time) " +
             "VALUES (#{account},#{accessToken},#{accessTokenExpireTime},#{refreshToken},#{refreshTokenExpireTime})")
-    Boolean addToken(TokenDto tokenDto);
+    boolean addToken(TokenDto tokenDto);
 
     @Delete("DELETE FROM tokens WHERE access_token = #{accessToken}")
     void deleteToken(String accessToken);
 
     @Update("UPDATE tokens SET access_token_expire_time = #{accessTokenExpireTime},access_token = #{accessToken}," +
             "refresh_token = #{refreshToken},refresh_token_expire_time = #{refreshTokenExpireTime} WHERE account = #{account}")
-    Boolean updateToken(TokenDto tokenDto);
+    boolean updateToken(TokenDto tokenDto);
 }

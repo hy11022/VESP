@@ -30,7 +30,5 @@ public class LoginDto implements Serializable {
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    private String status;
-
     private String lastLoginTime;
 }

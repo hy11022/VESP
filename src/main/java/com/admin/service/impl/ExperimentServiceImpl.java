@@ -131,7 +131,7 @@ public class ExperimentServiceImpl implements ExperimentService {
     }
 
     @Override
-    public boolean updateExperimentReadCount(ExperimentInfoDto experimentInfoDto) {
-        return experimentMapper.updateExperimentReadCount(experimentInfoDto);
+    public void updateExperimentReadCount(ExperimentInfoDto experimentInfoDto) {
+        experimentMapper.updateExperimentReadCount(experimentInfoDto);
     }
 }

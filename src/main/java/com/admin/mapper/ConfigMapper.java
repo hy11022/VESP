@@ -1,7 +1,5 @@
 package com.admin.mapper;
 
-import com.admin.pojo.dto.config.AddLabelDto;
-import com.admin.pojo.dto.config.LabelFilterDto;
 import com.admin.pojo.dto.common.ProvinceFilterDto;
 import com.admin.pojo.dto.config.*;
 import com.admin.pojo.entity.*;
@@ -176,26 +174,28 @@ public interface ConfigMapper {
     @Update("UPDATE labels SET status = #{status},update_time = #{updateTime} WHERE id= #{id}")
     boolean updateLabelStatus(UpdateLabelStatusDto updateLabelStatusDto);
 
-    List<LabelBelongEntity> getLabelBelongList(LabelBelongFilterDto labelBelongFilterDto);
+    List<ClassCourseFilterVo> getClassCourseList(ClassCourseFilterDto classCourseFilterDto);
 
-    @Select("SELECT * FROM label_belongs WHERE name=#{name}")
-    List<LabelBelongEntity> checkLabelBelongByName(AddLabelBelongDto addLabelBelongDto);
+    @Select("SELECT * FROM rel_class_course WHERE class_id=#{classID} AND term_id=#{termID} AND course_id=#{courseID}")
+    List<ClassCourseEntity> checkClassCourseByDto(AddClassCourseDto addClassCourseDto);
 
-    @Insert("INSERT INTO label_belongs SET name = #{name},create_time=#{createTime}")
-    boolean addLabelBelong(AddLabelBelongDto addLabelBelongDto);
+    @Insert("INSERT INTO rel_class_course SET class_id = #{classID},term_id=#{termID}," +
+            "course_id=#{courseID}, create_time=#{createTime}")
+    boolean addClassCourse(AddClassCourseDto addClassCourseDto);
 
-    @Select("SELECT * FROM label_belongs WHERE id=#{labelBelongID}")
-    List<LabelBelongEntity> getLabelBelongByID(int labelBelongID);
+    @Delete("DELETE FROM rel_class_course WHERE id = #{id}")
+    boolean deleteClassCourse(DeleteClassCourseDto deleteClassCourseDto);
 
-    @Select("SELECT * FROM labels WHERE belong_id=#{labelBelongID}")
-    List<LabelEntity> checkLabelBelongByID(int labelBelongID);
+    @Select("SELECT * FROM rel_class_course WHERE id=#{classCourseID}")
+    List<ClassCourseEntity> getClassCourseByID(int classCourseID);
 
-    @Delete("DELETE FROM label_belongs WHERE id=#{id}")
-    boolean deleteLabelBelong(DeleteLabelBelongDto deleteLabelBelongDto);
+    @Select("SELECT * FROM rel_class_course WHERE course_id=#{courseID} AND term_id =#{termID} " +
+            "AND class_id =#{classID} AND id<>#{id}")
+    List<ClassCourseEntity> checkTermCourseByDto(UpdateClassCourseDto updateClassCourseDto);
 
-    @Update("UPDATE label_belongs SET name = #{name},update_time = #{updateTime} WHERE id=#{id}")
-    boolean updateLabelBelong(UpdateLabelBelongDto updateLabelBelongDto);
+    @Update("UPDATE rel_class_course SET term_id = #{termID},course_id = #{courseID},update_time = #{updateTime} WHERE id= #{id}")
+    boolean updateClassCourse(UpdateClassCourseDto updateClassCourseDto);
 
-    @Update("UPDATE label_belongs SET status = #{status},update_time = #{updateTime} WHERE id=#{id}")
-    boolean updateLabelBelongStatus(UpdateLabelBelongStatusDto updateLabelBelongStatusDto);
+    @Update("UPDATE rel_class_course SET status = #{status},update_time = #{updateTime} WHERE id= #{id}")
+    boolean updateClassCourseStatus(UpdateClassCourseStatusDto updateClassCourseStatusDto);
 }

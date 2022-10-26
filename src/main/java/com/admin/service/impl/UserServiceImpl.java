@@ -1,8 +1,8 @@
 package com.admin.service.impl;
 
 import com.admin.mapper.UserMapper;
+import com.admin.pojo.dto.task.UserForTaskDto;
 import com.admin.pojo.dto.user.*;
-import com.admin.pojo.entity.SchoolEntity;
 import com.admin.pojo.entity.UserEntity;
 import com.admin.pojo.vo.user.UserVo;
 import com.admin.service.UserService;
@@ -54,18 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SchoolEntity> getSchoolByClassID(int classID) {
-        return userMapper.getSchoolByClassID(classID);
-    }
-
-    @Override
-    public List<SchoolEntity> getSchoolBySpecialityID(int specialityID) {
-        return userMapper.getSchoolBySpecialityID(specialityID);
-    }
-
-    @Override
-    public List<SchoolEntity> getSchoolByDepartmentID(int departmentID) {
-        return userMapper.getSchoolByDepartmentID(departmentID);
+    public List<UserEntity> getUserForTask(UserForTaskDto userForTaskDto) {
+        return userMapper.getUserForTask(userForTaskDto);
     }
 
     @Override

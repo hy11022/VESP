@@ -3,8 +3,9 @@
 
 <mapper namespace="com.admin.mapper.TeachMapper">
     <select id="getCourseList" resultType="com.admin.pojo.vo.teach.CourseFilterVo" >
-        SELECT a.*,b.name AS departmentName FROM courses a
+        SELECT a.*,b.name AS departmentName,c.name AS teacherName FROM courses a
             LEFT JOIN departments b ON a.department_id = b.id
+            LEFT JOIN users c ON a.teacher_account = c.account
             WHERE 1=1
         <if test="name != null and name !=''">
             AND a.name LIKE CONCAT('%',#{name},'%')
@@ -12,13 +13,17 @@
         <if test="departmentID != null and departmentID !=''">
             AND a.department_id = #{departmentID}
         </if>
+        <if test="teacherAccount != null and teacherAccount !=''">
+            AND a.teacher_account = #{teacherAccount}
+        </if>
         <if test="status != null and status !=''">
             AND a.status = #{status}
         </if>
     </select>
 
     <update id="updateCourse">
-        UPDATE courses SET name = #{name},department_id=#{departmentID},update_time = #{updateTime}
+        UPDATE courses SET name = #{name},department_id=#{departmentID},teacher_account=#{teacherAccount},
+        label_ids = #{labelIDs},update_time = #{updateTime}
         <if test="introduction != null and introduction !=''">
             ,introduction=#{introduction}
         </if>
@@ -27,4 +32,79 @@
         </if>
         WHERE id=#{id}
     </update>
+
+    <select id="getTermList" resultType="com.admin.pojo.vo.teach.TermFilterVo" >
+        SELECT * FROM terms
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="status != null and status !=''">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <select id="getCourseResourseList" resultType="com.admin.pojo.vo.teach.CourseResourseFilterVo" >
+        SELECT a.*,b.name AS courseName FROM course_resources a LEFT JOIN courses b ON a.course_id = b.id
+        WHERE 1=1
+        <if test="name != null and name !=''">
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !=''">
+            AND a.type = #{type}
+        </if>
+        <if test="courseID != null and courseID !=''">
+            AND a.course_id = #{courseID}
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+    </select>
+
+    <select id="getCourseQuestionList" resultType="com.admin.pojo.vo.teach.CourseQuestionFilterVo" >
+        SELECT a.*,b.name AS courseName FROM course_questions a LEFT JOIN courses b ON a.course_id = b.id
+        WHERE 1=1
+        <if test="courseID != null and courseID !=''">
+            AND a.course_id=#{courseID}
+        </if>
+        <if test="type != null and type !=''">
+            AND a.type = #{type}
+        </if>
+        <if test="content != null and content !=''">
+            AND a.content LIKE CONCAT('%',#{content},'%')
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+    </select>
+
+    <select id="getCourseContentList" resultType="com.admin.pojo.vo.teach.CourseContentFilterVo" >
+        SELECT a.*,b.name AS createrName FROM course_contents a LEFT JOIN users b ON a.creater_account = b.account
+        WHERE 1=1
+        <if test="courseID != null and courseID !=''">
+            AND a.course_id=#{courseID}
+        </if>
+        <if test="type != null and type !=''">
+            AND a.type = #{type}
+        </if>
+        <if test="releaseMethod != null and releaseMethod !=''">
+            AND a.release_method =#{releaseMethod}
+        </if>
+        <if test="createMethod != null and createMethod !=''">
+            AND a.create_method =#{createMethod}
+        </if>
+        <if test="createrAccount != null and createrAccount !=''">
+            AND a.creater_account =#{createrAccount}
+        </if>
+        <if test="status != null and status !=''">
+            AND a.status = #{status}
+        </if>
+    </select>
+
+    <insert id="copyCourseQuestions">
+        INSERT INTO course_questions_copy(content,question_id,type)
+        <foreach collection="list" item="u" index="index" separator="union all">
+            SELECT content,id,type FROM course_questions WHERE id=#{u}
+        </foreach>
+    </insert>
 </mapper>

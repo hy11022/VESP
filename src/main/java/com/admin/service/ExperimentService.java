@@ -59,5 +59,5 @@ public interface ExperimentService {
 
     boolean updateExperimentItemStatus(UpdateExperimentItemStatusDto updateExperimentItemStatusDto);
 
-    boolean updateExperimentReadCount(ExperimentInfoDto experimentInfoDto);
+    void updateExperimentReadCount(ExperimentInfoDto experimentInfoDto);
 }
